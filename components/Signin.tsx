@@ -27,6 +27,7 @@ function SignIn() {
                 password: formData.password,
             };
 
+
             const response = await fetch(
                 "http://localhost:3002/auth/login",
                 {
@@ -49,6 +50,9 @@ function SignIn() {
             login(responseData.accessToken);
             if (isAuthenticated) {
                 router.push('/')
+            }
+            if (forms.username === 'admin') {
+                router.push('admin')
             }
             // console.log("Signup Successful:", responseData);
         } catch (error: any) {

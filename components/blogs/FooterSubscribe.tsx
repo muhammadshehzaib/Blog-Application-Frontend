@@ -44,7 +44,7 @@ const FooterSubscribe = () => {
                                                     fill="none"
                                                     stroke="currentColor"
                                                     stroke-width="2"
-                                                    stroke-linecap="round"
+                                                    strokeLinecap="round"
                                                     strokeLinejoin="round"
                                                     className="h-6 w-6 text-primary-600 dark:text-slate-200"
                                                 >
@@ -79,7 +79,7 @@ const FooterSubscribe = () => {
                                                         fill="none"
                                                         stroke="currentColor"
                                                         stroke-width="2"
-                                                        stroke-linecap="round"
+                                                        strokeLinecap="round"
                                                         strokeLinejoin="round"
                                                         className="h-6 w-6 text-[#2563EB] dark:text-gray-400
                                                         

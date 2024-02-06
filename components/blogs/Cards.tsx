@@ -1,6 +1,26 @@
-import React from "react";
+'use client'
+import React, { useEffect, useState } from "react";
 
 const Cards = () => {
+    const [blogData, setBlogData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:3002/blogs');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch blog data');
+                }
+                const data = await response.json();
+                setBlogData(data);
+            } catch (error: any) {
+                console.error(error.message);
+            }
+        };
+
+        fetchData();
+    }, []); // Fetch data on component mount
+
     return (
         <div>
             <div className="grid mx-auto gap-8 md:gap-y-12 lg:grid-cols-3 sm:grid-cols-2 pb-6 px-6">
