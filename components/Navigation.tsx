@@ -1,8 +1,20 @@
+'use client'
 import React from 'react'
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'
+import useAuth from '@/hooks/useAuth';
+
 
 const Navigation = () => {
+    const router = useRouter()
+    const { logout } = useAuth();
+
+    const handleLogout = () => {
+        // Simulate a logout action
+        logout();
+        router.push('signin')
+    };
     return (
         <div className="navbar bg-base-100">
             <div className="navbar-start">
@@ -26,21 +38,22 @@ const Navigation = () => {
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                    <li><a>Item 1</a></li>
+                    <li><a className='flex items-center px-4 py-3 font-medium transition duration-150 ease-in-out hover:text-gray-900 dark:hover:text-white text-xl'>Pages</a></li>
                     <li>
                         <details>
-                            <summary>Parent</summary>
+                            <summary className='flex items-center px-4 py-3 font-medium transition duration-150 ease-in-out hover:text-gray-900 dark:hover:text-white text-xl'>Services</summary>
                             <ul className="p-2">
-                                <li><a>Submenu 1</a></li>
-                                <li><a>Submenu 2</a></li>
+                                <li><a className='flex items-center px-4 py-3 font-medium transition duration-150 ease-in-out hover:text-gray-900 dark:hover:text-white text-xl'>About Us</a></li>
+                                <li><a className='flex items-center px-4 py-3 font-medium transition duration-150 ease-in-out hover:text-gray-900 dark:hover:text-white text-xl'>Contact Us</a></li>
                             </ul>
                         </details>
                     </li>
-                    <li><a>Item 3</a></li>
+                    <li><a className='flex items-center px-4 py-3 font-medium transition duration-150 ease-in-out hover:text-gray-900 dark:hover:text-white text-xl' onClick={() => router.push('/blogs')}>Blogs</a></li>
+                    <li><a className='flex items-center px-4 py-3 font-medium transition duration-150 ease-in-out hover:text-gray-900 dark:hover:text-white text-xl' onClick={() => router.push('/create-blogs')}>Write Blog</a></li>
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                <a className="btn" onClick={handleLogout} >Logout</a>
             </div>
         </div>
 

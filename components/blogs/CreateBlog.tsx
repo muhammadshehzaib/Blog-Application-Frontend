@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
 import Navigation from '../Navigation';
 import Footer from '../Footer';
+import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie';
+import useAuth from '@/hooks/useAuth';
+
 
 const CreateBlog = () => {
+    const { isAuthenticated, token } = useAuth();
     const [formData, setFormData] = useState({
         title: "",
         content: "",
@@ -22,15 +27,45 @@ const CreateBlog = () => {
         setFormData((prevData) => ({
             ...prevData,
             image: file,
+
         }));
+        console.log(file);
     };
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
+        if (isAuthenticated) {
+            try {
+                const data = new FormData()
+                data.append('file', formData.image)
+                data.append('title', formData.title)
+                data.append('content', formData.content)
 
-        // You can handle form submission here, e.g., send the data to your backend
+                const response = await fetch(
+                    "http://localhost:3002/blogs",
+                    {
+                        method: "POST",
+                        headers: {
+                            // "Content-Type": "application/json",
+                            "authorization": `bearer ${token}`
+                        },
+                        body: data,
+                    }
+                );
 
-        // For demonstration purposes, let's log the data to the console
-        console.log(formData);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error("Blog Cannot be added", errorData);
+                    return;
+                }
+
+                const responseData = await response.json();
+                console.log("Blog Created Successfully", responseData);
+            } catch (error: any) {
+                console.error("Blog not Created:", error.message);
+            }
+
+            console.log(formData);
+        }
     };
 
     return (

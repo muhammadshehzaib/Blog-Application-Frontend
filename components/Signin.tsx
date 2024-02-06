@@ -2,8 +2,13 @@
 import React, { useState } from 'react'
 import Navigation from './Navigation';
 import Footer from './Footer';
+import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie';
+import useAuth from '@/hooks/useAuth';
 
 function SignIn() {
+    const router = useRouter();
+    const { isAuthenticated, token, login, logout } = useAuth();
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -23,7 +28,7 @@ function SignIn() {
             };
 
             const response = await fetch(
-                "http://localhost:3001/auth/login",
+                "http://localhost:3002/auth/login",
                 {
                     method: "POST",
                     headers: {
@@ -40,11 +45,17 @@ function SignIn() {
             }
 
             const responseData = await response.json();
-            console.log("Signup Successful:", responseData);
+            console.log(responseData.accessToken);
+            login(responseData.accessToken);
+            if (isAuthenticated) {
+                router.push('/')
+            }
+            // console.log("Signup Successful:", responseData);
         } catch (error: any) {
             console.error("Signup Failed:", error.message);
         }
     };
+
     return (
         <>
             <Navigation />
@@ -59,7 +70,7 @@ function SignIn() {
                             <div>
                                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900 dark:text-white">Username</label>
                                 <div className="mt-2">
-                                    <input id="username" name="username" type="username" autoComplete="username" required className="block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2" onChange={handleInputChange} />
+                                    <input id="username" name="username" type="username" autoComplete="username" required className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2" onChange={handleInputChange} />
                                 </div>
                             </div>
 
@@ -71,7 +82,7 @@ function SignIn() {
                                     </div>
                                 </div>
                                 <div className="mt-2">
-                                    <input id="password" name="password" type="password" autoComplete="current-password" required className="block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2" onChange={handleInputChange} />
+                                    <input id="password" name="password" type="password" autoComplete="current-password" required className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2" onChange={handleInputChange} />
                                 </div>
                             </div>
 
