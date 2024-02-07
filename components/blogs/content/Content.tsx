@@ -41,9 +41,9 @@ const Content = () => {
                                                     viewBox="0 0 24 24"
                                                     fill="none"
                                                     stroke="currentColor"
-                                                    stroke-width="2"
+                                                    strokeWidth="2"
                                                     strokeLinecap="round"
-                                                    stroke-linejoin="round"
+                                                    strokeLinejoin="round"
                                                     className="rtl:mr-0 rtl:ml-2 flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-full bg-blue-900 text-gray-50 mr-4 mt-1 p-1"
                                                 >
                                                     <path d="M5 12l5 5l10 -10"></path>
@@ -71,9 +71,9 @@ const Content = () => {
                                                     viewBox="0 0 24 24"
                                                     fill="none"
                                                     stroke="currentColor"
-                                                    stroke-width="2"
+                                                    strokeWidth="2"
                                                     strokeLinecap="round"
-                                                    stroke-linejoin="round"
+                                                    strokeLinejoin="round"
                                                     className="rtl:mr-0 rtl:ml-2 flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-full bg-blue-900 text-gray-50 mr-4 mt-1 p-1"
                                                 >
                                                     <path d="M5 12l5 5l10 -10"></path>
@@ -101,9 +101,9 @@ const Content = () => {
                                                     viewBox="0 0 24 24"
                                                     fill="none"
                                                     stroke="currentColor"
-                                                    stroke-width="2"
+                                                    strokeWidth="2"
                                                     strokeLinecap="round"
-                                                    stroke-linejoin="round"
+                                                    strokeLinejoin="round"
                                                     className="rtl:mr-0 rtl:ml-2 flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-full bg-blue-900 text-gray-50 mr-4 mt-1 p-1"
                                                 >
                                                     <path d="M5 12l5 5l10 -10"></path>
