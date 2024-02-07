@@ -15,7 +15,7 @@ const Navigation = () => {
         router.push("signin");
     };
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-white">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -78,7 +78,7 @@ const Navigation = () => {
 
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl" onClick={() => router.push('/')}>Blog Application</a>
+                <a className="btn btn-ghost text-xl" onClick={() => router.push('/')}>Scribble Sphere</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -92,7 +92,7 @@ const Navigation = () => {
                             <summary className="flex items-center px-4 py-3 font-medium transition duration-150 ease-in-out hover:text-gray-900 dark:hover:text-white text-xl">
                                 Pages
                             </summary>
-                            <ul className="block rounded pl-4 font-medium drop-shadow-xl md:absolute md:min-w-[200px] md:bg-white/90 md:pl-0 md:backdrop-blur-md dark:md:bg-slate-900/90">
+                            <ul className="block rounded pl-4 font-medium drop-shadow-xl md:absolute md:min-w-[200px] md:bg-white/90 md:pl-0 md:backdrop-blur-md dark:md:bg-slate-900/90 z-10">
                                 <li>
                                     <a
                                         className="whitespace-no-wrap block py-2 px-5 first:rounded-t last:rounded-b dark:hover:bg-gray-700 md:hover:bg-gray-200"

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Navigation from '../Navigation';
 import Footer from '../Footer';
 import { useRouter } from 'next/navigation'
-import Cookies from 'js-cookie';
 import useAuth from '@/hooks/useAuth';
 
 
@@ -45,7 +44,6 @@ const CreateBlog = () => {
                     {
                         method: "POST",
                         headers: {
-                            // "Content-Type": "application/json",
                             "authorization": `bearer ${token}`
                         },
                         body: data,

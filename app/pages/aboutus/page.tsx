@@ -1,11 +1,12 @@
-import React from 'react'
+import AboutUs from "@/components/pages/aboutus/AboutUs";
+import React from "react";
 
 const page = () => {
-    return (
-        <div>
-            about us
-        </div>
-    )
-}
+  return (
+    <div>
+      <AboutUs />
+    </div>
+  );
+};
 
-export default page
+export default page;

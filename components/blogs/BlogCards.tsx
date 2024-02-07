@@ -11,14 +11,14 @@ const BlogCards = ({ blog }) => {
         <div className='mt-10 ml-3 cursor-pointer'>
             <div key={"bolg-cards-Simple" + blog._id} className='card flex flex-col'>
                 <div className="image relative">
-                    <li onClick={() => router.push(`/blogs/${blog._id}`)}>
+                    <div onClick={() => router.push(`/blogs/${blog._id}`)}>
                         <Image
                             src={blog.image}
                             alt="Picture"
                             className="shadow-md"
                             height={300} width={300}
                         />
-                    </li>
+                    </div>
                 </div>
                 <div className="card-body px-0 py-3 flex flex-col items-start w-full">
                     <div className="userDetail flex">
