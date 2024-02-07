@@ -1,9 +1,12 @@
 import React from 'react'
 import Image from 'next/image';
 import { useRouter } from 'next/navigation'
+import BlogId from './BlogId';
 
 const BlogCards = ({ blog }) => {
     const router = useRouter()
+
+
     return (
         <div className='mt-10 ml-3 cursor-pointer'>
             <div key={"bolg-cards-Simple" + blog._id} className='card flex flex-col'>
