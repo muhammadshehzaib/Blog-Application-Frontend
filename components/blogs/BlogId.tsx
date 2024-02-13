@@ -1,15 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import useAuth from "@/hooks/useAuth";
-
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Comments from "./Comments";
 
 const BlogId = ({ blog }) => {
   const router = useRouter();
   const [comments, setComments] = useState();
-  const { isAuthenticated, token } = useAuth();
+  const { token } = useAuth();
 
   const [blogs, setBlogs] = useState();
 
@@ -91,7 +89,7 @@ const BlogId = ({ blog }) => {
             name=""
             id=""
             value={comments}
-            onChange={(e) => setComments(e.target.value)}
+            onChange={handleInputChange}
             placeholder="Add a comment..."
             className="w-full px-4 py-2 border rounded-md mr-2"
           />

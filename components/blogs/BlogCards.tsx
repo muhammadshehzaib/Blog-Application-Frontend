@@ -6,8 +6,7 @@ import BlogId from "./BlogId";
 
 const BlogCards = ({ blog }) => {
   const router = useRouter();
-  console.log();
-  const [categorySelected, setCategorySelected] = useState(null);
+  console.log("this is blog : :" + blog);
 
   return (
     <div>
@@ -62,8 +61,9 @@ const BlogCards = ({ blog }) => {
                   Status: {blog.status}
                 </p>
                 <p className="text-gray-500 font-medium text-xs">
-                  Category: {blog.category}
+                  Category: {blog.category && blog.category.category}
                 </p>
+                <p>{blog.reactions && blog.reactions.reaction}</p>
               </div>
             </div>
           </div>
