@@ -1,13 +1,10 @@
-'use client'
-import CreateBlog from '@/components/blogs/CreateBlog'
-import React from 'react'
-
+import CreateBlog from "@/components/blogs/CreateBlog";
 const page = () => {
-    return (
-        <div>
-            <CreateBlog />
-        </div>
-    )
-}
+  return (
+    <div>
+      <CreateBlog />
+    </div>
+  );
+};
 
-export default page
+export default page;

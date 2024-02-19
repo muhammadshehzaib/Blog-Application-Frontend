@@ -1,12 +1,30 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import BlogId from "./BlogId";
 
-const BlogCards = ({ blog }) => {
+interface Blog {
+  _id: string;
+  status: string;
+  createdAt: string;
+  title: string;
+  image: string;
+  content: string;
+  author: string;
+  category?: {
+    category: string;
+  };
+  reactions?: {
+    reaction: string;
+  };
+}
+
+interface BlogCardsProps {
+  blog: Blog;
+}
+
+const BlogCards: React.FC<BlogCardsProps> = ({ blog }) => {
   const router = useRouter();
-  console.log("this is blog : :" + blog);
 
   return (
     <div>

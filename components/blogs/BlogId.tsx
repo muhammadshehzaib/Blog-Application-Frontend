@@ -1,22 +1,33 @@
-"use client";
+import React, { useState, useEffect } from "react";
 import useAuth from "@/hooks/useAuth";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Comments from "./Comments";
+import Reactions from "./reactions/Reactions";
 
-const BlogId = ({ blog }) => {
+interface Blog {
+  _id: string;
+  title: string;
+  content: string;
+  image: string;
+  reactions: { reactions: string }[];
+  comments: { id: string; comment: string }[];
+}
+
+interface BlogIdProps {
+  blog: string;
+}
+
+const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
   const router = useRouter();
-  const [comments, setComments] = useState();
   const { token } = useAuth();
-
-  const [blogs, setBlogs] = useState();
-
-  // console.log("This is blog : ", blog);
+  const [comments, setComments] = useState<string>("");
+  const [reactions, setReactions] = useState<string | null>(null);
+  const [blogs, setBlogs] = useState<Blog | null>(null);
 
   const fetchData = async () => {
     try {
       const response = await fetch(`http://localhost:3002/blogs/${blog}`);
-      const data = await response.json();
+      const data: Blog = await response.json();
 
       if (!response.ok) {
         throw new Error("Failed to fetch blog data");
@@ -27,7 +38,7 @@ const BlogId = ({ blog }) => {
     }
   };
 
-  const handleComment = async (e: any) => {
+  const handleComment = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
@@ -47,8 +58,6 @@ const BlogId = ({ blog }) => {
       }
 
       const responseData = await response.json();
-      // console.log("responseData : ", responseData.comment);
-
       setComments("");
 
       console.log("Comment Successful:", responseData);
@@ -57,15 +66,39 @@ const BlogId = ({ blog }) => {
     }
   };
 
-  console.log({ comment: comments, blog: blog });
-
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setComments(value);
   };
+
+  const handleReactionSelected = async (reaction: string) => {
+    try {
+      const response = await fetch("http://localhost:3002/reactions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${token}`,
+        },
+        body: JSON.stringify({ reactions: reaction, blog: blog }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Reaction Failed:", errorData);
+        return;
+      }
+
+      const responseData = await response.json();
+      setReactions(responseData);
+
+      console.log("Reaction Successful ", responseData);
+    } catch (error: any) {
+      console.error("Reaction Unsuccessful:", error.message);
+    }
+  };
+
   useEffect(() => {
     fetchData();
-    // handleComment()
   }, [comments]);
 
   return (
@@ -79,8 +112,20 @@ const BlogId = ({ blog }) => {
           />
           <div className="text-2xl font-bold mb-2">{blogs.title}</div>
           <div className="mb-4">{blogs.content}</div>
+
+          {blogs.reactions.length === 0 ? (
+            <Reactions onReactionSelected={handleReactionSelected} />
+          ) : (
+            blogs.reactions.map((reaction) => (
+              <Reactions
+                key={reaction.reactions}
+                onReactionSelected={handleReactionSelected}
+              />
+            ))
+          )}
         </>
       )}
+
       <div className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">Comments</h2>
         <div className="flex mb-4">

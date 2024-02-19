@@ -1,10 +1,9 @@
-// useAuth.js
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     // Check for the token in cookies on mount

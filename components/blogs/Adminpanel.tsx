@@ -4,8 +4,16 @@ import Admin from "./Admin";
 import Navigation from "../Navigation";
 import Footer from "../Footer";
 
+interface Blog {
+  id: string;
+  _id: string;
+  status: string;
+  createdAt: string;
+  title: string;
+}
+
 const AdminPanel = () => {
-  const [blogData, setBlogData] = useState([]);
+  const [blogData, setBlogData] = useState<Blog[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,7 +22,7 @@ const AdminPanel = () => {
         if (!response.ok) {
           throw new Error("Failed to fetch blog data");
         }
-        const data = await response.json();
+        const data: Blog[] = await response.json();
 
         setBlogData(data);
       } catch (error: any) {

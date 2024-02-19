@@ -64,7 +64,11 @@ const Navigation = () => {
               <a onClick={() => router.push("/blogs")}>Blogs</a>
             </li>
             <li>
-              <a onClick={() => router.push("/create-blogs")}>Write Blogs</a>
+              {isAuthenticated ? (
+                <a onClick={() => router.push("/create-blogs")}>Write Blogs</a>
+              ) : (
+                ""
+              )}
             </li>
           </ul>
         </div>

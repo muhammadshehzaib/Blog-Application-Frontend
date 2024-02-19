@@ -1,19 +1,36 @@
-import React, { useState } from "react";
+"use client";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Navigation from "../Navigation";
 import Footer from "../Footer";
 import { useRouter } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
 
-const CreateBlog = () => {
+interface FormData {
+  title: string;
+  content: string;
+  image: File | null;
+  category: string;
+}
+
+interface Category {
+  _id: string;
+  category: string;
+}
+
+const CreateBlog: React.FC = () => {
   const { isAuthenticated, token } = useAuth();
-  const [formData, setFormData] = useState({
+  const router = useRouter();
+  const [formData, setFormData] = useState<FormData>({
     title: "",
     content: "",
     image: null,
     category: "",
   });
+  const [categories, setCategories] = useState<Category[]>([]);
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -21,20 +38,21 @@ const CreateBlog = () => {
     }));
   };
 
-  const handleFileChange = (e: any) => {
-    const file = e.target.files[0];
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
     setFormData((prevData) => ({
       ...prevData,
-      image: file,
+      image: file || null,
     }));
     console.log(file);
   };
-  const handleSubmit = async (e: any) => {
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isAuthenticated) {
       try {
         const data = new FormData();
-        data.append("file", formData.image);
+        data.append("file", formData.image as File);
         data.append("title", formData.title);
         data.append("content", formData.content);
         data.append("category", formData.category);
@@ -54,16 +72,44 @@ const CreateBlog = () => {
         }
 
         const responseData = await response.json();
-        console.log(responseData);
-
         console.log("Blog Created Successfully", responseData);
+        setFormData({
+          title: "",
+          content: "",
+          image: null,
+          category: "",
+        });
+        // Redirect to the created blog's page or any other route if needed
+        router.push(`/blogs/${responseData._id}`);
       } catch (error: any) {
         console.error("Blog not Created:", error.message);
       }
-
-      console.log(formData);
     }
   };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch("http://localhost:3002/blogscategories", {
+        method: "GET",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Category Cannot be added", errorData);
+        return;
+      }
+
+      const responseData = await response.json();
+      setCategories(responseData); // Update state with fetched data
+      console.log("Categories Fetched Successfully", responseData);
+    } catch (error: any) {
+      console.error("Categories not Fetched:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   return (
     <>
@@ -124,9 +170,13 @@ const CreateBlog = () => {
               <option value="" disabled>
                 Select a category
               </option>
-              <option value="Programming">Programming</option>
-              <option value="Gaming">Gaming</option>
-              <option value="Blockchain">Blockchain</option>
+              {categories.map((category) => (
+                <option key={category._id} value={category._id}>
+                  {category.category}
+                </option>
+              ))}
+              {/* <option value="Gaming">Gaming</option>
+              <option value="Blockchain">Blockchain</option> */}
             </select>
           </div>
           <div className="mb-6">
