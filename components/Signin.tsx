@@ -2,9 +2,10 @@
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Footer from "./Footer";
 import Navigation from "./Navigation";
-
 function SignIn() {
   const router = useRouter();
   const { isAuthenticated, token, login, logout } = useAuth();
@@ -37,18 +38,24 @@ function SignIn() {
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Signup Failed:", errorData);
+        toast.error("Username and password incorrect");
+
         return;
       }
 
       const responseData = await response.json();
-      console.log(responseData.accessToken);
-      login(responseData.accessToken);
-      if (isAuthenticated) {
-        router.push("/");
-      }
-      if (forms.username === "admin") {
-        router.push("admin");
-      }
+
+      toast.success("User Created successful");
+      setTimeout(() => {
+        login(responseData.accessToken);
+        if (isAuthenticated) {
+          router.push("/");
+        }
+        if (forms.username === "admin") {
+          router.push("admin");
+        }
+      }, 1000);
+
       // console.log("Signup Successful:", responseData);
     } catch (error: any) {
       console.error("Signup Failed:", error.message);
@@ -139,6 +146,7 @@ function SignIn() {
         </div>
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 }

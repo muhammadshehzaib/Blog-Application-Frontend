@@ -3,6 +3,8 @@ import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import Comments from "./Comments";
 import Reactions from "./reactions/Reactions";
+import Navigation from "../Navigation";
+import Footer from "../Footer";
 
 interface Blog {
   _id: string;
@@ -81,6 +83,9 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
         },
         body: JSON.stringify({ reactions: reaction, blog: blog }),
       });
+      console.log("This is reactions : " + reaction);
+
+      console.log("This is blog : " + blog);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -102,64 +107,71 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
   }, [comments]);
 
   return (
-    <div className="max-w-2xl mx-auto mt-8">
-      {blogs && (
-        <>
-          <img
-            src={blogs.image}
-            alt={blogs.title}
-            className="rounded-md w-full h-64 object-cover mb-4"
-          />
-          <div className="text-2xl font-bold mb-2">{blogs.title}</div>
-          <div className="mb-4">{blogs.content}</div>
+    <>
+      <Navigation />
 
-          {blogs.reactions.length === 0 ? (
-            <Reactions onReactionSelected={handleReactionSelected} />
-          ) : (
-            blogs.reactions.map((reaction) => (
-              <Reactions
-                key={reaction.reactions}
-                onReactionSelected={handleReactionSelected}
+      <div className="bg-white ">
+        <div className="max-w-2xl mx-auto  h-screen ">
+          {blogs && (
+            <>
+              <img
+                src={blogs.image}
+                alt={blogs.title}
+                className="rounded-md w-full h-64 object-cover mb-4"
               />
-            ))
+              <div className="text-2xl font-bold mb-2">{blogs.title}</div>
+              <div className="mb-4">{blogs.content}</div>
+
+              {blogs.reactions.length === 0 ? (
+                <Reactions onReactionSelected={handleReactionSelected} />
+              ) : (
+                blogs.reactions.map((reaction) => (
+                  <Reactions
+                    key={reaction.reactions}
+                    onReactionSelected={handleReactionSelected}
+                  />
+                ))
+              )}
+            </>
           )}
-        </>
-      )}
 
-      <div className="mt-8">
-        <h2 className="text-2xl font-semibold mb-4">Comments</h2>
-        <div className="flex mb-4">
-          <input
-            type="text"
-            name=""
-            id=""
-            value={comments}
-            onChange={handleInputChange}
-            placeholder="Add a comment..."
-            className="w-full px-4 py-2 border rounded-md mr-2"
-          />
-          <button
-            onClick={handleComment}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
-          >
-            Submit
-          </button>
-        </div>
-        {blogs?.comments.length !== 0 ? (
-          <div>
-            {blogs?.comments.map((comment) => (
-              <Comments
-                key={comment.id}
-                comment={comment.comment}
-                blogId={blog}
+          <div className="mt-8">
+            <h2 className="text-2xl font-semibold mb-4">Comments</h2>
+            <div className="flex mb-4">
+              <input
+                type="text"
+                name=""
+                id=""
+                value={comments}
+                onChange={handleInputChange}
+                placeholder="Add a comment..."
+                className="w-full px-4 py-2 border rounded-md mr-2"
               />
-            ))}
+              <button
+                onClick={handleComment}
+                className="bg-blue-500 text-white px-4 py-2 rounded-md"
+              >
+                Submit
+              </button>
+            </div>
+            {blogs?.comments.length !== 0 ? (
+              <div>
+                {blogs?.comments.map((comment) => (
+                  <Comments
+                    key={comment.id}
+                    comment={comment.comment}
+                    blogId={blog}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div>No comments yet.</div>
+            )}
           </div>
-        ) : (
-          <div>No comments yet.</div>
-        )}
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

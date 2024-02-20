@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 function SignUp() {
   const router = useRouter();
@@ -37,11 +39,16 @@ function SignUp() {
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Signup Failed:", errorData);
+        toast.error("Username exist");
+
         return;
       }
 
       const responseData = await response.json();
-      router.push("signin");
+      toast.success("User Created successful");
+      setTimeout(() => {
+        router.push("signin");
+      }, 1000);
       console.log("Signup Successful:", responseData);
     } catch (error: any) {
       console.error("Signup Failed:", error.message);
@@ -153,6 +160,7 @@ function SignUp() {
         </div>
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 }

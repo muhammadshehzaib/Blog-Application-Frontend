@@ -47,21 +47,23 @@ const Blogs: React.FC = () => {
       )
     : blogData;
 
+  const uniqueCategories = Array.from(
+    new Set(blogData.map((blog) => blog.category && blog.category.category))
+  );
+
   return (
     <div>
       <Navigation />
       <div className="flex space-x-4 justify-center mt-5">
-        {blogData.map((blog) => (
+        {uniqueCategories.map((category) => (
           <button
-            key={blog._id}
+            key={category}
             className={`bg-${
-              categorySelected === (blog.category && blog.category.category)
-                ? "gray"
-                : "blue"
-            }-500 hover:bg-transparent text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out`}
-            onClick={() => handleClick(blog.category && blog.category.category)}
+              categorySelected === category ? "gray" : "blue"
+            }-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out`}
+            onClick={() => handleClick(category)}
           >
-            {blog.category && blog.category.category}
+            {category}
           </button>
         ))}
       </div>

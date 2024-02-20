@@ -15,16 +15,16 @@ const Reactions = ({ onReactionSelected }) => {
         <span
           role="img"
           aria-label="Happy"
-          onClick={() => handleReactionClick("Happy")}
-          style={{ opacity: selectedReaction === "Happy" ? 1 : 0.6 }}
+          onClick={() => handleReactionClick("happy")}
+          style={{ opacity: selectedReaction === "happy" ? 1 : 0.6 }}
         >
           😄
         </span>
         <span
           role="img"
           aria-label="Sad"
-          onClick={() => handleReactionClick("Sad")}
-          style={{ opacity: selectedReaction === "Sad" ? 1 : 0.6 }}
+          onClick={() => handleReactionClick("sad")}
+          style={{ opacity: selectedReaction === "sad" ? 1 : 0.6 }}
         >
           😢
         </span>
