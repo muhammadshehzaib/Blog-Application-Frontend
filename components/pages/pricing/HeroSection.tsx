@@ -16,10 +16,10 @@ const HeroSection = () => {
               <div className="mx-auto max-w-3xl">
                 <p className="mb-6 text-xl font-normal text-gray-600 dark:text-slate-400">
                   <span className="hidden md:inline">
-                    Here, you'll find a clear breakdown of our service plans and
-                    their respective features. Whether you're a small business
-                    or a large enterprise, we have options tailored to your
-                    needs.
+                    Here, you&apos;ll find a clear breakdown of our service
+                    plans and their respective features. Whether you're a small
+                    business or a large enterprise, we have options tailored to
+                    your needs.
                   </span>{" "}
                   You can choose the plan that best suits your goals!
                 </p>

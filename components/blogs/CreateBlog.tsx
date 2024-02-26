@@ -82,7 +82,6 @@ const CreateBlog: React.FC = () => {
           image: null,
           category: "",
         });
-        // Redirect to the created blog's page or any other route if needed
         router.push(`/blogs`);
       } catch (error: any) {
         console.error("Blog not Created:", error.message);
