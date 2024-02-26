@@ -23,7 +23,9 @@ const Blogs: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3002/blogs");
+        const response = await fetch(
+          "https://blog-application-two-psi.vercel.app/blogs"
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch blog data");
         }

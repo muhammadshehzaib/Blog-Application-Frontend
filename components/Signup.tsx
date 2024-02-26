@@ -28,13 +28,16 @@ function SignUp() {
         password: formData.password,
       };
 
-      const response = await fetch("http://localhost:3002/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(forms),
-      });
+      const response = await fetch(
+        "https://blog-application-two-psi.vercel.app/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(forms),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

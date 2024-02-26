@@ -57,13 +57,16 @@ const CreateBlog: React.FC = () => {
         data.append("content", formData.content);
         data.append("category", formData.category);
 
-        const response = await fetch("http://localhost:3002/blogs", {
-          method: "POST",
-          headers: {
-            authorization: `bearer ${token}`,
-          },
-          body: data,
-        });
+        const response = await fetch(
+          "https://blog-application-two-psi.vercel.app/blogs",
+          {
+            method: "POST",
+            headers: {
+              authorization: `bearer ${token}`,
+            },
+            body: data,
+          }
+        );
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -89,9 +92,12 @@ const CreateBlog: React.FC = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch("http://localhost:3002/blogscategories", {
-        method: "GET",
-      });
+      const response = await fetch(
+        "https://blog-application-two-psi.vercel.app/blogscategories",
+        {
+          method: "GET",
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

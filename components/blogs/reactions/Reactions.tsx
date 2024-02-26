@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 
-const Reactions = ({ onReactionSelected }) => {
-  const [selectedReaction, setSelectedReaction] = useState(null);
+interface ReactionsProps {
+  onReactionSelected: (reaction: string) => void;
+}
 
-  const handleReactionClick = (reaction) => {
+const Reactions: FC<ReactionsProps> = ({ onReactionSelected }) => {
+  const [selectedReaction, setSelectedReaction] = useState<string | null>(null);
+
+  const handleReactionClick = (reaction: string) => {
     setSelectedReaction(reaction);
     onReactionSelected(reaction);
   };
