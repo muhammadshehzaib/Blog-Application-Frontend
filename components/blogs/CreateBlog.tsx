@@ -181,8 +181,6 @@ const CreateBlog: React.FC = () => {
                   {category.category}
                 </option>
               ))}
-              {/* <option value="Gaming">Gaming</option>
-              <option value="Blockchain">Blockchain</option> */}
             </select>
           </div>
           <div className="mb-6">
