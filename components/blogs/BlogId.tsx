@@ -29,7 +29,7 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `https://blog-application-two-psi.vercel.app//blogs/${blog}`
+        `https://blog-application-two-psi.vercel.app/blogs/${blog}`
       );
       const data: Blog = await response.json();
 
@@ -47,7 +47,7 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
 
     try {
       const response = await fetch(
-        "https://blog-application-two-psi.vercel.app//comments",
+        "https://blog-application-two-psi.vercel.app/comments",
         {
           method: "POST",
           headers: {
