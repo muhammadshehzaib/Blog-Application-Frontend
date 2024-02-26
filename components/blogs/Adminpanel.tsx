@@ -19,7 +19,7 @@ const AdminPanel = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://blog-application-two-psi.vercel.app//blogs"
+          "https://blog-application-two-psi.vercel.app/blogs"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch blog data");
