@@ -1,5 +1,6 @@
 import React from "react";
-import Image from "../../../images/aboutus/hero2.webp";
+import Image1 from "../../../images/aboutus/hero2.webp";
+import Image from "next/image";
 
 const HeroSection = () => {
   return (
@@ -49,8 +50,8 @@ const HeroSection = () => {
             </div>
             <div className="block flex-1 items-center md:flex">
               <div className="relative m-auto h-full max-w-4xl object-cover">
-                <img
-                  src={Image.src}
+                <Image
+                  src={Image1.src}
                   alt="Hero TailNext"
                   loading="eager"
                   width="540"

@@ -5,6 +5,7 @@ import Person3 from "../../../images/testimonals/photo-1619734086067-24bf8889ea7
 import Person4 from "../../../images/testimonals/photo-1659057106920-da022cfbc0cd.webp";
 import Person5 from "../../../images/testimonals/photo-1665984867752-6370ab5ae35e.webp";
 import Person6 from "../../../images/testimonals/photo-1694287877106-ee22f764aef1.webp";
+import Image from "next/image";
 
 const Testimonials = () => {
   return (
@@ -36,7 +37,7 @@ const Testimonials = () => {
                 <div className="select-none h-full">
                   <div className="flex flex-col justify-between items-stretch w-full h-full">
                     <div className="flex items-center">
-                      <img
+                      <Image
                         src={Person1.src}
                         alt="Tayla Kirsten"
                         loading="lazy"
@@ -69,7 +70,7 @@ const Testimonials = () => {
                 <div className="select-none h-full">
                   <div className="flex flex-col justify-between items-stretch w-full h-full">
                     <div className="flex items-center">
-                      <img
+                      <Image
                         src={Person2.src}
                         alt="Silver Jordan"
                         loading="lazy"
@@ -102,7 +103,7 @@ const Testimonials = () => {
                 <div className="select-none h-full">
                   <div className="flex flex-col justify-between items-stretch w-full h-full">
                     <div className="flex items-center">
-                      <img
+                      <Image
                         src={Person3.src}
                         alt="Kelsey Arden"
                         loading="lazy"
@@ -135,7 +136,7 @@ const Testimonials = () => {
                 <div className="select-none h-full">
                   <div className="flex flex-col justify-between items-stretch w-full h-full">
                     <div className="flex items-center">
-                      <img
+                      <Image
                         src={Person4.src}
                         alt="Sarah Johnson"
                         loading="lazy"
@@ -168,7 +169,7 @@ const Testimonials = () => {
                 <div className="select-none h-full">
                   <div className="flex flex-col justify-between items-stretch w-full h-full">
                     <div className="flex items-center">
-                      <img
+                      <Image
                         src={Person5.src}
                         alt="Keith Young"
                         loading="lazy"
@@ -201,7 +202,7 @@ const Testimonials = () => {
                 <div className="select-none h-full">
                   <div className="flex flex-col justify-between items-stretch w-full h-full">
                     <div className="flex items-center">
-                      <img
+                      <Image
                         src={Person6.src}
                         alt="Lisa Gordon"
                         loading="lazy"

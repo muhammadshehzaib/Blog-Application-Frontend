@@ -5,6 +5,7 @@ import Comments from "./Comments";
 import Reactions from "./reactions/Reactions";
 import Navigation from "../Navigation";
 import Footer from "../Footer";
+import Image from "next/image";
 
 interface Blog {
   _id: string;
@@ -119,9 +120,11 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
         <div className="max-w-2xl mx-auto  h-screen ">
           {blogs && (
             <>
-              <img
+              <Image
                 src={blogs.image}
                 alt={blogs.title}
+                width={300}
+                height={200}
                 className="rounded-md w-full h-64 object-cover mb-4"
               />
               <div className="text-2xl font-bold mb-2">{blogs.title}</div>
