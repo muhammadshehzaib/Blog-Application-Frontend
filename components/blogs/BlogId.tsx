@@ -123,6 +123,8 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
               <Image
                 src={blogs.image}
                 alt={blogs.title}
+                width={300}
+                height={200}
                 className="rounded-md w-full h-64 object-cover mb-4"
               />
               <div className="text-2xl font-bold mb-2">{blogs.title}</div>

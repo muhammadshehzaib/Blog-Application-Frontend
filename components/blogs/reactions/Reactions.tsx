@@ -16,7 +16,6 @@ const Reactions: FC<ReactionsProps> = ({ onReactionSelected }) => {
 
   return (
     <div>
-      <h3>Select a reaction:</h3>
       <div className="flex justify-around text-3xl cursor-pointer">
         <span
           role="img"
@@ -34,8 +33,63 @@ const Reactions: FC<ReactionsProps> = ({ onReactionSelected }) => {
         >
           😢
         </span>
+        <span
+          role="img"
+          aria-label="angry"
+          onClick={() => handleReactionClick("angry")}
+          style={{ opacity: selectedReaction === "angry" ? 1 : 0.6 }}
+        >
+          😡
+        </span>
+        <span
+          role="img"
+          aria-label="love"
+          onClick={() => handleReactionClick("love")}
+          style={{ opacity: selectedReaction === "love" ? 1 : 0.6 }}
+        >
+          ❤️
+        </span>
+        <span
+          role="img"
+          aria-label="surprised"
+          onClick={() => handleReactionClick("surprised")}
+          style={{ opacity: selectedReaction === "surprised" ? 1 : 0.6 }}
+        >
+          😮
+        </span>
+        <span
+          role="img"
+          aria-label="boring"
+          onClick={() => handleReactionClick("boring")}
+          style={{ opacity: selectedReaction === "boring" ? 1 : 0.6 }}
+        >
+          😑
+        </span>
+        <span
+          role="img"
+          aria-label="excited"
+          onClick={() => handleReactionClick("excited")}
+          style={{ opacity: selectedReaction === "excited" ? 1 : 0.6 }}
+        >
+          🤩
+        </span>
+        <span
+          role="img"
+          aria-label="laugh"
+          onClick={() => handleReactionClick("laugh")}
+          style={{ opacity: selectedReaction === "laugh" ? 1 : 0.6 }}
+        >
+          😆
+        </span>
+        <span
+          role="img"
+          aria-label="shocked"
+          onClick={() => handleReactionClick("shocked")}
+          style={{ opacity: selectedReaction === "shocked" ? 1 : 0.6 }}
+        >
+          😱
+        </span>
       </div>
-      <p>{selectedReaction}</p>
     </div>
   );
 };
