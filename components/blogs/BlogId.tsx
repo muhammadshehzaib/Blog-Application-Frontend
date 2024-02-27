@@ -88,7 +88,7 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
             "Content-Type": "application/json",
             authorization: `bearer ${token}`,
           },
-          body: JSON.stringify({ reactions: reaction, blog: blog }),
+          body: JSON.stringify({ reactions: reaction, blogId: blog }),
         }
       );
       console.log("This is reactions : " + reaction);

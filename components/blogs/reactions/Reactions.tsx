@@ -8,8 +8,10 @@ const Reactions: FC<ReactionsProps> = ({ onReactionSelected }) => {
   const [selectedReaction, setSelectedReaction] = useState<string | null>(null);
 
   const handleReactionClick = (reaction: string) => {
-    setSelectedReaction(reaction);
     onReactionSelected(reaction);
+    setSelectedReaction((prevReaction) =>
+      prevReaction === reaction ? null : reaction
+    );
   };
 
   return (
