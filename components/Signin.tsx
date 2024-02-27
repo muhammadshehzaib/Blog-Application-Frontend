@@ -14,9 +14,6 @@ function SignIn() {
     password: "",
   });
 
-  console.log("process.env.LOCALHOST", `${process.env.LOCALHOST}`);
-  console.log("process.env.DEPLOYMENTLINK", `${process.env.DEPLOYMENTLINK}`);
-
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));

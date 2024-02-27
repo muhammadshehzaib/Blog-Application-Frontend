@@ -44,7 +44,7 @@ const CreateBlog: React.FC = () => {
       ...prevData,
       image: file || null,
     }));
-    console.log(file);
+    // console.log(file);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
