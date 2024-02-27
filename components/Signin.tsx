@@ -14,9 +14,8 @@ function SignIn() {
     password: "",
   });
 
-  console.log(
-    `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/auth/login`
-  );
+  console.log("process.env.LOCALHOST", `${process.env.LOCALHOST}`);
+  console.log("process.env.DEPLOYMENTLINK", `${process.env.DEPLOYMENTLINK}`);
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -31,13 +30,16 @@ function SignIn() {
         password: formData.password,
       };
 
-      const response = await fetch(`${process.env.LOCALHOST}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(forms),
-      });
+      const response = await fetch(
+        `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(forms),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

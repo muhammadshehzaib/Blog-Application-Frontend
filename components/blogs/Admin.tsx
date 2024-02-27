@@ -16,7 +16,9 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
   const handleApprove = async (_id: string) => {
     // Implement the logic to approve the blog with the given blogId
     const response = await fetch(
-      `${process.env.LOCALHOST  || process.env.DEPLOYMENTLINK}/blogs/approved/${blog._id}`,
+      `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/blogs/approved/${
+        blog._id
+      }`,
       {
         method: "PUT",
         headers: {
@@ -31,7 +33,9 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
 
   const handleDisapprove = async (_id: string) => {
     const response = await fetch(
-      `${process.env.LOCALHOST  || process.env.DEPLOYMENTLINK}/blogs/disapproved/${blog._id}`,
+      `${
+        process.env.LOCALHOST || process.env.DEPLOYMENTLINK
+      }/blogs/disapproved/${blog._id}`,
       {
         method: "PUT",
         headers: {
