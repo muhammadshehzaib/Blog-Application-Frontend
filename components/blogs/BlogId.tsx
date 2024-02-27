@@ -28,9 +28,7 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(
-        `https://blog-application-two-psi.vercel.app/blogs/${blog}`
-      );
+      const response = await fetch(`${process.env.LOCALHOST  || process.env.DEPLOYMENTLINK}/blogs/${blog}`);
       const data: Blog = await response.json();
 
       if (!response.ok) {
@@ -46,17 +44,14 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        "https://blog-application-two-psi.vercel.app/comments",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `bearer ${token}`,
-          },
-          body: JSON.stringify({ comment: comments, blog: blog }),
-        }
-      );
+      const response = await fetch(`${process.env.LOCALHOST  || process.env.DEPLOYMENTLINK}/comments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${token}`,
+        },
+        body: JSON.stringify({ comment: comments, blog: blog }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -80,17 +75,14 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
 
   const handleReactionSelected = async (reaction: string) => {
     try {
-      const response = await fetch(
-        "https://blog-application-two-psi.vercel.app/reactions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `bearer ${token}`,
-          },
-          body: JSON.stringify({ reactions: reaction, blogId: blog }),
-        }
-      );
+      const response = await fetch(`${process.env.LOCALHOST  || process.env.DEPLOYMENTLINK}/reactions`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${token}`,
+        },
+        body: JSON.stringify({ reactions: reaction, blogId: blog }),
+      });
       console.log("This is reactions : " + reaction);
 
       console.log("This is blog : " + blog);
