@@ -58,7 +58,7 @@ const CreateBlog: React.FC = () => {
         data.append("category", formData.category);
 
         const response = await fetch(
-          "https://blog-application-two-psi.vercel.app/blogs",
+          `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/blogs`,
           {
             method: "POST",
             headers: {
@@ -92,7 +92,9 @@ const CreateBlog: React.FC = () => {
   const fetchCategories = async () => {
     try {
       const response = await fetch(
-        "https://blog-application-two-psi.vercel.app/blogscategories",
+        `${
+          process.env.LOCALHOST || process.env.DEPLOYMENTLINK
+        }/blogscategories`,
         {
           method: "GET",
         }

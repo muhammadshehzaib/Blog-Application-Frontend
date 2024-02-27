@@ -14,6 +14,10 @@ function SignIn() {
     password: "",
   });
 
+  console.log(
+    `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/auth/login`
+  );
+
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -27,16 +31,13 @@ function SignIn() {
         password: formData.password,
       };
 
-      const response = await fetch(
-        "https://blog-application-two-psi.vercel.app/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(forms),
-        }
-      );
+      const response = await fetch(`${process.env.LOCALHOST}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(forms),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();

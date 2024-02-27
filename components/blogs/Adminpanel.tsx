@@ -18,9 +18,7 @@ const AdminPanel = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://blog-application-two-psi.vercel.app/blogs"
-        );
+        const response = await fetch(`${process.env.LOCALHOST  || process.env.DEPLOYMENTLINK}/blogs`);
         if (!response.ok) {
           throw new Error("Failed to fetch blog data");
         }
