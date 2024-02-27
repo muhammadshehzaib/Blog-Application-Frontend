@@ -27,13 +27,12 @@ const BlogCards: React.FC<BlogCardsProps> = ({ blog }) => {
   const router = useRouter();
 
   return (
-    <div>
-      <div></div>
-      <div
-        className={
-          blog.status === "Approved" ? "mt-10 ml-3 cursor-pointer" : "hidden"
-        }
-      >
+    <div
+      className={
+        blog.status === "Approved" ? "mt-10 ml-3 cursor-pointer" : "hidden"
+      }
+    >
+      <div>
         <div
           key={`bolg-cards-Simple${blog._id}`}
           className="card flex flex-col border rounded-md overflow-hidden shadow-md bg-white dark:bg-gray-800"

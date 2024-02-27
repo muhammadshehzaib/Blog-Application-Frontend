@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useAuth from "@/hooks/useAuth";
 
 interface BlogProps {
@@ -12,41 +12,81 @@ interface BlogProps {
 
 const Admin: React.FC<BlogProps> = ({ blog }) => {
   const { token } = useAuth();
+  const [isStatusUpdated, setStatusUpdated] = useState(false);
 
   const handleApprove = async (_id: string) => {
-    // Implement the logic to approve the blog with the given blogId
-    const response = await fetch(
-      `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/blogs/approved/${
-        blog._id
-      }`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `bearer ${token}`,
-        },
-        body: JSON.stringify(blog),
-      }
-    );
-    console.log(`Blog ${response} approved`);
+    try {
+      await fetch(
+        `${
+          process.env.LOCALHOST || process.env.DEPLOYMENTLINK
+        }/blogs/approved/${_id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(`Blog approved`);
+      setStatusUpdated(true); // Set the status update flag
+    } catch (error) {
+      console.error("Error approving blog:", error);
+    }
   };
 
   const handleDisapprove = async (_id: string) => {
-    const response = await fetch(
-      `${
-        process.env.LOCALHOST || process.env.DEPLOYMENTLINK
-      }/blogs/disapproved/${blog._id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `bearer ${token}`,
-        },
-        body: JSON.stringify(blog),
-      }
-    );
-    console.log(`Blog ${response} disapproved`);
+    try {
+      await fetch(
+        `${
+          process.env.LOCALHOST || process.env.DEPLOYMENTLINK
+        }/blogs/disapproved/${_id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(`Blog disapproved`);
+      setStatusUpdated(true); // Set the status update flag
+    } catch (error) {
+      console.error("Error disapproving blog:", error);
+    }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetch(
+          `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/blogs/${
+            blog._id
+          }`
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch updated data");
+            }
+            return response.json();
+          })
+          .then((updatedData) => {
+            console.log("Updated data:", updatedData);
+          });
+
+        // Reset the status update flag
+        setStatusUpdated(false);
+      } catch (error) {
+        console.error("Error fetching updated data:", error);
+      }
+    };
+
+    if (isStatusUpdated) {
+      fetchData(); // Fetch data when status is updated
+    }
+  }, [isStatusUpdated, blog._id, token]);
 
   return (
     <tr key={blog._id} className="even:bg-gray-50">
