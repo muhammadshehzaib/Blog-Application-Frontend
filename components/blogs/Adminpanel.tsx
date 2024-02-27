@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Admin from "./Admin";
 import Navigation from "../Navigation";
 import Footer from "../Footer";
+import { useRouter } from "next/navigation";
 
 interface Blog {
   id: string;
@@ -14,6 +15,7 @@ interface Blog {
 
 const AdminPanel = () => {
   const [blogData, setBlogData] = useState<Blog[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,11 +37,23 @@ const AdminPanel = () => {
     fetchData();
   }, [blogData]);
 
+  const category = () => {
+    router.push("/category");
+  };
+
   return (
     <>
       <Navigation />
       <div className="container mx-auto p-6 min-h-[38.5rem]">
-        <h2 className="text-3xl font-bold mb-6">Admin Panel</h2>
+        <div className="flex justify-between items-center">
+          <h2 className="text-3xl font-bold mb-6">Admin Panel</h2>
+          <button
+            className="cursor-pointer text-xl font-bold mb-6"
+            onClick={category}
+          >
+            Create new Category
+          </button>
+        </div>
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-300">
             <thead className="bg-gray-100">
