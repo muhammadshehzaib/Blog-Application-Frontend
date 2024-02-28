@@ -54,26 +54,28 @@ const Blogs: React.FC = () => {
   );
 
   return (
-    <div>
+    <div className="bg-white">
       <Navigation />
-      <div className="flex space-x-4 justify-center mt-5">
+
+      <div className="flex space-x-4 justify-center mt-5 flex-wrap">
         {uniqueCategories.map((category) => (
           <button
             key={category}
             className={`bg-${
               categorySelected === category ? "gray" : "blue"
-            }-500 hover:bg-slate-700 text-black font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out`}
+            }-500 hover:bg-slate-700 mb-2 text-black font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out`}
             onClick={() => handleClick(category)}
           >
             {category}
           </button>
         ))}
       </div>
-      <div className="grid sm:grid-cols-3 grid-cols-1 gap-4 min-h-[38.5rem]">
+      <div className="grid sm:grid-cols-3 grid-cols-1 gap-4 min-h-[38.5rem] px-5">
         {filteredBlogs.map((blog) => (
           <BlogCards key={blog._id} blog={blog} />
         ))}
       </div>
+
       <div className="mt-12"></div>
       <Footer />
     </div>

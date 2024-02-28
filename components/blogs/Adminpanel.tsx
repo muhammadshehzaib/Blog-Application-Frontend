@@ -4,6 +4,7 @@ import Admin from "./Admin";
 import Navigation from "../Navigation";
 import Footer from "../Footer";
 import { useRouter } from "next/navigation";
+import Example from "../buttons/CreateCategory";
 
 interface Blog {
   id: string;
@@ -37,22 +38,18 @@ const AdminPanel = () => {
     fetchData();
   }, [blogData]);
 
-  const category = () => {
-    router.push("/category");
-  };
-
   return (
     <>
       <Navigation />
-      <div className="container mx-auto p-6 min-h-[38.5rem]">
+      <div className="mx-auto p-6 min-h-[38.5rem]">
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold mb-6">Admin Panel</h2>
-          <button
-            className="cursor-pointer text-xl font-bold mb-6"
+          <Example />
+          {/* className="cursor-pointer text-xl font-bold mb-6"
             onClick={category}
           >
             Create new Category
-          </button>
+          </button> */}
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-300">
