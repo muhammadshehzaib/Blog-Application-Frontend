@@ -6,6 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./Footer";
 import Navigation from "./Navigation";
+import NeuButton from "./buttons/Submit";
 function SignIn() {
   const router = useRouter();
   const { isAuthenticated, token, login, logout } = useAuth();
@@ -68,7 +69,7 @@ function SignIn() {
   return (
     <>
       <Navigation />
-      <div className="flex min-h-[38.5rem] flex-col justify-center px-6 py-12 lg:px-8 bg-gray-100 dark:bg-gray-800">
+      <div className="flex min-h-[38.5rem] flex-col justify-center px-6 py-12 lg:px-8 bg-white dark:bg-gray-800">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-10 text-center text-3xl font-bold leading-9 text-gray-900 dark:text-white">
             Sign in to your account
@@ -128,12 +129,7 @@ function SignIn() {
             </div>
 
             <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 focus:outline-none focus:ring-offset-gray-100"
-              >
-                Sign in
-              </button>
+              <NeuButton button={"login"} />
             </div>
           </form>
 

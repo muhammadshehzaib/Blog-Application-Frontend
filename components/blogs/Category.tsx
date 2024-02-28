@@ -4,6 +4,7 @@ import Navigation from "../Navigation";
 import Footer from "../Footer";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import NeuButton from "../buttons/Submit";
 
 interface FormData {
   category: string;
@@ -87,12 +88,9 @@ const Category = () => {
               required
             />
           </div>
-          <button
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
-            Submit
-          </button>
+          <div className="flex items-center justify-between">
+            <NeuButton button={"Add Category"} />
+          </div>
         </form>
       </div>
       <Footer />

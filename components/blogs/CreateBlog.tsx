@@ -4,6 +4,7 @@ import Navigation from "../Navigation";
 import Footer from "../Footer";
 import { useRouter } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
+import NeuButton from "../buttons/Submit";
 
 interface FormData {
   title: string;
@@ -119,16 +120,16 @@ const CreateBlog: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <div className="bg-white">
       <Navigation />
       <div className="flex items-center min-h-[50rem] max-w-full justify-center">
         <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-[50%]"
+          className="bg-white shadow-md rounded px-6 pt-6 pb-8 mb-4 w-[50%]"
           onSubmit={handleSubmit}
         >
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm font-semibold mb-2"
               htmlFor="title"
             >
               Title:
@@ -145,7 +146,7 @@ const CreateBlog: React.FC = () => {
           </div>
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm font-semibold mb-2"
               htmlFor="content"
             >
               Content:
@@ -161,7 +162,7 @@ const CreateBlog: React.FC = () => {
           </div>
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm font-semibold mb-2"
               htmlFor="category"
             >
               Category:
@@ -186,7 +187,7 @@ const CreateBlog: React.FC = () => {
           </div>
           <div className="mb-6">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm font-semibold mb-2"
               htmlFor="image"
             >
               Upload Image:
@@ -202,17 +203,12 @@ const CreateBlog: React.FC = () => {
             />
           </div>
           <div className="flex items-center justify-between">
-            <button
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
-              Submit
-            </button>
+            <NeuButton button={"Add Blog"} />
           </div>
         </form>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

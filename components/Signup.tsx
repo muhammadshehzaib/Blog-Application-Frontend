@@ -5,6 +5,7 @@ import Navigation from "./Navigation";
 import Footer from "./Footer";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import NeuButton from "./buttons/Submit";
 
 function SignUp() {
   const router = useRouter();
@@ -28,13 +29,16 @@ function SignUp() {
         password: formData.password,
       };
 
-      const response = await fetch(`${process.env.LOCALHOST  || process.env.DEPLOYMENTLINK}/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(forms),
-      });
+      const response = await fetch(
+        `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(forms),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -57,7 +61,7 @@ function SignUp() {
   return (
     <>
       <Navigation />
-      <div className="min-h-[38.5rem] bg-gray-100 dark:bg-gray-800">
+      <div className="min-h-[38.5rem] bg-white dark:bg-gray-800">
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <h2 className="mt-10 text-center text-3xl font-bold leading-9 text-gray-900 dark:text-white">
@@ -81,7 +85,7 @@ function SignUp() {
                     type="text"
                     autoComplete="username"
                     required
-                    className="block w-full rounded-md border-0 p-2 text-black shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
+                    className="block w-full rounded-md p-2 border-2 text-black focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -101,7 +105,7 @@ function SignUp() {
                     type="email"
                     autoComplete="email"
                     required
-                    className="block w-full rounded-md border-0 p-2 text-black shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
+                    className="block w-full rounded-md border-2 p-2 text-black shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -131,7 +135,7 @@ function SignUp() {
                     type="password"
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md border-0 p-2 text-black shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
+                    className="block w-full rounded-md  p-2 text-black shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm border-2"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -148,12 +152,7 @@ function SignUp() {
               </p>
 
               <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 focus:outline-none focus:ring-offset-gray-100"
-                >
-                  Sign up
-                </button>
+                <NeuButton button={"SignUp"} />
               </div>
             </form>
           </div>

@@ -35,7 +35,7 @@ const BlogCards: React.FC<BlogCardsProps> = ({ blog }) => {
       <div>
         <div
           key={`bolg-cards-Simple${blog._id}`}
-          className="card flex flex-col border rounded-md overflow-hidden shadow-md bg-white dark:bg-gray-800"
+          className="card flex flex-col border rounded-md overflow-hidden shadow-md bg-white dark:bg-gray-800 xl:h-[450px] h-[500px]"
         >
           <div
             className="image relative cursor-pointer"
