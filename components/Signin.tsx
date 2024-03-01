@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Footer from "./Footer";
 import Navigation from "./Navigation";
 import NeuButton from "./buttons/Submit";
+import Link from "next/link";
+
 function SignIn() {
   const router = useRouter();
   const { isAuthenticated, token, login, logout } = useAuth();
@@ -59,16 +61,11 @@ function SignIn() {
           router.push("admin");
         }
       }, 1000);
-
-      // console.log("Signup Successful:", responseData);
     } catch (error: any) {
       console.error("Signup Failed:", error.message);
     }
   };
 
-  const ForgetPassword = () => {
-    router.push("/forgetpassword");
-  };
   return (
     <>
       <Navigation />
@@ -110,12 +107,12 @@ function SignIn() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <a
-                    onClick={ForgetPassword}
+                  <Link
+                    href="/forgetpassword"
                     className="font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer"
                   >
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="mt-2">
@@ -138,12 +135,12 @@ function SignIn() {
 
           <p className="mt-8 text-center text-sm text-gray-500">
             Not a member?{" "}
-            <a
-              onClick={() => router.push("/signup")}
+            <Link
+              href="/signup"
               className="font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer"
             >
               Sign Up
-            </a>
+            </Link>
           </p>
         </div>
       </div>
