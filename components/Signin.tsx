@@ -66,6 +66,9 @@ function SignIn() {
     }
   };
 
+  const ForgetPassword = () => {
+    router.push("/forgetpassword");
+  };
   return (
     <>
       <Navigation />
@@ -108,8 +111,8 @@ function SignIn() {
                 </label>
                 <div className="text-sm">
                   <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    onClick={ForgetPassword}
+                    className="font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer"
                   >
                     Forgot password?
                   </a>

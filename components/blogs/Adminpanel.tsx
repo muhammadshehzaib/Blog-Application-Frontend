@@ -45,11 +45,6 @@ const AdminPanel = () => {
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold mb-6">Admin Panel</h2>
           <Example />
-          {/* className="cursor-pointer text-xl font-bold mb-6"
-            onClick={category}
-          >
-            Create new Category
-          </button> */}
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-300">
