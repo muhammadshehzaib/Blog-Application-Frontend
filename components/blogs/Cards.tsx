@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 const Cards = () => {
   const [blogData, setBlogData] = useState([]);
@@ -7,7 +8,9 @@ const Cards = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.LOCALHOST  || process.env.DEPLOYMENTLINK}/blogs`);
+        const response = await fetch(
+          `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/blogs`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch blog data");
         }
@@ -51,12 +54,12 @@ const Cards = () => {
                 bloggers with an intuitive dashboard.
               </p>
               <div className="flex w-auto cursor-pointer">
-                <a
+                <Link
                   className="inline-flex items-center w-full sm:mb-0 mt-3 font-bold text-blue-600 hover:underline dark:text-gray-200 cursor-pointer justify-start"
                   href="/"
                 >
                   Discover now
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -90,12 +93,12 @@ const Cards = () => {
                 audio.
               </p>
               <div className="flex w-auto cursor-pointer">
-                <a
+                <Link
                   className="inline-flex items-center w-full sm:mb-0 mt-3 font-bold text-blue-600 hover:underline dark:text-gray-200 cursor-pointer justify-start"
                   href="/"
                 >
                   Discover now
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -130,12 +133,12 @@ const Cards = () => {
                 styles.Customizable layouts for a unique blog appearance.
               </p>
               <div className="flex w-auto cursor-pointer">
-                <a
+                <Link
                   className="inline-flex items-center w-full sm:mb-0 mt-3 font-bold text-blue-600 hover:underline dark:text-gray-200 cursor-pointer justify-start"
                   href="/"
                 >
                   Discover now
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -168,12 +171,12 @@ const Cards = () => {
                 optimization features.
               </p>
               <div className="flex w-auto cursor-pointer">
-                <a
+                <Link
                   className="inline-flex items-center w-full sm:mb-0 mt-3 font-bold text-blue-600 hover:underline dark:text-gray-200 cursor-pointer justify-start"
                   href="/"
                 >
                   Discover now
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -207,12 +210,12 @@ const Cards = () => {
                 security.
               </p>
               <div className="flex w-auto cursor-pointer">
-                <a
+                <Link
                   className="inline-flex items-center w-full sm:mb-0 mt-3 font-bold text-blue-600 hover:underline dark:text-gray-200 cursor-pointer justify-start"
                   href="/"
                 >
                   Discover now
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -245,12 +248,12 @@ const Cards = () => {
                 scheme.
               </p>
               <div className="flex w-auto cursor-pointer">
-                <a
+                <Link
                   className="inline-flex items-center w-full sm:mb-0 mt-3 font-bold text-blue-600 hover:underline dark:text-gray-200 cursor-pointer justify-start"
                   href="/"
                 >
                   Discover now
-                </a>
+                </Link>
               </div>
             </div>
           </div>

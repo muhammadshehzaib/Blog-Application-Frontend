@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import NeuButton from "./buttons/Submit";
+import Link from "next/link";
 
 function SignUp() {
   const router = useRouter();
@@ -136,12 +137,12 @@ function SignUp() {
 
               <p className="mt-4 text-center text-sm text-gray-500">
                 Already a member?{" "}
-                <a
-                  onClick={() => router.push("/signin")}
+                <Link
+                  href="/signin"
                   className="font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer"
                 >
                   Sign In
-                </a>
+                </Link>
               </p>
 
               <div>
