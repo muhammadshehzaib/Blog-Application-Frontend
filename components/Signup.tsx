@@ -9,6 +9,8 @@ import NeuButton from "./buttons/Submit";
 import Link from "next/link";
 
 function SignUp() {
+  // console.log(process.env.DEPLOYMENTLINK);
+
   const router = useRouter();
   const [formData, setFormData] = useState({
     username: "",

@@ -35,9 +35,7 @@ const Otp = () => {
       data.append("email", formData.email);
 
       const response = await fetch(
-        `${
-          process.env.LOCALHOST || process.env.DEPLOYMENTLINK
-        }/auth/verifyOtp?code=${formData.otp}`,
+        `${process.env.DEPLOYMENTLINK}/auth/verifyOtp?code=${formData.otp}`,
         {
           method: "PATCH",
           headers: {

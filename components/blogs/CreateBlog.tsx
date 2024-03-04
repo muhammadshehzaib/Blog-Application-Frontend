@@ -58,16 +58,13 @@ const CreateBlog: React.FC = () => {
         data.append("content", formData.content);
         data.append("category", formData.category);
 
-        const response = await fetch(
-          `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/blogs`,
-          {
-            method: "POST",
-            headers: {
-              authorization: `bearer ${token}`,
-            },
-            body: data,
-          }
-        );
+        const response = await fetch(`${process.env.DEPLOYMENTLINK}/blogs`, {
+          method: "POST",
+          headers: {
+            authorization: `bearer ${token}`,
+          },
+          body: data,
+        });
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -93,9 +90,7 @@ const CreateBlog: React.FC = () => {
   const fetchCategories = async () => {
     try {
       const response = await fetch(
-        `${
-          process.env.LOCALHOST || process.env.DEPLOYMENTLINK
-        }/blogscategories`,
+        `${process.env.DEPLOYMENTLINK}/blogscategories`,
         {
           method: "GET",
         }
