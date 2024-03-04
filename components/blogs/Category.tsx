@@ -34,9 +34,7 @@ const Category = () => {
         data.append("category", formData.category);
 
         const response = await fetch(
-          `${
-            process.env.LOCALHOST || process.env.DEPLOYMENTLINK
-          }/blogscategories`,
+          `${process.env.DEPLOYMENTLINK}/blogscategories`,
           {
             method: "POST",
             headers: {

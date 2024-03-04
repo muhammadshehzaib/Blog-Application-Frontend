@@ -8,9 +8,7 @@ const Cards = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/blogs`
-        );
+        const response = await fetch(`${process.env.DEPLOYMENTLINK}/blogs`);
         if (!response.ok) {
           throw new Error("Failed to fetch blog data");
         }

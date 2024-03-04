@@ -16,18 +16,13 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
 
   const handleApprove = async (_id: string) => {
     try {
-      await fetch(
-        `${
-          process.env.LOCALHOST || process.env.DEPLOYMENTLINK
-        }/blogs/approved/${_id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `bearer ${token}`,
-          },
-        }
-      );
+      await fetch(`${process.env.DEPLOYMENTLINK}/blogs/approved/${_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${token}`,
+        },
+      });
 
       console.log(`Blog approved`);
       setStatusUpdated(true); // Set the status update flag
@@ -38,18 +33,13 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
 
   const handleDisapprove = async (_id: string) => {
     try {
-      await fetch(
-        `${
-          process.env.LOCALHOST || process.env.DEPLOYMENTLINK
-        }/blogs/disapproved/${_id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `bearer ${token}`,
-          },
-        }
-      );
+      await fetch(`${process.env.DEPLOYMENTLINK}/blogs/disapproved/${_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${token}`,
+        },
+      });
 
       console.log(`Blog disapproved`);
       setStatusUpdated(true); // Set the status update flag
@@ -61,11 +51,7 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetch(
-          `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/blogs/${
-            blog._id
-          }`
-        )
+        await fetch(`${process.env.DEPLOYMENTLINK}/blogs/${blog._id}`)
           .then((response) => {
             if (!response.ok) {
               throw new Error("Failed to fetch updated data");

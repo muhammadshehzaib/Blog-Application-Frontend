@@ -34,9 +34,7 @@ const ForgetPassword = () => {
       data.append("email", formData.email);
 
       const response = await fetch(
-        `${
-          process.env.LOCALHOST || process.env.DEPLOYMENTLINK
-        }/auth/generateOtp`,
+        `${process.env.DEPLOYMENTLINK}/auth/generateOtp`,
         {
           method: "POST",
           headers: {

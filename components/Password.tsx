@@ -31,9 +31,7 @@ const Password = () => {
       };
 
       const response = await fetch(
-        `${
-          process.env.LOCALHOST || process.env.DEPLOYMENTLINK
-        }/auth/changePassword`,
+        `${process.env.DEPLOYMENTLINK}/auth/changePassword`,
         {
           method: "POST",
           headers: {

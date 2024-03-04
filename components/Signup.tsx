@@ -9,6 +9,8 @@ import NeuButton from "./buttons/Submit";
 import Link from "next/link";
 
 function SignUp() {
+  // console.log(process.env.DEPLOYMENTLINK);
+
   const router = useRouter();
   const [formData, setFormData] = useState({
     username: "",
@@ -32,7 +34,7 @@ function SignUp() {
       };
 
       const response = await fetch(
-        `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/auth/register`,
+        `${process.env.DEPLOYMENTLINK}/auth/register`,
         {
           method: "POST",
           headers: {
