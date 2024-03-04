@@ -34,7 +34,7 @@ function SignUp() {
       };
 
       const response = await fetch(
-        `${process.env.LOCALHOST || process.env.DEPLOYMENTLINK}/auth/register`,
+        `${process.env.DEPLOYMENTLINK}/auth/register`,
         {
           method: "POST",
           headers: {
