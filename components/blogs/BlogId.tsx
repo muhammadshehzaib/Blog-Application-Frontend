@@ -110,8 +110,8 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
     <>
       <Navigation />
 
-      <div className="bg-white ">
-        <div className="max-w-2xl mx-auto  h-screen ">
+      <div className="bg-white dark:bg-slate-900">
+        <div className="max-w-2xl mx-auto h-screen dark:text-slate-100">
           {blogs && (
             <>
               <Image
@@ -147,11 +147,11 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
                 value={comments}
                 onChange={handleInputChange}
                 placeholder="Add a comment..."
-                className="w-full px-4 py-2 border rounded-md mr-2"
+                className="w-full px-4 py-2 border rounded-md mr-2 dark:bg-slate-800 dark:text-slate-100"
               />
               <button
                 onClick={handleComment}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md dark:bg-blue-700"
               >
                 Submit
               </button>

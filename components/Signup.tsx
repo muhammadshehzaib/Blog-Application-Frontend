@@ -9,8 +9,6 @@ import NeuButton from "./buttons/Submit";
 import Link from "next/link";
 
 function SignUp() {
-  // console.log(process.env.DEPLOYMENTLINK);
-
   const router = useRouter();
   const [formData, setFormData] = useState({
     username: "",
@@ -48,12 +46,11 @@ function SignUp() {
         const errorData = await response.json();
         console.error("Signup Failed:", errorData);
         toast.error("Username exist");
-
         return;
       }
 
       const responseData = await response.json();
-      toast.success("User Created successful");
+      toast.success("User Created successfully");
       setTimeout(() => {
         router.push("signin");
       }, 1000);
@@ -62,10 +59,11 @@ function SignUp() {
       console.error("Signup Failed:", error.message);
     }
   };
+
   return (
     <>
       <Navigation />
-      <div className="min-h-[38.5rem] bg-white dark:bg-gray-800">
+      <div className="min-h-[38.5rem] bg-white dark:bg-gray-900 h-screen">
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <h2 className="mt-10 text-center text-3xl font-bold leading-9 text-gray-900 dark:text-white">
@@ -78,7 +76,7 @@ function SignUp() {
               <div>
                 <label
                   htmlFor="username"
-                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
+                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
                 >
                   Username
                 </label>
@@ -89,7 +87,7 @@ function SignUp() {
                     type="text"
                     autoComplete="username"
                     required
-                    className="block w-full rounded-md p-2 border-2 text-black focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
+                    className="block w-full rounded-md p-2 border-2 border-gray-300 dark:border-gray-700 text-black dark:text-white bg-white dark:bg-gray-800 focus:ring-indigo-600 focus:border-indigo-600 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 sm:text-sm"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -98,7 +96,7 @@ function SignUp() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
+                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
                 >
                   Email address
                 </label>
@@ -109,7 +107,7 @@ function SignUp() {
                     type="email"
                     autoComplete="email"
                     required
-                    className="block w-full rounded-md border-2 p-2 text-black shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
+                    className="block w-full rounded-md border-2 p-2 border-gray-300 dark:border-gray-700 text-black dark:text-white bg-white dark:bg-gray-800 shadow-sm focus:ring-indigo-600 focus:border-indigo-600 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 sm:text-sm"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -119,7 +117,7 @@ function SignUp() {
                 <div className="flex items-center justify-between">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
+                    className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
                   >
                     Password
                   </label>
@@ -131,17 +129,17 @@ function SignUp() {
                     type="password"
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md  p-2 text-black shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm border-2"
+                    className="block w-full rounded-md border-2 p-2 border-gray-300 dark:border-gray-700 text-black dark:text-white bg-white dark:bg-gray-800 shadow-sm focus:ring-indigo-600 focus:border-indigo-600 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 sm:text-sm"
                     onChange={handleInputChange}
                   />
                 </div>
               </div>
 
-              <p className="mt-4 text-center text-sm text-gray-500">
+              <p className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
                 Already a member?{" "}
                 <Link
                   href="/signin"
-                  className="font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer"
+                  className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 cursor-pointer"
                 >
                   Sign In
                 </Link>

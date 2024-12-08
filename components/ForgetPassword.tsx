@@ -67,42 +67,40 @@ const ForgetPassword = () => {
     }
   };
   return (
-    <>
-      <div>
-        <>
-          <Navigation />
-          <div className="flex items-center min-h-[50rem] max-w-full justify-center">
-            <form
-              className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-[50%]"
-              onSubmit={handleSubmit}
-            >
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="title"
-                >
-                  Email
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <NeuButton button={"Submit"} />
-              </div>
-            </form>
-          </div>
-          <Footer />
-        </>
-      </div>
-      <ToastContainer />
-    </>
+    <div>
+      <>
+        <Navigation />
+        <div className="flex items-center min-h-[50rem] max-w-full justify-center h-screen bg-white dark:bg-slate-900">
+          <form
+            className="bg-white dark:bg-slate-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-[50%]"
+            onSubmit={handleSubmit}
+          >
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
+                htmlFor="email"
+              >
+                Email
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-slate-700 leading-tight focus:outline-none focus:shadow-outline bg-white border-black"
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <NeuButton button={"Submit"} />
+            </div>
+          </form>
+        </div>
+
+        <Footer />
+      </>
+    </div>
   );
 };
 

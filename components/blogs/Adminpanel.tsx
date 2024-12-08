@@ -39,14 +39,14 @@ const AdminPanel = () => {
   return (
     <>
       <Navigation />
-      <div className="mx-auto p-6 min-h-[38.5rem]">
+      <div className="mx-auto p-6 min-h-[38.5rem] bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-200">
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold mb-6">Admin Panel</h2>
           <Example />
         </div>
         <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-300">
-            <thead className="bg-gray-100">
+          <table className="min-w-full border border-gray-300 dark:border-gray-700">
+            <thead className="bg-gray-100 dark:bg-gray-800">
               <tr>
                 <th
                   colSpan={4}
@@ -56,10 +56,18 @@ const AdminPanel = () => {
                 </th>
               </tr>
               <tr>
-                <th className="py-2 px-6 border-b">Status</th>
-                <th className="py-2 px-6 border-b">Created At</th>
-                <th className="py-2 px-6 border-b">Blog Title</th>
-                <th className="py-2 px-6 border-b">Action</th>
+                <th className="py-2 px-6 border-b dark:border-gray-700">
+                  Status
+                </th>
+                <th className="py-2 px-6 border-b dark:border-gray-700">
+                  Created At
+                </th>
+                <th className="py-2 px-6 border-b dark:border-gray-700">
+                  Blog Title
+                </th>
+                <th className="py-2 px-6 border-b dark:border-gray-700">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -70,7 +78,6 @@ const AdminPanel = () => {
           </table>
         </div>
       </div>
-
       <Footer />
     </>
   );

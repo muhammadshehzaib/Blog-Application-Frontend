@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import BlogId from "./BlogId";
 
 interface Blog {
   _id: string;
@@ -27,14 +26,10 @@ const BlogCards: React.FC<BlogCardsProps> = ({ blog }) => {
   const router = useRouter();
 
   return (
-    <div
-      className={
-        blog.status === "Approved" ? "mt-10 ml-3 cursor-pointer" : "hidden"
-      }
-    >
+    <div className={blog.status === "Approved" ? "mt-10 ml-3 cursor-pointer" : "hidden"}>
       <div>
         <div
-          key={`bolg-cards-Simple${blog._id}`}
+          key={`blog-cards-Simple${blog._id}`}
           className="card flex flex-col border rounded-md overflow-hidden shadow-md bg-white dark:bg-gray-800 xl:h-[450px] h-[500px]"
         >
           <div
@@ -51,7 +46,7 @@ const BlogCards: React.FC<BlogCardsProps> = ({ blog }) => {
           </div>
           <div className="card-body p-4 flex flex-col items-start w-full">
             <div className="userDetail flex">
-              <p className="text-gray-500 font-medium text-xs">
+              <p className="text-gray-500 dark:text-gray-400 font-medium text-xs">
                 {new Date(blog.createdAt).toLocaleDateString(undefined, {
                   month: "long",
                   day: "numeric",
@@ -59,10 +54,10 @@ const BlogCards: React.FC<BlogCardsProps> = ({ blog }) => {
               </p>
             </div>
             <div className="blogHeading pt-3">
-              <h2 className="text-xl md:text-2xl font-bold">{blog.title}</h2>
+              <h2 className="text-xl md:text-2xl font-bold dark:text-gray-100">{blog.title}</h2>
             </div>
             <div className="blogParagraph mt-2">
-              <p className="text-gray-600 font-medium text-sm">
+              <p className="text-gray-600 dark:text-gray-300 font-medium text-sm">
                 {blog.content}
               </p>
             </div>
@@ -71,16 +66,18 @@ const BlogCards: React.FC<BlogCardsProps> = ({ blog }) => {
             </div>
             <div className="mt-3 flex items-center justify-between">
               <div>
-                <p className="text-gray-500 font-medium text-xs">
+                <p className="text-gray-500 dark:text-gray-400 font-medium text-xs">
                   Author: {blog.author}
                 </p>
-                <p className="text-gray-500 font-medium text-xs">
+                <p className="text-gray-500 dark:text-gray-400 font-medium text-xs">
                   Status: {blog.status}
                 </p>
-                <p className="text-gray-500 font-medium text-xs">
+                <p className="text-gray-500 dark:text-gray-400 font-medium text-xs">
                   Category: {blog.category && blog.category.category}
                 </p>
-                <p>{blog.reactions && blog.reactions.reaction}</p>
+                <p className="text-gray-500 dark:text-gray-400">
+                  {blog.reactions && blog.reactions.reaction}
+                </p>
               </div>
             </div>
           </div>

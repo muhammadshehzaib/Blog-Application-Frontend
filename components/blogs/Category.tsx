@@ -64,20 +64,20 @@ const Category = () => {
   return (
     <>
       <Navigation />
-      <div className="flex items-center min-h-[50rem] max-w-full justify-center">
+      <div className="flex items-center min-h-[50rem] max-w-full justify-center dark:bg-slate-900 bg-white h-screen"> 
         <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-[50%]"
+          className="bg-white dark:bg-slate-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-[50%]"
           onSubmit={handleSubmit}
         >
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
               htmlFor="title"
             >
               Create Category :
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-slate-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
               id="category"
               name="category"
               type="text"

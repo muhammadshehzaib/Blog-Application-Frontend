@@ -4,9 +4,9 @@ import Image from "next/image";
 
 const HeroSection = () => {
   return (
-    <div className="bg-white mt-12">
-      <div className="px-3 mx-auto max-w-full pb-10 text-center md:pb-16 ">
-        <h1 className="leading-tighter font-heading mb-6 text-4xl font-bold tracking-tighter md:text-5xl lg:text-6xl">
+    <div className="bg-white dark:bg-gray-900 mt-12">
+      <div className="px-3 mx-auto max-w-full pb-10 text-center md:pb-16">
+        <h1 className="leading-tighter font-heading mb-6 text-4xl font-bold tracking-tighter text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
           Explore the world of blogging with Next.js + Tailwind CSS
         </h1>
         <div className="mx-auto max-w-7xl">
@@ -21,7 +21,7 @@ const HeroSection = () => {
           <Image
             className="mx-auto h-auto w-full rounded-md bg-gray-400 dark:bg-slate-700"
             src={MainImage.src}
-            alt=""
+            alt="Blogging with Next.js"
             width={1024}
             height={607}
             sizes="(max-width: 64rem) 100vw, 1024px"

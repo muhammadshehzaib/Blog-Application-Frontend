@@ -52,16 +52,14 @@ const Blogs: React.FC = () => {
   );
 
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-slate-900 dark:text-slate-100">
       <Navigation />
 
       <div className="flex space-x-4 justify-center mt-5 flex-wrap">
         {uniqueCategories.map((category) => (
           <button
             key={category}
-            className={`bg-${
-              categorySelected === category ? "gray" : "blue"
-            }-500 hover:bg-slate-700 mb-2 text-black font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out`}
+            className="bg-blue-500 hover:bg-slate-700 dark:bg-gray-700 dark:hover:bg-slate-600 mb-2 text-black dark:text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out"
             onClick={() => handleClick(category)}
           >
             {category}

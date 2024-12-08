@@ -3,14 +3,14 @@ import React from "react";
 const HeroSection = () => {
   return (
     <div>
-      <section className=" bg-white">
+      <section className="bg-white dark:bg-slate-800">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="py-12 md:py-20">
             <div className="mx-auto max-w-4xl pb-10 text-center md:pb-16">
-              <p className="text-base font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-200">
+              <p className="text-base font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-400">
                 Demo Pricing Page
               </p>
-              <h1 className="leading-tighter font-heading mb-6 text-4xl font-bold tracking-tighter md:text-5xl lg:text-6xl">
+              <h1 className="leading-tighter font-heading mb-6 text-4xl font-bold tracking-tighter text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
                 Plans and Prices
               </h1>
               <div className="mx-auto max-w-3xl">

@@ -8,7 +8,7 @@ const OurServicesSection = () => {
         <div className="relative mx-auto -mb-12 max-w-6xl px-4 sm:px-6">
           <div className="mb-4">
             <div className="mb-6 mx-auto md:mb-12 text-center">
-              <h2 className="font-heading mb-4 font-bold tracking-tight text-4xl md:text-5xl">
+              <h2 className="font-heading mb-4 font-bold tracking-tight text-4xl md:text-5xl text-gray-800 dark:text-gray-100">
                 Our Services
               </h2>
             </div>
@@ -36,7 +36,7 @@ const OurServicesSection = () => {
                   </svg>
                 </div>
                 <div className="mt-0.5">
-                  <h3 className="text-xl font-bold">
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
                     Next.Js + Tailwind CSS Integration
                   </h3>
                   <p className="mt-3 text-md text-gray-500 dark:text-gray-400">
@@ -68,7 +68,7 @@ const OurServicesSection = () => {
                   </svg>
                 </div>
                 <div className="mt-0.5">
-                  <h3 className="text-xl font-bold">Ready-to-use Components</h3>
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Ready-to-use Components</h3>
                   <p className="mt-3 text-md text-gray-500 dark:text-gray-400">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   </p>
@@ -99,7 +99,7 @@ const OurServicesSection = () => {
                   </svg>
                 </div>
                 <div className="mt-0.5">
-                  <h3 className="text-xl font-bold">Best Practices</h3>
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Best Practices</h3>
                   <p className="mt-3 text-md text-gray-500 dark:text-gray-400">
                     Morbi sit amet arcu vitae metus molestie auctor sit amet in
                     risus. Sed vel lacinia purus.
@@ -128,7 +128,7 @@ const OurServicesSection = () => {
                   </svg>
                 </div>
                 <div className="mt-0.5">
-                  <h3 className="text-xl font-bold">Excellent Page Speed</h3>
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Excellent Page Speed</h3>
                   <p className="mt-3 text-md text-gray-500 dark:text-gray-400">
                     Phasellus id cursus urna. Nullam feugiat tellus sed euismod
                     venenatis. Phasellus id cursus urna. Nullam feugiat tellus
@@ -159,7 +159,7 @@ const OurServicesSection = () => {
                   </svg>
                 </div>
                 <div className="mt-0.5">
-                  <h3 className="text-xl font-bold">
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
                     Search Engine Optimization (SEO)
                   </h3>
                   <p className="mt-3 text-md text-gray-500 dark:text-gray-400">
@@ -194,7 +194,7 @@ const OurServicesSection = () => {
                   </svg>
                 </div>
                 <div className="mt-0.5">
-                  <h3 className="text-xl font-bold">
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
                     Open to new ideas and contributions
                   </h3>
                   <p className="mt-3 text-md text-gray-500 dark:text-gray-400">

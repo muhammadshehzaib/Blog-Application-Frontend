@@ -10,10 +10,10 @@ const HeroSection = () => {
           <div className="block py-12 text-center md:flex md:py-12 md:text-left lg:py-16">
             <div className="mx-auto flex max-w-5xl basis-[56%] items-center">
               <div className="max-w-3xl pb-12 pr-0 md:py-0 md:pr-8 md:pb-0 lg:pr-16">
-                <p className="text-base font-semibold uppercase tracking-wide text-blue-600 dark:text-primary-200">
+                <p className="text-base font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-300">
                   About Us Demo Page
                 </p>
-                <h1 className="leading-tighter font-heading mb-4 px-4 text-5xl font-bold tracking-tighter md:px-0 md:text-[3.48rem]">
+                <h1 className="leading-tighter font-heading mb-4 px-4 text-5xl font-bold tracking-tighter md:px-0 md:text-[3.48rem] text-gray-900 dark:text-white">
                   Great companies are made by great people
                 </h1>
                 <div className="mx-auto max-w-3xl">
@@ -28,7 +28,7 @@ const HeroSection = () => {
                   <div className="flex max-w-none flex-col flex-nowrap justify-center gap-4 sm:flex-row md:m-0 md:justify-start">
                     <div className="flex w-auto cursor-pointer">
                       <a
-                        className="inline-flex items-center justify-center w-full sm:mb-0 btn btn-primary"
+                        className="inline-flex items-center justify-center w-full sm:mb-0 btn btn-primary text-white bg-blue-600 dark:bg-blue-500"
                         target="_blank"
                         rel="noopener noreferrer"
                         href="https://www.linkedin.com/"
@@ -38,7 +38,7 @@ const HeroSection = () => {
                     </div>
                     <div className="flex w-auto cursor-pointer">
                       <a
-                        className="inline-flex items-center justify-center w-full sm:mb-0 btn"
+                        className="inline-flex items-center justify-center w-full sm:mb-0 btn text-white bg-gray-600 dark:bg-gray-700"
                         href="/contact"
                       >
                         Contact us

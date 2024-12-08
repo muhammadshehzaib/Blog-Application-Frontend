@@ -75,31 +75,31 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
   }, [isStatusUpdated, blog._id, token]);
 
   return (
-    <tr key={blog._id} className="even:bg-gray-50">
-      <td className="py-2 px-4 border-b text-center">{blog.status}</td>
-      <td className="py-2 px-4 border-b text-center">
-        {" "}
-        {new Date(blog.createdAt).toLocaleDateString(undefined, {
-          month: "long",
-          day: "numeric",
-        })}
-      </td>
-      <td className="py-2 px-4 border-b text-center">{blog.title}</td>
-      <td className="py-2 px-4 border-b text-center">
-        <button
-          className="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-600"
-          onClick={() => handleApprove(blog._id)}
-        >
-          Approve
-        </button>
-        <button
-          className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600 ml-2"
-          onClick={() => handleDisapprove(blog._id)}
-        >
-          Disapprove
-        </button>
-      </td>
-    </tr>
+    <tr key={blog._id} className="even:bg-gray-50 dark:even:bg-gray-800 dark:odd:bg-gray-900">
+    <td className="py-2 px-4 border-b text-center dark:text-gray-200 dark:border-gray-700">{blog.status}</td>
+    <td className="py-2 px-4 border-b text-center dark:text-gray-200 dark:border-gray-700">
+      {" "}
+      {new Date(blog.createdAt).toLocaleDateString(undefined, {
+        month: "long",
+        day: "numeric",
+      })}
+    </td>
+    <td className="py-2 px-4 border-b text-center dark:text-gray-200 dark:border-gray-700">{blog.title}</td>
+    <td className="py-2 px-4 border-b text-center dark:border-gray-700">
+      <button
+        className="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700"
+        onClick={() => handleApprove(blog._id)}
+      >
+        Approve
+      </button>
+      <button
+        className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600 ml-2 dark:bg-red-600 dark:hover:bg-red-700"
+        onClick={() => handleDisapprove(blog._id)}
+      >
+        Disapprove
+      </button>
+    </td>
+  </tr>
   );
 };
 

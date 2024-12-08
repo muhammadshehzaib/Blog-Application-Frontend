@@ -8,7 +8,7 @@ const Plans = () => {
         <div className="relative mx-auto max-w-7xl px-4 md:px-6 py-12 md:py-16 lg:py-20 text-default">
           <div className="mb-4">
             <div className="mb-6 mx-auto md:mb-12 text-center max-w-5xl">
-              <h2 className="font-heading mb-4 font-bold tracking-tight text-2xl sm:text-3xl">
+              <h2 className="font-heading mb-4 font-bold tracking-tight text-2xl sm:text-3xl text-blue-600">
                 Our plans
               </h2>
               <p className="mx-auto mt-4 max-w-3xl text-xl text-gray-600 dark:text-slate-400 text-center">
@@ -33,7 +33,7 @@ const Plans = () => {
                       Optimal choice for personal use
                     </p>
                     <div className="my-8">
-                      <div className="flex items-center justify-center text-center mb-1">
+                      <div className="flex items-center justify-center text-center mb-1 text-blue-500">
                         <span className="text-5xl">$</span>
                         <span className="text-6xl font-extrabold">29</span>
                       </div>
@@ -177,7 +177,7 @@ const Plans = () => {
                       Optimal choice for small teams
                     </p>
                     <div className="my-8">
-                      <div className="flex items-center justify-center text-center mb-1">
+                      <div className="flex items-center justify-center text-center mb-1 text-blue-500">
                         <span className="text-5xl">$</span>
                         <span className="text-6xl font-extrabold">69</span>
                       </div>
@@ -316,7 +316,7 @@ const Plans = () => {
                       Optimal choice for companies
                     </p>
                     <div className="my-8">
-                      <div className="flex items-center justify-center text-center mb-1">
+                      <div className="flex items-center justify-center text-center mb-1 text-blue-500">
                         <span className="text-5xl">$</span>
                         <span className="text-6xl font-extrabold">199</span>
                       </div>

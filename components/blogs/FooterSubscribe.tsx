@@ -3,11 +3,11 @@ import React from "react";
 const FooterSubscribe = () => {
     return (
         <div>
-            <section className="bg-[#1E3A8A] text-gray-200" >
+            <section className="bg-[#1E3A8A] text-gray-200 dark:bg-[#0F172A]">
                 <div className="mx-auto max-w-7xl px-4 py-16 lg:px-8 lg:pt-20">
                     <div className="row-gap-10 grid gap-6 md:grid-cols-2">
                         <div className="mx-auto md:my-auto md:ml-0 md:pb-6 md:pr-24">
-                            <h2 className="mb-3 flex justify-center text-6xl font-bold md:justify-start">
+                            <h2 className="mb-3 flex justify-center text-6xl font-bold md:justify-start text-white dark:text-slate-100">
                                 Next.js + Tailwind CSS
                             </h2>
                             <p className="text-center text-xl text-gray-200 dark:text-slate-300 md:text-left">
@@ -24,7 +24,7 @@ const FooterSubscribe = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <div className="card mb-6 px-5 py-4 bg-white">
+                                    <div className="card mb-6 px-5 py-4 bg-white dark:bg-[#1E293B]">
                                         <div className="flex items-center justify-between">
                                             <div className="w-full">
                                                 <h3 className="mb-3 text-xl font-bold text-gray-700 dark:text-white">
@@ -56,7 +56,7 @@ const FooterSubscribe = () => {
                                 </a>
                             </div>
                             <div>
-                                <div className="card mb-6 px-5 py-4 bg-white">
+                                <div className="card mb-6 px-5 py-4 bg-white dark:bg-[#1E293B]">
                                     <div className="flex items-center justify-between">
                                         <div className="w-full">
                                             <h3 className="mb-3 text-xl font-bold text-gray-700 dark:text-white">
@@ -68,7 +68,7 @@ const FooterSubscribe = () => {
                                         </div>
                                     </div>
                                     <div className="mt-2">
-                                        <form className="rounded-md border border-gray-400 bg-white shadow-md">
+                                        <form className="rounded-md border border-gray-400 bg-white shadow-md dark:bg-[#1F2937] dark:border-[#374151]">
                                             <div className="flex items-center">
                                                 <span className="rounded-bl rounded-tl border-r-[1px] border-gray-400 px-2 py-2 dark:bg-[#3b3b3b]">
                                                     <svg
@@ -81,10 +81,7 @@ const FooterSubscribe = () => {
                                                         strokeWidth="2"
                                                         strokeLinecap="round"
                                                         strokeLinejoin="round"
-                                                        className="h-6 w-6 text-[#2563EB] dark:text-gray-400
-                                                        
-                                                        "
-
+                                                        className="h-6 w-6 text-[#2563EB] dark:text-gray-400"
                                                     >
                                                         <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"></path>
                                                         <path d="M3 7l9 6l9 -6"></path>
@@ -92,13 +89,13 @@ const FooterSubscribe = () => {
                                                 </span>
                                                 <input
                                                     placeholder="Enter your email address"
-                                                    className="w-full py-2 pl-2 pr-4 dark:text-gray-300"
+                                                    className="w-full py-2 pl-2 pr-4 dark:text-gray-300 dark:bg-[#1F2937]"
                                                     type="email"
                                                     name="email"
                                                 />
                                                 <button
                                                     type="submit"
-                                                    className="rounded-br rounded-tr border-l-[1px] border-gray-400 bg-primary-600 px-4 py-2 text-white bg-[#2563EB]"
+                                                    className="rounded-br rounded-tr border-l-[1px] border-gray-400 bg-primary-600 px-4 py-2 text-white dark:bg-[#2563EB]"
                                                 >
                                                     Subscribe
                                                 </button>

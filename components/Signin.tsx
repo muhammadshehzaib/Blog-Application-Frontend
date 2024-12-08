@@ -66,7 +66,7 @@ function SignIn() {
   return (
     <>
       <Navigation />
-      <div className="flex min-h-[38.5rem] flex-col justify-center px-6 py-12 lg:px-8 bg-white dark:bg-gray-800">
+      <div className="flex min-h-[38.5rem] flex-col justify-center px-6 py-12 lg:px-8 bg-white dark:bg-gray-800 h-screen">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-10 text-center text-3xl font-bold leading-9 text-gray-900 dark:text-white">
             Sign in to your account

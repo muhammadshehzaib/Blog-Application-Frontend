@@ -115,95 +115,96 @@ const CreateBlog: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-white">
-      <Navigation />
-      <div className="flex items-center min-h-[50rem] max-w-full justify-center">
-        <form
-          className="bg-white shadow-md rounded px-6 pt-6 pb-8 mb-4 w-[50%]"
-          onSubmit={handleSubmit}
+<div className="bg-white dark:bg-slate-900">
+  <Navigation />
+  <div className="flex items-center min-h-[50rem] max-w-full justify-center h-screen">
+    <form
+      className="bg-white dark:bg-slate-800 shadow-md rounded px-6 pt-6 pb-8 mb-4 w-[50%]"
+      onSubmit={handleSubmit}
+    >
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2"
+          htmlFor="title"
         >
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-semibold mb-2"
-              htmlFor="title"
-            >
-              Title:
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="title"
-              name="title"
-              type="text"
-              value={formData.title}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-semibold mb-2"
-              htmlFor="content"
-            >
-              Content:
-            </label>
-            <textarea
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-x"
-              id="content"
-              name="content"
-              value={formData.content}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-semibold mb-2"
-              htmlFor="category"
-            >
-              Category:
-            </label>
-            <select
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="category"
-              name="category"
-              value={formData.category}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="" disabled>
-                Select a category
-              </option>
-              {categories.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.category}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-semibold mb-2"
-              htmlFor="image"
-            >
-              Upload Image:
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="image"
-              name="image"
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              required
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <NeuButton button={"Add Blog"} />
-          </div>
-        </form>
+          Title:
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-slate-700 leading-tight focus:outline-none focus:shadow-outline bg-white border-black"
+          id="title"
+          name="title"
+          type="text"
+          value={formData.title}
+          onChange={handleInputChange}
+          required
+        />
       </div>
-      <Footer />
-    </div>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2"
+          htmlFor="content"
+        >
+          Content:
+        </label>
+        <textarea
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-slate-700 leading-tight focus:outline-none focus:shadow-outline resize-x bg-white border-black"
+          id="content"
+          name="content"
+          value={formData.content}
+          onChange={handleInputChange}
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2"
+          htmlFor="category"
+        >
+          Category:
+        </label>
+        <select
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-slate-700 leading-tight focus:outline-none focus:shadow-outline bg-white border-black"
+          id="category"
+          name="category"
+          value={formData.category}
+          onChange={handleInputChange}
+          required
+        >
+          <option value="" disabled>
+            Select a category
+          </option>
+          {categories.map((category) => (
+            <option key={category._id} value={category._id}>
+              {category.category}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="mb-6">
+        <label
+          className="block text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2"
+          htmlFor="image"
+        >
+          Upload Image:
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-slate-700 leading-tight focus:outline-none focus:shadow-outline bg-white border-black"
+          id="image"
+          name="image"
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          required
+        />
+      </div>
+      <div className="flex items-center justify-between">
+        <NeuButton button={"Add Blog"} />
+      </div>
+    </form>
+  </div>
+  <Footer />
+</div>
+
   );
 };
 
