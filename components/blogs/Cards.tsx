@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
+
 
 const Cards = () => {
   const [blogData, setBlogData] = useState([]);
@@ -20,7 +22,32 @@ const Cards = () => {
     };
 
     fetchData();
-  }, []); // Fetch data on component mount
+  }, []); 
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.2,
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+
 
   return (
     <div>
