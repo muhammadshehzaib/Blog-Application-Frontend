@@ -1,212 +1,117 @@
 import React from "react";
+import Link from "next/link";
 
 const OurServicesSection = () => {
   return (
-    <div className="mb-12">
-      <section className="relative mx-auto py-12 md:py-16 lg:py-20">
-        <div className="pointer-events-none absolute inset-0 mb-36 bg-blue-50 dark:bg-slate-800"></div>
-        <div className="relative mx-auto -mb-12 max-w-6xl px-4 sm:px-6">
-          <div className="mb-4">
-            <div className="mb-6 mx-auto md:mb-12 text-center">
-              <h2 className="font-heading mb-4 font-bold tracking-tight text-4xl md:text-5xl text-gray-800 dark:text-gray-100">
-                Our Services
-              </h2>
+    <div className="bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 py-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6 font-serif">
+            What We Offer to <span className="text-blue-600 dark:text-blue-400">Writers</span>
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            Empower your writing journey with our comprehensive suite of tools and services designed for modern content creators.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Content Creation Tools */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+            <div className="flex items-center mb-4">
+              <svg className="w-8 h-8 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Content Creation Tools</h3>
             </div>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Advanced editor with markdown support, image optimization, and formatting tools to help you create beautiful content.
+            </p>
+            <Link href="/create-blogs" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">
+              Start Writing →
+            </Link>
           </div>
-          <div className="grid mx-auto gap-8 md:gap-y-12 lg:grid-cols-3 sm:grid-cols-2">
-            <div className="bg-white p-4 border-2 drop-shadow-xl">
-              <div
-                className="card flex flex-start min-w-screen-sm items-stretch h-full flex-row rounded-lg 
-              "
-              >
-                <div className="flex justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="rtl:mr-0 rtl:ml-2 h-8 w-8 mr-4 text-blue-800 dark:text-primary-600"
-                  >
-                    <path d="M11.667 6c-2.49 0 -4.044 1.222 -4.667 3.667c.933 -1.223 2.023 -1.68 3.267 -1.375c.71 .174 1.217 .68 1.778 1.24c.916 .912 2 1.968 4.288 1.968c2.49 0 4.044 -1.222 4.667 -3.667c-.933 1.223 -2.023 1.68 -3.267 1.375c-.71 -.174 -1.217 -.68 -1.778 -1.24c-.916 -.912 -1.975 -1.968 -4.288 -1.968zm-4 6.5c-2.49 0 -4.044 1.222 -4.667 3.667c.933 -1.223 2.023 -1.68 3.267 -1.375c.71 .174 1.217 .68 1.778 1.24c.916 .912 1.975 1.968 4.288 1.968c2.49 0 4.044 -1.222 4.667 -3.667c-.933 1.223 -2.023 1.68 -3.267 1.375c-.71 -.174 -1.217 -.68 -1.778 -1.24c-.916 -.912 -1.975 -1.968 -4.288 -1.968z"></path>
-                  </svg>
-                </div>
-                <div className="mt-0.5">
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
-                    Next.Js + Tailwind CSS Integration
-                  </h3>
-                  <p className="mt-3 text-md text-gray-500 dark:text-gray-400">
-                    Nullam non sodales massa. Ut justo neque, elementum et
-                    vehicula vel, pellentesque non orci.
-                  </p>
-                </div>
-              </div>
+
+          {/* Analytics & Insights */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+            <div className="flex items-center mb-4">
+              <svg className="w-8 h-8 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Analytics & Insights</h3>
             </div>
-            <div className="bg-white p-4 border-2 drop-shadow-xl">
-              <div className="card flex flex-start min-w-screen-sm items-stretch h-full flex-row rounded-lg">
-                <div className="flex justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="rtl:mr-0 rtl:ml-2 h-8 w-8 mr-4 text-blue-800 dark:text-primary-600"
-                  >
-                    <path d="M3 12l3 3l3 -3l-3 -3z"></path>
-                    <path d="M15 12l3 3l3 -3l-3 -3z"></path>
-                    <path d="M9 6l3 3l3 -3l-3 -3z"></path>
-                    <path d="M9 18l3 3l3 -3l-3 -3z"></path>
-                  </svg>
-                </div>
-                <div className="mt-0.5">
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Ready-to-use Components</h3>
-                  <p className="mt-3 text-md text-gray-500 dark:text-gray-400">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
-                </div>
-              </div>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Detailed analytics on your content performance, reader engagement, and audience demographics.
+            </p>
+            <Link href="/analytics" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">
+              View Analytics →
+            </Link>
+          </div>
+
+          {/* SEO Optimization */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+            <div className="flex items-center mb-4">
+              <svg className="w-8 h-8 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">SEO Optimization</h3>
             </div>
-            <div className="bg-white p-4 border-2 drop-shadow-xl">
-              <div className="card flex flex-start min-w-screen-sm items-stretch h-full flex-row rounded-lg">
-                <div className="flex justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="rtl:mr-0 rtl:ml-2 h-8 w-8 mr-4 text-blue-800 dark:text-primary-600"
-                  >
-                    <path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path>
-                    <path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path>
-                    <path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path>
-                    <path d="M11 6l9 0"></path>
-                    <path d="M11 12l9 0"></path>
-                    <path d="M11 18l9 0"></path>
-                  </svg>
-                </div>
-                <div className="mt-0.5">
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Best Practices</h3>
-                  <p className="mt-3 text-md text-gray-500 dark:text-gray-400">
-                    Morbi sit amet arcu vitae metus molestie auctor sit amet in
-                    risus. Sed vel lacinia purus.
-                  </p>
-                </div>
-              </div>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Built-in SEO tools to help your content rank better and reach a wider audience.
+            </p>
+            <Link href="/seo-tools" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">
+              Optimize Content →
+            </Link>
+          </div>
+
+          {/* Community Features */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+            <div className="flex items-center mb-4">
+              <svg className="w-8 h-8 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Community Features</h3>
             </div>
-            <div className="bg-white p-4 border-2 drop-shadow-xl">
-              <div className="card flex flex-start min-w-screen-sm items-stretch h-full flex-row rounded-lg">
-                <div className="flex justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="rtl:mr-0 rtl:ml-2 h-8 w-8 mr-4 text-blue-800 dark:text-primary-600"
-                  >
-                    <path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3 -5a9 9 0 0 0 6 -8a3 3 0 0 0 -3 -3a9 9 0 0 0 -8 6a6 6 0 0 0 -5 3"></path>
-                    <path d="M7 14a6 6 0 0 0 -3 6a6 6 0 0 0 6 -3"></path>
-                    <path d="M15 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                  </svg>
-                </div>
-                <div className="mt-0.5">
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Excellent Page Speed</h3>
-                  <p className="mt-3 text-md text-gray-500 dark:text-gray-400">
-                    Phasellus id cursus urna. Nullam feugiat tellus sed euismod
-                    venenatis. Phasellus id cursus urna. Nullam feugiat tellus
-                    sed euismod venenatis.
-                  </p>
-                </div>
-              </div>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Connect with other writers, join writing challenges, and participate in community events.
+            </p>
+            <Link href="/community" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">
+              Join Community →
+            </Link>
+          </div>
+
+          {/* Monetization */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+            <div className="flex items-center mb-4">
+              <svg className="w-8 h-8 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Monetization</h3>
             </div>
-            <div className="bg-white p-4 border-2 drop-shadow-xl">
-              <div className="card flex flex-start min-w-screen-sm items-stretch h-full flex-row rounded-lg">
-                <div className="flex justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="rtl:mr-0 rtl:ml-2 h-8 w-8 mr-4 text-blue-800 dark:text-primary-600"
-                  >
-                    <path d="M21 7l-18 0"></path>
-                    <path d="M18 10l3 -3l-3 -3"></path>
-                    <path d="M6 20l-3 -3l3 -3"></path>
-                    <path d="M3 17l18 0"></path>
-                  </svg>
-                </div>
-                <div className="mt-0.5">
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
-                    Search Engine Optimization (SEO)
-                  </h3>
-                  <p className="mt-3 text-md text-gray-500 dark:text-gray-400">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Morbi sagittis, quam nec venenatis lobortis, mi risus tempus
-                    nulla.
-                  </p>
-                </div>
-              </div>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Multiple ways to monetize your content through subscriptions, tips, and sponsored opportunities.
+            </p>
+            <Link href="/monetization" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">
+              Start Earning →
+            </Link>
+          </div>
+
+          {/* Support & Resources */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+            <div className="flex items-center mb-4">
+              <svg className="w-8 h-8 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Support & Resources</h3>
             </div>
-            <div
-              className="bg-white p-4 border-2 drop-shadow-xl
-            "
-            >
-              <div className="card flex flex-start min-w-screen-sm items-stretch h-full flex-row rounded-lg">
-                <div className="flex justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="rtl:mr-0 rtl:ml-2 h-8 w-8 mr-4 text-blue-800 dark:text-primary-600"
-                  >
-                    <path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"></path>
-                    <path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"></path>
-                    <path d="M9.7 17l4.6 0"></path>
-                  </svg>
-                </div>
-                <div className="mt-0.5">
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
-                    Open to new ideas and contributions
-                  </h3>
-                  <p className="mt-3 text-md text-gray-500 dark:text-gray-400">
-                    Maecenas urna augue, commodo vitae lectus euismod, tempor
-                    aliquam arcu.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              24/7 support, writing guides, and resources to help you grow as a writer.
+            </p>
+            <Link href="/resources" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">
+              Access Resources →
+            </Link>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

@@ -2,113 +2,84 @@ import React from "react";
 
 const FooterSubscribe = () => {
     return (
-        <div>
-            <section className="bg-[#1E3A8A] text-gray-200 dark:bg-[#0F172A]">
-                <div className="mx-auto max-w-7xl px-4 py-16 lg:px-8 lg:pt-20">
-                    <div className="row-gap-10 grid gap-6 md:grid-cols-2">
-                        <div className="mx-auto md:my-auto md:ml-0 md:pb-6 md:pr-24">
-                            <h2 className="mb-3 flex justify-center text-6xl font-bold md:justify-start text-white dark:text-slate-100">
-                                Next.js + Tailwind CSS
-                            </h2>
-                            <p className="text-center text-xl text-gray-200 dark:text-slate-300 md:text-left">
-                                Aliquam sodales porttitor lacus ac tristique. Etiam posuere elit
-                                at leo feugiat sodales. Sed ac mauris quis sem tempor
-                                condimentum non at metus.
-                            </p>
+        <section className="py-24 bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-900 dark:to-blue-950">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-5xl mx-auto">
+                    <div className="text-center mb-12">
+                        <h2 className="text-4xl font-bold text-white mb-6 font-serif">
+                            Join Our Growing Community of Writers
+                        </h2>
+                        <p className="text-xl text-blue-100 mb-8">
+                            Be part of a thriving ecosystem of creative minds, storytellers, and thought leaders
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                        <div className="text-center p-6 bg-white bg-opacity-10 rounded-xl backdrop-blur-lg">
+                            <div className="text-4xl font-bold text-white mb-2">50K+</div>
+                            <div className="text-blue-100">Active Writers</div>
                         </div>
-                        <div className="relative -mb-6">
+                        <div className="text-center p-6 bg-white bg-opacity-10 rounded-xl backdrop-blur-lg">
+                            <div className="text-4xl font-bold text-white mb-2">100K+</div>
+                            <div className="text-blue-100">Published Articles</div>
+                        </div>
+                        <div className="text-center p-6 bg-white bg-opacity-10 rounded-xl backdrop-blur-lg">
+                            <div className="text-4xl font-bold text-white mb-2">2M+</div>
+                            <div className="text-blue-100">Monthly Readers</div>
+                        </div>
+                        <div className="text-center p-6 bg-white bg-opacity-10 rounded-xl backdrop-blur-lg">
+                            <div className="text-4xl font-bold text-white mb-2">150+</div>
+                            <div className="text-blue-100">Countries Reached</div>
+                        </div>
+                    </div>
+
+                    <div className="bg-white bg-opacity-10 rounded-2xl backdrop-blur-lg p-8 md:p-12">
+                        <div className="grid md:grid-cols-2 gap-8 items-center">
                             <div>
-                                <a
-                                    href="/"
-                                    className="w-full sm:mb-0"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <div className="card mb-6 px-5 py-4 bg-white dark:bg-[#1E293B]">
-                                        <div className="flex items-center justify-between">
-                                            <div className="w-full">
-                                                <h3 className="mb-3 text-xl font-bold text-gray-700 dark:text-white">
-                                                    Learn more
-                                                </h3>
-                                                <p className="text-gray-600 dark:text-slate-400">
-                                                    className aptent taciti sociosqu ad litora torquent
-                                                    per conubia.
-                                                </p>
-                                            </div>
-                                            <div className="flex h-10 w-10 items-center justify-center">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    strokeWidth="2"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    className="h-6 w-6 text-primary-600 dark:text-slate-200"
-                                                >
-                                                    <path d="M9 6l6 6l-6 6"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
+                                <h3 className="text-2xl font-bold text-white mb-4">Start Your Writing Journey Today</h3>
+                                <p className="text-blue-100 mb-6">
+                                    Join ScribbleSphere and turn your passion for writing into engaging content that reaches readers worldwide.
+                                </p>
+                                <ul className="space-y-3 mb-8">
+                                    <li className="flex items-center text-blue-100">
+                                        <svg className="w-5 h-5 mr-3 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                        </svg>
+                                        Free getting started guides
+                                    </li>
+                                    <li className="flex items-center text-blue-100">
+                                        <svg className="w-5 h-5 mr-3 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                        </svg>
+                                        Access to writer's community
+                                    </li>
+                                    <li className="flex items-center text-blue-100">
+                                        <svg className="w-5 h-5 mr-3 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                        </svg>
+                                        Professional writing tools
+                                    </li>
+                                </ul>
                             </div>
-                            <div>
-                                <div className="card mb-6 px-5 py-4 bg-white dark:bg-[#1E293B]">
-                                    <div className="flex items-center justify-between">
-                                        <div className="w-full">
-                                            <h3 className="mb-3 text-xl font-bold text-gray-700 dark:text-white">
-                                                Subscribe
-                                            </h3>
-                                            <p className="text-gray-600 dark:text-slate-400">
-                                                Morbi orci nunc, euismod ac dui id, convallis.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="mt-2">
-                                        <form className="rounded-md border border-gray-400 bg-white shadow-md dark:bg-[#1F2937] dark:border-[#374151]">
-                                            <div className="flex items-center">
-                                                <span className="rounded-bl rounded-tl border-r-[1px] border-gray-400 px-2 py-2 dark:bg-[#3b3b3b]">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="24"
-                                                        height="24"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth="2"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        className="h-6 w-6 text-[#2563EB] dark:text-gray-400"
-                                                    >
-                                                        <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"></path>
-                                                        <path d="M3 7l9 6l9 -6"></path>
-                                                    </svg>
-                                                </span>
-                                                <input
-                                                    placeholder="Enter your email address"
-                                                    className="w-full py-2 pl-2 pr-4 dark:text-gray-300 dark:bg-[#1F2937]"
-                                                    type="email"
-                                                    name="email"
-                                                />
-                                                <button
-                                                    type="submit"
-                                                    className="rounded-br rounded-tr border-l-[1px] border-gray-400 bg-primary-600 px-4 py-2 text-white dark:bg-[#2563EB]"
-                                                >
-                                                    Subscribe
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                            <div className="space-y-4">
+                                <input
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    className="w-full px-6 py-4 rounded-lg bg-white bg-opacity-20 border border-blue-300 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                />
+                                <button className="w-full px-8 py-4 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition duration-300">
+                                    Get Started for Free
+                                </button>
+                                <p className="text-sm text-blue-200 text-center">
+                                    No credit card required • Free 14-day trial
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
+
     );
 };
 

@@ -5,7 +5,6 @@ import Navigation from "./Navigation";
 import Footer from "./Footer";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
-import NeuButton from "./buttons/Submit";
 import Link from "next/link";
 
 function SignUp() {
@@ -45,16 +44,15 @@ function SignUp() {
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Signup Failed:", errorData);
-        toast.error("Username exist");
+        toast.error("Username already exists");
         return;
       }
 
       const responseData = await response.json();
-      toast.success("User Created successfully");
+      toast.success("Account created successfully");
       setTimeout(() => {
-        router.push("signin");
+        router.push("/signin");
       }, 1000);
-      console.log("Signup Successful:", responseData);
     } catch (error: any) {
       console.error("Signup Failed:", error.message);
     }
@@ -63,92 +61,86 @@ function SignUp() {
   return (
     <>
       <Navigation />
-      <div className="min-h-[38.5rem] bg-white dark:bg-gray-900 h-screen">
-        <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 className="mt-10 text-center text-3xl font-bold leading-9 text-gray-900 dark:text-white">
-              Sign up to your account
-            </h2>
-          </div>
+      <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 pt-24">
+        <div className="container mx-auto px-4 py-16">
+          <div className="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Join Our Community</h2>
+              <p className="mt-2 text-gray-600 dark:text-gray-300">Start your writing journey today</p>
+            </div>
 
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" method="POST" onSubmit={handleSignup}>
+            <form className="space-y-6" onSubmit={handleSignup}>
               <div>
                 <label
                   htmlFor="username"
-                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                 >
                   Username
                 </label>
-                <div className="mt-2">
-                  <input
-                    id="username"
-                    name="username"
-                    type="text"
-                    autoComplete="username"
-                    required
-                    className="block w-full rounded-md p-2 border-2 border-gray-300 dark:border-gray-700 text-black dark:text-white bg-white dark:bg-gray-800 focus:ring-indigo-600 focus:border-indigo-600 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 sm:text-sm"
-                    onChange={handleInputChange}
-                  />
-                </div>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  autoComplete="username"
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  onChange={handleInputChange}
+                />
               </div>
 
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                 >
-                  Email address
+                  Email
                 </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    className="block w-full rounded-md border-2 p-2 border-gray-300 dark:border-gray-700 text-black dark:text-white bg-white dark:bg-gray-800 shadow-sm focus:ring-indigo-600 focus:border-indigo-600 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 sm:text-sm"
-                    onChange={handleInputChange}
-                  />
-                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  onChange={handleInputChange}
+                />
               </div>
 
               <div>
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
-                  >
-                    Password
-                  </label>
-                </div>
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="block w-full rounded-md border-2 p-2 border-gray-300 dark:border-gray-700 text-black dark:text-white bg-white dark:bg-gray-800 shadow-sm focus:ring-indigo-600 focus:border-indigo-600 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 sm:text-sm"
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <p className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
-                Already a member?{" "}
-                <Link
-                  href="/signin"
-                  className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 cursor-pointer"
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                 >
-                  Sign In
-                </Link>
-              </p>
-
-              <div>
-                <NeuButton button={"SignUp"} />
+                  Password
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  onChange={handleInputChange}
+                />
               </div>
+
+              <button
+                type="submit"
+                className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition duration-150 ease-in-out"
+              >
+                Create Account
+              </button>
             </form>
+
+            <p className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+              Already have an account?{" "}
+              <Link
+                href="/signin"
+                className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+              >
+                Sign in here
+              </Link>
+            </p>
           </div>
         </div>
       </div>

@@ -1,208 +1,121 @@
 import React from "react";
 
-const Histroy = () => {
+const History = () => {
   return (
-    <div>
-      <section
-        className="relative not-prose scroll-mt-[72px]"
-        id="steps-on-about"
-      >
-        <div className="absolute inset-0 bg-blue-50 dark:bg-slate-800"></div>
-        <div className="relative mx-auto px-4 md:px-6 py-12 md:py-16 lg:py-20 text-default max-w-6xl">
-          <div className="flex flex-col gap-8 md:gap-12">
-            <div className="md:py-4 max-w-4xl mx-auto md:self-center">
-              <div className="mb-4">
-                <div className="mb-6 mx-auto md:mb-12 text-center">
-                  <p className="text-base font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-200">
-                    Company History
-                  </p>
-                  <h2 className="font-heading mb-4 font-bold tracking-tight text-3xl sm:text-4xl text-gray-900 dark:text-slate-100">
-                    History of TailNext
-                  </h2>
-                  <p className="mx-auto mt-4 max-w-3xl text-xl text-gray-600 dark:text-slate-400 text-center">
-                    Duis sit amet magna et sapien cursus fermentum. Curabitur ac
-                    mauris non magna condimentum scelerisque. Aliquam nunc
-                    ipsum, semper ac scelerisque sit amet, pulvinar vitae
-                    libero.
-                  </p>
+    <div className="bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 py-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6 font-serif">
+            Our <span className="text-blue-600 dark:text-blue-400">Journey</span>
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            From a simple idea to a thriving writing community, follow our path of continuous innovation and growth.
+          </p>
+        </div>
+
+        <div className="max-w-3xl mx-auto">
+          {/* First Timeline Item */}
+          <div className="flex mb-12">
+            <div className="flex flex-col items-center mr-6">
+              <div className="flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-blue-600 dark:bg-blue-500 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
                 </div>
               </div>
-              <div>
-                {/* First Timeline Item */}
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-4 rtl:mr-0 rtl:ml-4">
-                    <div className="flex items-center justify-center ">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="w-10 h-10 p-2 rounded-full border-2 text-blue-600 dark:text-blue-200"
-                      >
-                        <path d="M13 20v-16l-5 5"></path>
-                      </svg>
-                    </div>
-                    <div className="w-px h-full bg-gray-300 dark:bg-slate-500"></div>
-                  </div>
-                  <div className="pt-1 pb-8">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-slate-300 mb-2">
-                      Our foundation
-                    </h3>
-                    <p className="text-gray-600 dark:text-slate-400">
-                      Donec pharetra, justo a rutrum venenatis, augue erat porta
-                      leo, non eleifend dui lectus ut turpis. Fusce tincidunt
-                      mattis magna eu commodo. Proin non facilisis enim, ut
-                      luctus dolor.
-                    </p>
-                  </div>
-                </div>
+              <div className="w-px h-full bg-blue-200 dark:bg-blue-800"></div>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">The Beginning (2022)</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                Started with a vision to create a platform where writers could share their stories freely and connect with readers worldwide.
+              </p>
+            </div>
+          </div>
 
-                {/* Second Timeline Item */}
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-4 rtl:mr-0 rtl:ml-4">
-                    <div className="flex items-center justify-center ">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="w-10 h-10 p-2 rounded-full border-2 text-blue-600 dark:text-blue-200"
-                      >
-                        <path d="M8 8a4 4 0 1 1 8 0c0 1.098 -.564 2.025 -1.159 2.815l-6.841 9.185h8"></path>
-                      </svg>
-                    </div>
-                    <div className="w-px h-full bg-gray-300 dark:bg-slate-500"></div>
-                  </div>
-                  <div className="pt-1 pb-8">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-slate-300 mb-2">
-                      The early years
-                    </h3>
-                    <p className="text-gray-600 dark:text-slate-400">
-                      Nunc scelerisque dui non nulla faucibus, sed elementum
-                      urna congue. Donec varius nisi sit amet massa malesuada
-                      euismod. Donec auctor interdum leo eget ultricies.
-                    </p>
-                  </div>
+          {/* Second Timeline Item */}
+          <div className="flex mb-12">
+            <div className="flex flex-col items-center mr-6">
+              <div className="flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-blue-600 dark:bg-blue-500 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
                 </div>
+              </div>
+              <div className="w-px h-full bg-blue-200 dark:bg-blue-800"></div>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Growing Community (2023)</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                Reached our first milestone of 10,000 active writers and launched community features to foster collaboration.
+              </p>
+            </div>
+          </div>
 
-                {/* Third Timeline Item */}
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-4 rtl:mr-0 rtl:ml-4">
-                    <div className="flex items-center justify-center ">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="w-10 h-10 p-2 rounded-full border-2 text-blue-600 dark:text-blue-200"
-                      >
-                        <path d="M12 12a4 4 0 1 0 -4 -4"></path>
-                        <path d="M8 16a4 4 0 1 0 4 -4"></path>
-                      </svg>
-                    </div>
-                    <div className="w-px h-full bg-gray-300 dark:bg-slate-500"></div>
-                  </div>
-                  <div className="pt-1 pb-8">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-slate-300 mb-2">
-                      Growth
-                    </h3>
-                    <p className="text-gray-600 dark:text-slate-400">
-                      Vestibulum euismod dolor vel magna consectetur, vitae
-                      ornare metus finibus. Nam nec magna lacinia, cursus purus
-                      ut, pellentesque ex. Aliquam nec porta sapien, nec iaculis
-                      odio. Donec sed lacus arcu.
-                    </p>
-                  </div>
+          {/* Third Timeline Item */}
+          <div className="flex mb-12">
+            <div className="flex flex-col items-center mr-6">
+              <div className="flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-blue-600 dark:bg-blue-500 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
                 </div>
+              </div>
+              <div className="w-px h-full bg-blue-200 dark:bg-blue-800"></div>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Platform Evolution (2023)</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                Introduced advanced writing tools, analytics, and monetization features to help writers succeed.
+              </p>
+            </div>
+          </div>
 
-                {/* Fourth Timeline Item */}
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-4 rtl:mr-0 rtl:ml-4">
-                    <div className="flex items-center justify-center ">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="w-10 h-10 p-2 rounded-full border-2 text-blue-600 dark:text-blue-200"
-                      >
-                        <path d="M15 20v-15l-8 11h10"></path>
-                      </svg>
-                    </div>
-                    <div className="w-px h-full bg-gray-300 dark:bg-slate-500"></div>
-                  </div>
-                  <div className="pt-1 pb-8">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-slate-300 mb-2">
-                      Expanding horizons
-                    </h3>
-                    <p className="text-gray-600 dark:text-slate-400">
-                      Aenean mollis est ac quam viverra, eget dictum justo
-                      iaculis. Morbi venenatis neque sed blandit faucibus.
-                      Pellentesque sit amet justo at ligula eleifend lacinia.
-                      Etiam nec orci quam.
-                    </p>
-                  </div>
+          {/* Fourth Timeline Item */}
+          <div className="flex mb-12">
+            <div className="flex flex-col items-center mr-6">
+              <div className="flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-blue-600 dark:bg-blue-500 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  </svg>
                 </div>
+              </div>
+              <div className="w-px h-full bg-blue-200 dark:bg-blue-800"></div>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Global Expansion (2024)</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                Expanded to serve writers in over 100 countries and launched localization support for multiple languages.
+              </p>
+            </div>
+          </div>
 
-                {/* Fifth Timeline Item */}
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-4 rtl:mr-0 rtl:ml-4">
-                    <div className="flex items-center justify-center text-slate-200 rounded-full bg-blue-900">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="w-10 h-10 p-2 rounded-full border-2 text-blue-900"
-                      >
-                        <path d="M8 20h4a4 4 0 1 0 0 -8h-4v-8h8"></path>
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="pt-1 ">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-slate-300 mb-2">
-                      TailNext today
-                    </h3>
-                    <p className="text-gray-600 dark:text-slate-400">
-                      Ut facilisis tortor ligula, a aliquet lectus ultricies ac.
-                      Aliquam in erat pretium, tincidunt arcu ut, facilisis
-                      augue. Pellentesque non nisi nulla. Duis tristique et purus
-                      a malesuada.
-                    </p>
-                  </div>
+          {/* Fifth Timeline Item */}
+          <div className="flex">
+            <div className="flex flex-col items-center mr-6">
+              <div className="flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-blue-600 dark:bg-blue-500 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                  </svg>
                 </div>
               </div>
             </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Looking Ahead (2024 & Beyond)</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                Continuing to innovate with AI-powered writing assistance, enhanced collaboration tools, and new ways for writers to reach their audience.
+              </p>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };
 
-export default Histroy;
+export default History;

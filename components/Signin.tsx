@@ -6,7 +6,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./Footer";
 import Navigation from "./Navigation";
-import NeuButton from "./buttons/Submit";
 import Link from "next/link";
 
 function SignIn() {
@@ -21,6 +20,7 @@ function SignIn() {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
+
   const handleSignin = async (e: any) => {
     e.preventDefault();
 
@@ -40,15 +40,14 @@ function SignIn() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Signup Failed:", errorData);
+        console.error("Signin Failed:", errorData);
         toast.error("Username and password incorrect");
-
         return;
       }
 
       const responseData = await response.json();
-
-      toast.success("User Created successful");
+      toast.success("Signed in successfully");
+      
       setTimeout(() => {
         login(responseData.accessToken);
         if (isAuthenticated) {
@@ -59,86 +58,84 @@ function SignIn() {
         }
       }, 1000);
     } catch (error: any) {
-      console.error("Signup Failed:", error.message);
+      console.error("Signin Failed:", error.message);
     }
   };
 
   return (
     <>
       <Navigation />
-      <div className="flex min-h-[38.5rem] flex-col justify-center px-6 py-12 lg:px-8 bg-white dark:bg-gray-800 h-screen">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-10 text-center text-3xl font-bold leading-9 text-gray-900 dark:text-white">
-            Sign in to your account
-          </h2>
-        </div>
+      <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 pt-24">
+        <div className="container mx-auto px-4 py-16">
+          <div className="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Welcome Back</h2>
+              <p className="mt-2 text-gray-600 dark:text-gray-300">Sign in to continue your writing journey</p>
+            </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
-          <form className="space-y-6" onSubmit={handleSignin}>
-            <div>
-              <label
-                htmlFor="username"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
-              >
-                Username
-              </label>
-              <div className="mt-2">
+            <form className="space-y-6" onSubmit={handleSignin}>
+              <div>
+                <label
+                  htmlFor="username"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
+                  Username
+                </label>
                 <input
                   id="username"
                   name="username"
                   type="text"
                   autoComplete="username"
                   required
-                  className="block w-full rounded-md border-0 p-2 text-black shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   onChange={handleInputChange}
                 />
               </div>
-            </div>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
-                >
-                  Password
-                </label>
-                <div className="text-sm">
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    Password
+                  </label>
                   <Link
                     href="/forgetpassword"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer"
+                    className="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
                   >
                     Forgot password?
                   </Link>
                 </div>
-              </div>
-              <div className="mt-2">
                 <input
                   id="password"
                   name="password"
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="block w-full rounded-md border-0 p-2 text-black shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   onChange={handleInputChange}
                 />
               </div>
-            </div>
 
-            <div>
-              <NeuButton button={"login"} />
-            </div>
-          </form>
+              <button
+                type="submit"
+                className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition duration-150 ease-in-out"
+              >
+                Sign In
+              </button>
+            </form>
 
-          <p className="mt-8 text-center text-sm text-gray-500">
-            Not a member?{" "}
-            <Link
-              href="/signup"
-              className="font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer"
-            >
-              Sign Up
-            </Link>
-          </p>
+            <p className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+              Not a member yet?{" "}
+              <Link
+                href="/signup"
+                className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+              >
+                Join our community
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
       <Footer />
