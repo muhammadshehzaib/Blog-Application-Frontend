@@ -14,9 +14,7 @@ const Services = () => {
       <Navigation />
       <HeroSection />
       <OurServicesSection />
-      <Content />
-      <ContentTwo />
-      <ContentThree />
+      
       <FooterSubscribe />
       <Footer />
     </div>
