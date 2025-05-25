@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image1 from "../../../images/camera-back.webp";
 import Image from "next/image";
-import Tick from "@/images/svg/tick";
+import Tick from "../../../images/svg/Tick";
 
 const ContentTwo = () => {
   // Variants for section text

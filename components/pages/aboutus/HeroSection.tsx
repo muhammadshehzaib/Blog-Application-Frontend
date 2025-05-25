@@ -10,7 +10,7 @@ const HeroSection = () => {
             The Story Behind <span className="text-blue-600 dark:text-blue-400">Scribble Sphere</span>
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-            We're building a community where ideas flourish and stories come to life. Learn about our journey and the people making it possible.
+            We&apos;re building a community where ideas flourish and stories come to life. Learn about our journey and the people making it possible.
           </p>
         </div>
 

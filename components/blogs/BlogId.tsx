@@ -104,7 +104,7 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
 
   useEffect(() => {
     fetchData();
-  }, [comments]);
+  }, );
 
   return (
     <>

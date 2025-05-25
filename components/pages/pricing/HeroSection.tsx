@@ -9,7 +9,7 @@ const HeroSection = () => {
             Simple Pricing for <span className="text-blue-600 dark:text-blue-400">Every Writer</span>
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-            Whether you're just starting your writing journey or running a professional publication, we have a plan that's perfect for you.
+            Whether you&apos;re just starting your writing journey or running a professional publication, we have a plan that&apos;s perfect for you.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <div className="flex items-center bg-white dark:bg-gray-800 rounded-lg px-4 py-2 shadow-sm">
