@@ -66,7 +66,7 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6 font-serif">
-              What you get with <span className="text-blue-600 dark:text-blue-400">ScribbleSphere</span>
+              What you get with <span className="text-blue-600 dark:text-blue-400">Writers&apos; Haven</span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300">
               Everything you need to create, publish, and grow your blog
@@ -216,7 +216,7 @@ export default function Home() {
                 <div>
                   <h3 className="text-2xl font-bold text-white mb-4">Start Your Writing Journey Today</h3>
                   <p className="text-blue-100 mb-6">
-                    Join ScribbleSphere and turn your passion for writing into engaging content that reaches readers worldwide.
+                    Join Writers&apos; Haven and turn your passion for writing into engaging content that reaches readers worldwide.
                   </p>
                   <ul className="space-y-3 mb-8">
                     <li className="flex items-center text-blue-100">

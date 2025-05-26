@@ -52,7 +52,7 @@ const Features = () => {
           className="font-heading mb-4 font-bold tracking-tight text-4xl md:text-5xl text-gray-900 dark:text-white"
         >
           What you get with{" "}
-          <span className="whitespace-nowrap">ScribbleSphere</span>
+          <span className="whitespace-nowrap">Writers&apos; Haven</span>
         </motion.h2>
         
         <motion.p 

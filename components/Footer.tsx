@@ -8,7 +8,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="text-2xl font-serif font-bold text-gray-900 dark:text-white">
-              Scribble Sphere
+              Writers&apos; Haven
             </Link>
             <p className="mt-4 text-gray-600 dark:text-gray-300">
               A community-driven platform for writers and readers to share their stories, ideas, and experiences.
@@ -65,7 +65,7 @@ function Footer() {
 
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
           <p className="text-center text-gray-600 dark:text-gray-300">
-            © {new Date().getFullYear()} Scribble Sphere. All rights reserved.
+            © {new Date().getFullYear()} Writers&apos; Haven. All rights reserved.
           </p>
         </div>
       </div>

@@ -38,7 +38,7 @@ const FooterSubscribe = () => {
                             <div>
                                 <h3 className="text-2xl font-bold text-white mb-4">Start Your Writing Journey Today</h3>
                                 <p className="text-blue-100 mb-6">
-                                    Join ScribbleSphere and turn your passion for writing into engaging content that reaches readers worldwide.
+                                    Join Writers&apos; Haven and turn your passion for writing into engaging content that reaches readers worldwide.
                                 </p>
                                 <ul className="space-y-3 mb-8">
                                     <li className="flex items-center text-blue-100">

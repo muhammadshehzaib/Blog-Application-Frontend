@@ -7,7 +7,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center mb-16">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 font-serif">
-            The Story Behind <span className="text-blue-600 dark:text-blue-400">Scribble Sphere</span>
+            The Story Behind <span className="text-blue-600 dark:text-blue-400">Writers&apos; Haven</span>
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
             We&apos;re building a community where ideas flourish and stories come to life. Learn about our journey and the people making it possible.

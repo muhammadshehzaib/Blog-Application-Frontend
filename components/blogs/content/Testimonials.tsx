@@ -56,7 +56,7 @@ const Testimonials = () => {
       image: Person1,
       name: "Tayla Kirsten",
       role: "Marketing Manager",
-      quote: "ScribbleSphere has transformed my blogging journey! The seamless interface and powerful features made publishing and sharing my thoughts a breeze. It ..."
+      quote: "Writers' Haven has transformed my blogging journey! The seamless interface and powerful features made publishing and sharing my thoughts a breeze. It ..."
     },
     {
       image: Person2,
@@ -68,7 +68,7 @@ const Testimonials = () => {
       image: Person3,
       name: "Kelsey Arden",
       role: "Co-Founder & CEO",
-      quote: "The synergy of Next.js and Tailwind CSS on Scribblesphere provides an unbeatable foundation for my blog. The attention to detail in design, combined w..."
+      quote: "The synergy of Next.js and Tailwind CSS on Writers' Haven provides an unbeatable foundation for my blog. The attention to detail in design, combined w..."
     },
     {
       image: Person4,
