@@ -5,7 +5,7 @@ const nextConfig = {
   },
   env: {
     LOCALHOST: "http://localhost:3002",
-    DEPLOYMENTLINK: "https://blog-application-two-psi.vercel.app",
+    DEPLOYMENTLINK: "http://localhost:3002",
   },
 };
 

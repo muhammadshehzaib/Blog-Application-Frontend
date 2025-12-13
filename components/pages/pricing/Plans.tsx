@@ -1,137 +1,267 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const Plans = () => {
+  const plans = [
+    {
+      name: "Free",
+      price: "$0",
+      period: "/month",
+      description: "Perfect for getting started",
+      features: [
+        "Up to 3 articles per month",
+        "Basic writing tools",
+        "Community access",
+      ],
+      buttonText: "Get Started",
+      buttonLink: "/signup",
+      gradient: "from-zinc-500 to-zinc-600",
+      featured: false,
+    },
+    {
+      name: "Pro",
+      price: "$15",
+      period: "/month",
+      description: "For serious writers",
+      features: [
+        "Unlimited articles",
+        "Advanced writing tools",
+        "Analytics dashboard",
+        "Priority support",
+      ],
+      buttonText: "Upgrade to Pro",
+      buttonLink: "/signup?plan=pro",
+      gradient: "from-emerald-500 to-teal-500",
+      featured: true,
+    },
+    {
+      name: "Business",
+      price: "$49",
+      period: "/month",
+      description: "For professional publishers",
+      features: [
+        "Everything in Pro",
+        "Custom branding",
+        "Team collaboration",
+        "API access",
+      ],
+      buttonText: "Contact Sales",
+      buttonLink: "/signup?plan=business",
+      gradient: "from-blue-500 to-cyan-500",
+      featured: false,
+    },
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
-    <div className="bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 py-16">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6 font-serif">
-            Choose Your <span className="text-blue-600 dark:text-blue-400">Writing Journey</span>
-              </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
-            Select a plan that best fits your writing goals and aspirations. Upgrade or downgrade anytime.
-              </p>
-            </div>
+    <div className="relative bg-black text-white overflow-hidden py-24 border-t border-zinc-900">
+      {/* Grid Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Free Plan */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Free</h3>
-              <div className="flex justify-center items-baseline mb-2">
-                <span className="text-5xl font-extrabold text-gray-900 dark:text-white">$0</span>
-                <span className="text-gray-500 dark:text-gray-400">/month</span>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300">Perfect for getting started</p>
+      {/* Floating Gradient Orbs */}
+      <motion.div
+        animate={{
+          y: [0, -30, 0],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute top-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
+      />
+      <motion.div
+        animate={{
+          y: [0, 30, 0],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute bottom-20 left-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
+      />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+            Choose Your{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400">
+              Writing Journey
+            </span>
+          </h2>
+          <p className="text-xl text-zinc-400 leading-relaxed">
+            Select a plan that best fits your writing goals and aspirations.
+            Upgrade or downgrade anytime.
+          </p>
+        </motion.div>
+
+        {/* Pricing Cards */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto"
+        >
+          {plans.map((plan, index) => (
+            <motion.div
+              key={index}
+              variants={cardVariants}
+              whileHover={{
+                y: plan.featured ? 0 : -8,
+                transition: { duration: 0.3 },
+              }}
+              className={`group relative bg-zinc-950 border rounded-3xl p-8 transition-all duration-300 overflow-hidden ${
+                plan.featured
+                  ? "border-emerald-500/50 scale-105 md:scale-110 shadow-2xl shadow-emerald-500/20"
+                  : "border-zinc-900 hover:border-zinc-800"
+              }`}
+            >
+              {/* Featured Badge */}
+              {plan.featured && (
+                <div className="absolute top-0 right-0 bg-gradient-to-r from-emerald-500 to-teal-500 text-black text-xs font-bold px-4 py-1 rounded-bl-xl rounded-tr-3xl">
+                  MOST POPULAR
+                </div>
+              )}
+
+              {/* Gradient Overlay */}
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${plan.gradient} opacity-0 ${
+                  plan.featured ? "opacity-5" : "group-hover:opacity-5"
+                } transition-opacity duration-500`}
+              ></div>
+
+              {/* Content */}
+              <div className="relative">
+                {/* Plan Header */}
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-white mb-4">
+                    {plan.name}
+                  </h3>
+                  <div className="flex justify-center items-baseline mb-2">
+                    <span className="text-5xl font-extrabold text-white">
+                      {plan.price}
+                    </span>
+                    <span className="text-zinc-400 ml-1">{plan.period}</span>
                   </div>
-            <ul className="space-y-4 mb-8">
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                <span className="text-gray-600 dark:text-gray-300">Up to 3 articles per month</span>
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                <span className="text-gray-600 dark:text-gray-300">Basic writing tools</span>
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                <span className="text-gray-600 dark:text-gray-300">Community access</span>
-              </li>
-            </ul>
-            <Link href="/signup" className="block w-full text-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold py-3 rounded-lg transition duration-150">
-              Get Started
-            </Link>
-                            </div>
+                  <p className="text-zinc-400">{plan.description}</p>
+                </div>
 
-          {/* Pro Plan */}
-          <div className="bg-blue-600 dark:bg-blue-700 rounded-xl p-8 shadow-lg transform scale-105">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-white mb-4">Pro</h3>
-              <div className="flex justify-center items-baseline mb-2">
-                <span className="text-5xl font-extrabold text-white">$15</span>
-                <span className="text-blue-200">/month</span>
-              </div>
-              <p className="text-blue-100">For serious writers</p>
+                {/* Features List */}
+                <ul className="space-y-4 mb-8">
+                  {plan.features.map((feature, featureIndex) => (
+                    <motion.li
+                      key={featureIndex}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.1 * featureIndex }}
+                      className="flex items-center"
+                    >
+                      <div
+                        className={`w-6 h-6 mr-3 rounded-full bg-gradient-to-br ${plan.gradient} flex items-center justify-center flex-shrink-0`}
+                      >
+                        <svg
+                          className="w-4 h-4 text-black"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
                       </div>
-            <ul className="space-y-4 mb-8">
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-blue-200 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                <span className="text-white">Unlimited articles</span>
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-blue-200 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                <span className="text-white">Advanced writing tools</span>
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-blue-200 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                <span className="text-white">Analytics dashboard</span>
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-blue-200 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                              </svg>
-                <span className="text-white">Priority support</span>
-              </li>
-            </ul>
-            <Link href="/signup?plan=pro" className="block w-full text-center bg-white hover:bg-gray-50 text-blue-600 font-semibold py-3 rounded-lg transition duration-150">
-              Upgrade to Pro
-            </Link>
-                            </div>
+                      <span className="text-zinc-300">{feature}</span>
+                    </motion.li>
+                  ))}
+                </ul>
 
-          {/* Business Plan */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Business</h3>
-              <div className="flex justify-center items-baseline mb-2">
-                <span className="text-5xl font-extrabold text-gray-900 dark:text-white">$49</span>
-                <span className="text-gray-500 dark:text-gray-400">/month</span>
+                {/* CTA Button */}
+                {plan.featured ? (
+                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                    <Link
+                      href={plan.buttonLink}
+                      className={`block w-full text-center bg-gradient-to-r ${plan.gradient} text-black font-bold py-4 rounded-xl transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40`}
+                    >
+                      {plan.buttonText}
+                    </Link>
+                  </motion.div>
+                ) : (
+                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                    <Link
+                      href={plan.buttonLink}
+                      className="block w-full text-center bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700 text-white font-semibold py-4 rounded-xl transition-all duration-300"
+                    >
+                      {plan.buttonText}
+                    </Link>
+                  </motion.div>
+                )}
               </div>
-              <p className="text-gray-600 dark:text-gray-300">For professional publishers</p>
-            </div>
-            <ul className="space-y-4 mb-8">
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-gray-600 dark:text-gray-300">Everything in Pro</span>
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-gray-600 dark:text-gray-300">Custom branding</span>
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-gray-600 dark:text-gray-300">Team collaboration</span>
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-gray-600 dark:text-gray-300">API access</span>
-              </li>
-            </ul>
-            <Link href="/signup?plan=business" className="block w-full text-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold py-3 rounded-lg transition duration-150">
-              Contact Sales
+
+              {/* Bottom Accent Line */}
+              {!plan.featured && (
+                <motion.div
+                  className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${plan.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left`}
+                ></motion.div>
+              )}
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Additional Info */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6, duration: 0.8 }}
+          className="text-center mt-16"
+        >
+          <p className="text-zinc-500">
+            All plans include a 14-day free trial. Need a custom plan?{" "}
+            <Link
+              href="/contact"
+              className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors duration-300"
+            >
+              Contact us
             </Link>
-          </div>
-        </div>
+          </p>
+        </motion.div>
       </div>
     </div>
   );

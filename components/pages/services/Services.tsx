@@ -10,7 +10,7 @@ import FooterSubscribe from "@/components/blogs/FooterSubscribe";
 
 const Services = () => {
   return (
-    <div className="bg-white dark:bg-gray-900">
+    <div className="">
       <Navigation />
       <HeroSection />
       <OurServicesSection />

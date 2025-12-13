@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "@/hooks/useAuth";
+import { motion } from "framer-motion";
 
 interface BlogProps {
   blog: {
@@ -13,6 +14,8 @@ interface BlogProps {
 const Admin: React.FC<BlogProps> = ({ blog }) => {
   const { token } = useAuth();
   const [isStatusUpdated, setStatusUpdated] = useState(false);
+  // Optional: Local state to show immediate UI feedback before fetch completes
+  const [currentStatus, setCurrentStatus] = useState(blog.status);
 
   const handleApprove = async (_id: string) => {
     try {
@@ -25,7 +28,8 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
       });
 
       console.log(`Blog approved`);
-      setStatusUpdated(true); // Set the status update flag
+      setStatusUpdated(true);
+      setCurrentStatus("approved"); // Immediate visual feedback
     } catch (error) {
       console.error("Error approving blog:", error);
     }
@@ -42,7 +46,8 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
       });
 
       console.log(`Blog disapproved`);
-      setStatusUpdated(true); // Set the status update flag
+      setStatusUpdated(true);
+      setCurrentStatus("disapproved"); // Immediate visual feedback
     } catch (error) {
       console.error("Error disapproving blog:", error);
     }
@@ -60,9 +65,9 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
           })
           .then((updatedData) => {
             console.log("Updated data:", updatedData);
+            if (updatedData.status) setCurrentStatus(updatedData.status);
           });
 
-        // Reset the status update flag
         setStatusUpdated(false);
       } catch (error) {
         console.error("Error fetching updated data:", error);
@@ -70,36 +75,104 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
     };
 
     if (isStatusUpdated) {
-      fetchData(); // Fetch data when status is updated
+      fetchData();
     }
   }, [isStatusUpdated, blog._id, token]);
 
+  // Helper to determine badge color based on status
+  const getStatusColor = (status: string) => {
+    const s = status.toLowerCase();
+    if (s === "approved" || s === "published")
+      return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.2)]";
+    if (s === "disapproved" || s === "rejected")
+      return "bg-red-500/10 text-red-400 border-red-500/20";
+    return "bg-amber-500/10 text-amber-400 border-amber-500/20";
+  };
+
   return (
-    <tr key={blog._id} className="even:bg-gray-50 dark:even:bg-gray-800 dark:odd:bg-gray-900">
-    <td className="py-2 px-4 border-b text-center dark:text-gray-200 dark:border-gray-700">{blog.status}</td>
-    <td className="py-2 px-4 border-b text-center dark:text-gray-200 dark:border-gray-700">
-      {" "}
-      {new Date(blog.createdAt).toLocaleDateString(undefined, {
-        month: "long",
-        day: "numeric",
-      })}
-    </td>
-    <td className="py-2 px-4 border-b text-center dark:text-gray-200 dark:border-gray-700">{blog.title}</td>
-    <td className="py-2 px-4 border-b text-center dark:border-gray-700">
-      <button
-        className="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700"
-        onClick={() => handleApprove(blog._id)}
-      >
-        Approve
-      </button>
-      <button
-        className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600 ml-2 dark:bg-red-600 dark:hover:bg-red-700"
-        onClick={() => handleDisapprove(blog._id)}
-      >
-        Disapprove
-      </button>
-    </td>
-  </tr>
+    <motion.tr
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="group border-b border-zinc-900 hover:bg-zinc-900/50 transition-colors duration-300"
+    >
+      {/* Status Column */}
+      <td className="py-6 px-6 text-center align-middle">
+        <span
+          className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border ${getStatusColor(
+            currentStatus
+          )}`}
+        >
+          {currentStatus}
+        </span>
+      </td>
+
+      {/* Date Column */}
+      <td className="py-6 px-6 text-center text-sm text-zinc-500 align-middle">
+        {new Date(blog.createdAt).toLocaleDateString(undefined, {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        })}
+      </td>
+
+      {/* Title Column */}
+      <td className="py-6 px-6 text-center align-middle">
+        <p className="text-white font-medium text-sm line-clamp-1 max-w-[250px] mx-auto group-hover:text-emerald-400 transition-colors">
+          {blog.title}
+        </p>
+      </td>
+
+      {/* Actions Column */}
+      <td className="py-6 px-6 text-center align-middle">
+        <div className="flex items-center justify-center gap-2">
+          {/* Approve Button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => handleApprove(blog._id)}
+            className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-500 border border-emerald-500/50 hover:bg-emerald-500 hover:text-black transition-all duration-300"
+            title="Approve"
+          >
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          </motion.button>
+
+          {/* Disapprove Button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => handleDisapprove(blog._id)}
+            className="flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-800 text-zinc-400 border border-zinc-700 hover:border-red-500/50 hover:text-red-400 hover:bg-red-500/10 transition-all duration-300"
+            title="Disapprove"
+          >
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </motion.button>
+        </div>
+      </td>
+    </motion.tr>
   );
 };
 
