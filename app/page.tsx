@@ -488,7 +488,7 @@ export default function Home() {
                 </span>
               </h2>
               <p className="text-xl text-zinc-400 mb-8 max-w-3xl mx-auto">
-                Join thousands of writers who've transformed their content into revenue-generating machines
+                Join thousands of writers who&apos;ve transformed their content into revenue-generating machines
               </p>
             </div>
 
@@ -541,7 +541,7 @@ export default function Home() {
                     </span>
                   </h3>
                   <p className="text-zinc-400 mb-8 leading-relaxed">
-                    Join Writers' Haven and transform your passion into profit. Get access to exclusive tools, analytics, and a global community.
+                    Join Writers&apos; Haven and transform your passion into profit. Get access to exclusive tools, analytics, and a global community.
                   </p>
                   <ul className="space-y-4">
                     {[

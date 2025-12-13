@@ -69,7 +69,7 @@ const Navigation = () => {
                 </svg>
               </div>
               <span className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors duration-300">
-                Writers' Haven
+                Writers&apos; Haven
               </span>
             </motion.a>
 

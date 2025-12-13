@@ -230,7 +230,7 @@ const Blogs: React.FC = () => {
           >
             <h2 className="text-2xl font-bold mb-3">Filter by Category</h2>
             <p className="text-zinc-500 text-sm">
-              Find exactly what you're looking for
+              Find exactly what you&apos;re looking for
             </p>
           </motion.div>
 

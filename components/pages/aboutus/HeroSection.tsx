@@ -86,11 +86,11 @@ const HeroSection = () => {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
             The Story Behind{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400">
-              Writers' Haven
+              Writers&apos; Haven
             </span>
           </h1>
           <p className="text-xl text-zinc-400 leading-relaxed">
-            We're building a community where ideas flourish and stories come to
+            We&apos;re building a community where ideas flourish and stories come to
             life. Learn about our journey and the people making it possible.
           </p>
         </motion.div>

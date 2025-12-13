@@ -203,7 +203,7 @@ const Otp = () => {
                 {/* Footer */}
                 <div className="mt-8 text-center">
                   <p className="text-sm text-zinc-400">
-                    Didn't receive a code?{" "}
+                    Didn&apos;t receive a code?{" "}
                     <button
                       onClick={() => router.push("/forgetpassword")}
                       className="font-semibold text-cyan-400 hover:text-cyan-300 transition-colors duration-300"
@@ -227,7 +227,7 @@ const Otp = () => {
               className="mt-6 text-center"
             >
               <p className="text-sm text-zinc-500">
-                Check your spam folder if you don't see the email
+                Check your spam folder if you don&apos;t see the email
               </p>
             </motion.div>
           </motion.div>

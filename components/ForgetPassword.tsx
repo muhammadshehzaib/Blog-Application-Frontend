@@ -205,7 +205,7 @@ const ForgetPassword = () => {
               className="mt-6 text-center"
             >
               <p className="text-sm text-zinc-500">
-                We'll send a verification code to your email address
+                We&apos;ll send a verification code to your email address
               </p>
             </motion.div>
           </motion.div>

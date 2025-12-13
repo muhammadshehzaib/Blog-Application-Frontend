@@ -158,7 +158,7 @@ const FooterSubscribe = () => {
                   Start Your Writing Journey Today
                 </h3>
                 <p className="text-zinc-400 mb-6 leading-relaxed">
-                  Join Writers' Haven and turn your passion for writing into
+                  Join Writers&apos; Haven and turn your passion for writing into
                   engaging content that reaches readers worldwide.
                 </p>
 

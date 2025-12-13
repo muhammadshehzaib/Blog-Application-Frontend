@@ -86,7 +86,7 @@ function Footer() {
                 </svg>
               </div>
               <span className="text-2xl font-bold text-white group-hover:text-emerald-400 transition-colors duration-300">
-                Writers' Haven
+                Writers&apos; Haven
               </span>
             </Link>
             <p className="text-zinc-400 leading-relaxed max-w-md">
@@ -190,7 +190,7 @@ function Footer() {
         >
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-zinc-500 text-sm text-center md:text-left">
-              © {new Date().getFullYear()} Writers' Haven. All rights reserved.
+              © {new Date().getFullYear()} Writers&apos; Haven. All rights reserved.
             </p>
 
 

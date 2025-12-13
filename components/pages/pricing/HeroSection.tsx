@@ -95,8 +95,8 @@ const HeroSection = () => {
             transition={{ delay: 0.5, duration: 0.8 }}
             className="text-xl text-zinc-400 leading-relaxed mb-10 max-w-3xl mx-auto"
           >
-            Whether you're just starting your writing journey or running a
-            professional publication, we have a plan that's perfect for you.
+            Whether you&apos;re just starting your writing journey or running a
+            professional publication, we have a plan that&apos;s perfect for you.
           </motion.p>
 
           {/* Features */}
