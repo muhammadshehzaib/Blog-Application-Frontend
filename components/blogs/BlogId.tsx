@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import useAuth from "@/hooks/useAuth";
+import useBlogSocket from "@/hooks/useBlogSocket";
 import { useRouter } from "next/navigation";
 import Comments from "./Comments";
 import Reactions from "./reactions/Reactions";
@@ -28,6 +29,7 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
   const [comments, setComments] = useState<string>("");
   const [reactions, setReactions] = useState<string | null>(null);
   const [blogs, setBlogs] = useState<Blog | null>(null);
+  const { liveComments, counts } = useBlogSocket(blog);
 
   const fetchData = async () => {
     try {
@@ -184,16 +186,19 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
 
                   {/* Reactions Section */}
                   <div className="pt-6 border-t border-zinc-800">
-                    {blogs.reactions.length === 0 ? (
-                      <Reactions onReactionSelected={handleReactionSelected} />
-                    ) : (
-                      blogs.reactions.map((reaction) => (
-                        <Reactions
-                          key={reaction.reactions}
-                          onReactionSelected={handleReactionSelected}
-                        />
-                      ))
+                    {counts && Object.keys(counts).length > 0 && (
+                      <div className="flex flex-wrap gap-3 mb-4 text-sm text-zinc-300">
+                        {Object.entries(counts).map(([type, count]) => (
+                          <span
+                            key={type}
+                            className="px-3 py-1 bg-zinc-900 border border-zinc-800 rounded-full"
+                          >
+                            <strong className="text-white">{type}</strong>: {count}
+                          </span>
+                        ))}
+                      </div>
                     )}
+                    <Reactions onReactionSelected={handleReactionSelected} />
                   </div>
                 </div>
 
@@ -253,14 +258,16 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
 
                   {/* Comments List */}
                   <div className="space-y-4">
-                    {blogs?.comments.length !== 0 ? (
-                      blogs?.comments.map((comment) => (
-                        <Comments
-                          key={comment.id}
-                          comment={comment.comment}
-                          blogId={blog}
-                        />
-                      ))
+                    {(blogs?.comments?.length ?? 0) + liveComments.length > 0 ? (
+                      [...(blogs?.comments ?? []), ...liveComments].map(
+                        (comment: any, idx) => (
+                          <Comments
+                            key={comment._id ?? comment.id ?? idx}
+                            comment={comment.comment}
+                            blogId={blog}
+                          />
+                        ),
+                      )
                     ) : (
                       <div className="text-center py-12">
                         <div className="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center mx-auto mb-4">
