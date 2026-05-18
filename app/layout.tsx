@@ -1,50 +1,71 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+  axes: ["opsz", "SOFT"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
-    default: "Writer's Heaven - Your Creative Blogging Space",
-    template: "%s | Writer's Heaven"
+    default: "Writers' Haven — A Quiet Place for Loud Ideas",
+    template: "%s · Writers' Haven",
   },
-  description: "Writer's Heaven is a modern blogging platform where writers share their stories, ideas, and creativity. Join our community of passionate writers and readers.",
-  keywords: ["blog", "writing", "creative writing", "articles", "stories", "writers community", "blogging platform"],
-  authors: [{ name: "Writer's Heaven Team" }],
-  creator: "Writer's Heaven",
-  publisher: "Writer's Heaven",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL("https://writersheaven.com"), // Replace with your actual domain
-  alternates: {
-    canonical: "/",
-  },
+  description:
+    "Writers' Haven is a publishing platform for essays, reporting, and short fiction. No engagement loops. No infinite scroll. Just writing.",
+  keywords: [
+    "blog",
+    "writing",
+    "essays",
+    "reporting",
+    "fiction",
+    "publishing",
+  ],
+  authors: [{ name: "Writers' Haven" }],
+  creator: "Writers' Haven",
+  publisher: "Writers' Haven",
+  formatDetection: { email: false, address: false, telephone: false },
+  metadataBase: new URL("https://writersheaven.com"),
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Writer's Heaven - Your Creative Blogging Space",
-    description: "A modern blogging platform where writers share their stories, ideas, and creativity.",
+    title: "Writers' Haven — A Quiet Place for Loud Ideas",
+    description:
+      "A publishing platform for essays, reporting, and short fiction.",
     url: "https://writersheaven.com",
-    siteName: "Writer's Heaven",
+    siteName: "Writers' Haven",
     locale: "en_US",
     type: "website",
     images: [
       {
-        url: "/og-image.jpg", // Add your Open Graph image
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Writer's Heaven - Blogging Platform",
+        alt: "Writers' Haven",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Writer's Heaven - Your Creative Blogging Space",
-    description: "A modern blogging platform where writers share their stories, ideas, and creativity.",
-    images: ["/twitter-image.jpg"], // Add your Twitter card image
-    creator: "@writersheaven", // Replace with your Twitter handle
+    title: "Writers' Haven — A Quiet Place for Loud Ideas",
+    description:
+      "A publishing platform for essays, reporting, and short fiction.",
+    images: ["/twitter-image.jpg"],
+    creator: "@writersheaven",
   },
   robots: {
     index: true,
@@ -62,9 +83,7 @@ export const metadata: Metadata = {
       { url: "/favicon.ico" },
       { url: "/writers_heaven_icon.svg", type: "image/svg+xml" },
     ],
-    apple: [
-      { url: "/apple-icon.png" },
-    ],
+    apple: [{ url: "/apple-icon.png" }],
   },
   manifest: "/manifest.json",
 };
@@ -75,8 +94,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html
+      lang="en"
+      className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable}`}
+    >
+      <body className="font-sans bg-ink text-paper antialiased selection:bg-accent selection:text-ink">
+        {children}
+      </body>
     </html>
   );
 }
