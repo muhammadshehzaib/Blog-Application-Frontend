@@ -18,6 +18,20 @@ interface Category {
   category: string;
 }
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.22, ease: [0.2, 0.65, 0.2, 1] as [number, number, number, number] },
+  },
+};
+
+const stagger = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
+
 const CreateBlog: React.FC = () => {
   const { isAuthenticated, token } = useAuth();
   const router = useRouter();
@@ -28,6 +42,19 @@ const CreateBlog: React.FC = () => {
     category: "",
   });
   const [categories, setCategories] = useState<Category[]>([]);
+  const [now, setNow] = useState<string>("");
+
+  useEffect(() => {
+    const tick = () => {
+      const d = new Date();
+      const hh = String(d.getHours()).padStart(2, "0");
+      const mm = String(d.getMinutes()).padStart(2, "0");
+      setNow(`${hh}:${mm}`);
+    };
+    tick();
+    const id = setInterval(tick, 30_000);
+    return () => clearInterval(id);
+  }, []);
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -113,201 +140,237 @@ const CreateBlog: React.FC = () => {
     fetchCategories();
   }, []);
 
+  const wordCount = formData.content.trim()
+    ? formData.content.trim().split(/\s+/).length
+    : 0;
+  const charCount = formData.content.length;
+  const readMin = Math.max(1, Math.round(wordCount / 220));
+
   return (
-    <div className="relative bg-black text-white min-h-screen overflow-hidden">
-      {/* Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
-
-      {/* Floating Gradient Orbs */}
-      <motion.div
-        animate={{
-          y: [0, -30, 0],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-20 left-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
-      />
-      <motion.div
-        animate={{
-          y: [0, 30, 0],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute bottom-20 right-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
-      />
-
+    <main className="bg-ink text-paper min-h-screen">
       <Navigation />
 
-      <div className="relative z-10 flex items-center justify-center min-h-screen pt-32 pb-16 px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="w-full max-w-3xl"
-        >
-          {/* Header */}
-          <div className="text-center mb-8">
+      <section className="relative">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-24">
+          {/* Meta line */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="flex items-center gap-3 mb-10 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase"
+          >
+            <span className="text-accent">●</span>
+            <span>Draft</span>
+            <span className="text-rule">·</span>
+            <span>auto-saving</span>
+            <span className="text-rule">·</span>
+            <span>{now || "--:--"}</span>
+            <span className="flex-1 border-t border-rule" />
+            <span className="hidden md:inline">composer / new</span>
+          </motion.div>
+
+          {/* Section header */}
+          <div className="flex items-baseline gap-4 mb-12">
+            <span className="font-mono text-paper-3 text-[0.7rem] tracking-label">
+              § 01
+            </span>
+            <span className="label">Compose</span>
+            <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+            <span className="font-mono text-paper-3 text-[0.7rem] tracking-label hidden md:inline">
+              new essay
+            </span>
+          </div>
+
+          <form onSubmit={handleSubmit}>
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500"
+              variants={stagger}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-1 lg:grid-cols-12 gap-10"
             >
-              <svg
-                className="w-8 h-8 text-black"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                />
-              </svg>
-            </motion.div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-3">
-              Create Your{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400">
-                Story
-              </span>
-            </h1>
-            <p className="text-zinc-400 text-lg">
-              Share your thoughts and ideas with the world
-            </p>
-          </div>
+              {/* LEFT: Composer */}
+              <div className="lg:col-span-8">
+                {/* Tagline / kicker */}
+                <motion.div variants={fadeUp}>
+                  <span className="font-mono text-xs text-paper-3 block mb-3">
+                    &gt; title
+                  </span>
+                </motion.div>
 
-          {/* Form Card */}
-          <div className="relative bg-zinc-950 border border-zinc-900 rounded-3xl p-8 md:p-10 overflow-hidden">
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-blue-500/5 to-purple-500/5"></div>
-
-            <form onSubmit={handleSubmit} className="relative space-y-6">
-              {/* Title Input */}
-              <div>
-                <label
-                  className="block text-sm font-medium text-zinc-300 mb-2"
-                  htmlFor="title"
-                >
-                  Title
-                </label>
-                <input
-                  className="w-full px-4 py-3 border border-zinc-800 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-zinc-900 text-white placeholder-zinc-500 transition-all duration-300"
-                  id="title"
-                  name="title"
-                  type="text"
-                  placeholder="Enter your blog title"
-                  value={formData.title}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              {/* Content Textarea */}
-              <div>
-                <label
-                  className="block text-sm font-medium text-zinc-300 mb-2"
-                  htmlFor="content"
-                >
-                  Content
-                </label>
-                <textarea
-                  className="w-full px-4 py-3 border border-zinc-800 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-zinc-900 text-white placeholder-zinc-500 transition-all duration-300 min-h-[200px] resize-y"
-                  id="content"
-                  name="content"
-                  placeholder="Write your story here..."
-                  value={formData.content}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              {/* Category Select */}
-              <div>
-                <label
-                  className="block text-sm font-medium text-zinc-300 mb-2"
-                  htmlFor="category"
-                >
-                  Category
-                </label>
-                <select
-                  className="w-full px-4 py-3 border border-zinc-800 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-zinc-900 text-white transition-all duration-300"
-                  id="category"
-                  name="category"
-                  value={formData.category}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="" disabled className="text-zinc-500">
-                    Select a category
-                  </option>
-                  {categories.map((category) => (
-                    <option key={category._id} value={category._id}>
-                      {category.category}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Image Upload */}
-              <div>
-                <label
-                  className="block text-sm font-medium text-zinc-300 mb-2"
-                  htmlFor="image"
-                >
-                  Cover Image
-                </label>
-                <div className="relative">
+                {/* Title input — Fraunces, large, transparent */}
+                <motion.div variants={fadeUp}>
                   <input
-                    className="w-full px-4 py-3 border border-zinc-800 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-zinc-900 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-emerald-500 file:text-black file:font-semibold hover:file:bg-emerald-400 transition-all duration-300"
-                    id="image"
-                    name="image"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
+                    id="title"
+                    name="title"
+                    type="text"
+                    placeholder="An untitled piece"
+                    value={formData.title}
+                    onChange={handleInputChange}
                     required
+                    className="w-full bg-transparent border-0 border-b border-rule focus:border-accent text-paper font-display text-[clamp(1.75rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.03em] py-3 px-0 placeholder:text-paper-3/60 outline-none transition-colors"
                   />
-                </div>
-                {formData.image && (
-                  <p className="mt-2 text-sm text-zinc-400">
-                    Selected: {formData.image.name}
-                  </p>
-                )}
+                </motion.div>
+
+                {/* Byline + meta */}
+                <motion.div
+                  variants={fadeUp}
+                  className="mt-4 flex items-baseline gap-3 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase"
+                >
+                  <span>by you</span>
+                  <span className="text-rule">/</span>
+                  <span>{wordCount} words</span>
+                  <span className="text-rule">/</span>
+                  <span>{readMin} min read</span>
+                </motion.div>
+
+                {/* Body */}
+                <motion.div variants={fadeUp} className="mt-10">
+                  <span className="font-mono text-xs text-paper-3 block mb-2">
+                    &gt; body
+                  </span>
+                  <textarea
+                    id="content"
+                    name="content"
+                    placeholder="Start writing. The page is yours."
+                    value={formData.content}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full bg-transparent border-0 border-b border-rule focus:border-accent text-paper font-sans text-[1.0625rem] leading-[1.7] py-3 px-0 min-h-[420px] resize-y placeholder:text-paper-3/60 outline-none transition-colors"
+                  />
+                  <div className="mt-3 flex items-baseline gap-3 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase">
+                    <span>{charCount} chars</span>
+                    <span className="text-rule">·</span>
+                    <span>plain text · markdown ok</span>
+                  </div>
+                </motion.div>
               </div>
 
-              {/* Submit Button */}
-              <motion.button
-                type="submit"
-                whileHover={{
-                  scale: 1.02,
-                  boxShadow: "0 0 30px rgba(16, 185, 129, 0.3)",
-                }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full py-4 px-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-bold rounded-xl transition-all duration-300 shadow-lg shadow-emerald-500/20"
-              >
-                Publish Blog
-              </motion.button>
-            </form>
+              {/* RIGHT: Sidebar */}
+              <div className="lg:col-span-4 lg:pl-8 lg:border-l lg:border-rule">
+                <motion.div variants={fadeUp} className="mb-10">
+                  <p className="label mb-5">// metadata</p>
 
-            {/* Decorative Elements */}
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-tr from-blue-500/10 to-transparent rounded-full blur-3xl"></div>
-          </div>
-        </motion.div>
-      </div>
+                  {/* Category */}
+                  <div className="mb-8">
+                    <span className="font-mono text-xs text-paper-3 block mb-2">
+                      &gt; category
+                    </span>
+                    <select
+                      id="category"
+                      name="category"
+                      value={formData.category}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full bg-transparent border-0 border-b border-rule focus:border-accent text-paper font-mono text-sm py-2 px-0 outline-none transition-colors appearance-none"
+                    >
+                      <option value="" disabled className="bg-ink text-paper-3">
+                        select one
+                      </option>
+                      {categories.map((category) => (
+                        <option
+                          key={category._id}
+                          value={category._id}
+                          className="bg-ink text-paper"
+                        >
+                          {category.category}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Image upload — framed with ascii corners */}
+                  <div className="mb-8">
+                    <span className="font-mono text-xs text-paper-3 block mb-2">
+                      &gt; cover image
+                    </span>
+                    <div className="ascii-frame border border-rule bg-ink-2 p-5">
+                      <label
+                        htmlFor="image"
+                        className="block cursor-pointer text-center"
+                      >
+                        <span className="font-mono text-[0.7rem] tracking-label text-paper-3 uppercase block mb-2">
+                          {formData.image ? "[ replace file ]" : "[ choose file ]"}
+                        </span>
+                        <span className="font-mono text-xs text-paper-2 block break-all">
+                          {formData.image
+                            ? formData.image.name
+                            : "no file selected"}
+                        </span>
+                      </label>
+                      <input
+                        id="image"
+                        name="image"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        required
+                        className="sr-only"
+                      />
+                    </div>
+                    {formData.image && (
+                      <p className="mt-3 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase">
+                        {(formData.image.size / 1024).toFixed(1)} kb
+                      </p>
+                    )}
+                  </div>
+                </motion.div>
+
+                {/* Spec block */}
+                <motion.div variants={fadeUp} className="mb-10">
+                  <pre className="font-mono text-[0.7rem] text-paper-3 leading-relaxed select-none whitespace-pre">
+{`┌─ status ───────────────────
+│  state    draft
+│  visible  no
+│  format   essay / longform
+└────────────────────────────`}
+                  </pre>
+                </motion.div>
+
+                {/* Submit + reset */}
+                <motion.div
+                  variants={fadeUp}
+                  className="flex flex-col gap-3"
+                >
+                  <button
+                    type="submit"
+                    className="group inline-flex items-center justify-center gap-3 bg-accent text-ink px-6 py-3.5 hover:bg-paper transition-colors duration-200 ease-out"
+                  >
+                    <span className="font-mono text-xs opacity-70">▸</span>
+                    <span className="font-medium text-sm">Publish essay</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setFormData({
+                        title: "",
+                        content: "",
+                        image: null,
+                        category: "",
+                      })
+                    }
+                    className="group inline-flex items-center justify-center gap-2 border border-rule text-paper-2 px-6 py-3 hover:border-paper-3 hover:bg-ink-2 hover:text-paper transition-colors duration-200 ease-out"
+                  >
+                    <span className="font-mono text-[0.7rem] text-paper-3">
+                      [
+                    </span>
+                    <span className="text-sm">Clear draft</span>
+                    <span className="font-mono text-[0.7rem] text-paper-3">
+                      ]
+                    </span>
+                  </button>
+                  <p className="font-mono text-[0.7rem] tracking-label text-paper-3 uppercase mt-2">
+                    Submits to review queue · approved pieces appear in /blogs
+                  </p>
+                </motion.div>
+              </div>
+            </motion.div>
+          </form>
+        </div>
+      </section>
 
       <Footer />
-    </div>
+    </main>
   );
 };
 
-export default CreateBlog
+export default CreateBlog;

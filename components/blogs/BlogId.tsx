@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import useAuth from "@/hooks/useAuth";
 import useBlogSocket from "@/hooks/useBlogSocket";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Comments from "./Comments";
 import Reactions from "./reactions/Reactions";
 import Navigation from "../Navigation";
@@ -17,11 +18,28 @@ interface Blog {
   image: string;
   reactions: { reactions: string }[];
   comments: { id: string; comment: string }[];
+  createdAt?: string;
+  author?: string;
+  category?: { category: string };
 }
 
 interface BlogIdProps {
   blog: string;
 }
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.22, ease: [0.2, 0.65, 0.2, 1] as const },
+  },
+};
+
+const stagger = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
 
 const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
   const router = useRouter();
@@ -34,7 +52,7 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${process.env.DEPLOYMENTLINK}/blogs/${blog}`
+        `${process.env.DEPLOYMENTLINK}/blogs/${blog}`,
       );
       const data: Blog = await response.json();
 
@@ -110,196 +128,244 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
     fetchData();
   }, []);
 
+  const totalComments =
+    (blogs?.comments?.length ?? 0) + (liveComments?.length ?? 0);
+  const totalReactions = counts
+    ? Object.values(counts).reduce((a, b) => a + b, 0)
+    : 0;
+
+  const wordCount = blogs?.content
+    ? blogs.content.trim().split(/\s+/).filter(Boolean).length
+    : 0;
+  const readMinutes = Math.max(1, Math.round(wordCount / 220));
+
+  const dateStr = blogs?.createdAt
+    ? new Date(blogs.createdAt).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })
+    : "";
+
   return (
-    <>
+    <main className="bg-ink text-paper min-h-screen">
       <Navigation />
 
-      <div className="relative bg-black text-white min-h-screen overflow-hidden">
-        {/* Grid Background */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
-
-        {/* Floating Gradient Orbs */}
-        <motion.div
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-20 left-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            y: [0, 30, 0],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute bottom-20 right-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
-        />
-
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16">
-          {blogs && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              {/* Blog Image */}
+      {blogs ? (
+        <motion.article
+          variants={stagger}
+          initial="hidden"
+          animate="visible"
+          className="relative"
+        >
+          {/* ─────────── HEADER ─────────── */}
+          <header className="border-b border-rule">
+            <div className="max-w-3xl mx-auto px-6 lg:px-10 pt-16 pb-12">
               <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8 }}
-                className="relative rounded-2xl overflow-hidden mb-8 shadow-2xl"
+                variants={fadeUp}
+                className="flex items-center gap-3 mb-10 font-mono text-[0.7rem] tracking-label uppercase text-paper-3"
               >
+                <Link
+                  href="/blogs"
+                  className="hover:text-accent transition-colors inline-flex items-center gap-1.5"
+                >
+                  <span>←</span>
+                  <span>archive</span>
+                </Link>
+                <span className="text-rule">/</span>
+                <span>{blogs.category?.category || "essay"}</span>
+                <span className="flex-1 border-t border-rule" />
+                {dateStr && <span className="hidden md:inline">{dateStr}</span>}
+              </motion.div>
+
+              <motion.h1
+                variants={fadeUp}
+                className="font-display text-paper text-[clamp(2.25rem,5.5vw,4rem)] leading-[1.0] tracking-[-0.035em] text-balance"
+              >
+                {blogs.title}
+              </motion.h1>
+
+              <motion.div
+                variants={fadeUp}
+                className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[0.7rem] tracking-label uppercase text-paper-3 pb-1"
+              >
+                <span className="inline-flex items-center gap-2">
+                  <span className="text-accent">▎</span>
+                  <span>
+                    by{" "}
+                    <span className="text-paper">
+                      {blogs.author || "anon"}
+                    </span>
+                  </span>
+                </span>
+                <span className="text-rule">·</span>
+                <span>{readMinutes} min read</span>
+                <span className="text-rule">·</span>
+                <span>{wordCount} words</span>
+              </motion.div>
+            </div>
+          </header>
+
+          {/* ─────────── HERO IMAGE ─────────── */}
+          {blogs.image && (
+            <motion.div
+              variants={fadeUp}
+              className="border-b border-rule bg-ink-2"
+            >
+              <div className="max-w-6xl mx-auto">
                 <Image
                   src={blogs.image}
                   alt={blogs.title}
-                  width={1200}
-                  height={600}
-                  className="w-full h-96 object-cover"
+                  width={1600}
+                  height={900}
+                  className="w-full h-auto max-h-[70vh] object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-              </motion.div>
-
-              {/* Blog Content Card */}
-              <div className="relative bg-zinc-950 border border-zinc-900 rounded-3xl p-8 md:p-12 mb-8 overflow-hidden">
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-blue-500/5 to-purple-500/5"></div>
-
-                <div className="relative">
-                  {/* Title */}
-                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white leading-tight">
-                    {blogs.title}
-                  </h1>
-
-                  {/* Content */}
-                  <div className="text-lg text-zinc-300 leading-relaxed mb-8 whitespace-pre-wrap">
-                    {blogs.content}
-                  </div>
-
-                  {/* Reactions Section */}
-                  <div className="pt-6 border-t border-zinc-800">
-                    {counts && Object.keys(counts).length > 0 && (
-                      <div className="flex flex-wrap gap-3 mb-4 text-sm text-zinc-300">
-                        {Object.entries(counts).map(([type, count]) => (
-                          <span
-                            key={type}
-                            className="px-3 py-1 bg-zinc-900 border border-zinc-800 rounded-full"
-                          >
-                            <strong className="text-white">{type}</strong>: {count}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    <Reactions onReactionSelected={handleReactionSelected} />
-                  </div>
-                </div>
-
-                {/* Decorative Elements */}
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-tr from-blue-500/10 to-transparent rounded-full blur-3xl"></div>
-              </div>
-
-              {/* Comments Section */}
-              <div className="relative bg-zinc-950 border border-zinc-900 rounded-3xl p-8 md:p-12 overflow-hidden">
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-blue-500/5 to-emerald-500/5"></div>
-
-                <div className="relative">
-                  {/* Comments Header */}
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                      <svg
-                        className="w-5 h-5 text-black"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                        />
-                      </svg>
-                    </div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-white">
-                      Comments
-                    </h2>
-                  </div>
-
-                  {/* Add Comment Form */}
-                  <form onSubmit={handleComment} className="mb-8">
-                    <div className="flex flex-col sm:flex-row gap-3">
-                      <input
-                        type="text"
-                        value={comments}
-                        onChange={handleInputChange}
-                        placeholder="Share your thoughts..."
-                        className="flex-1 px-4 py-3 border border-zinc-800 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-zinc-900 text-white placeholder-zinc-500 transition-all duration-300"
-                      />
-                      <motion.button
-                        type="submit"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-bold rounded-xl transition-all duration-300 shadow-lg shadow-emerald-500/20 whitespace-nowrap"
-                      >
-                        Submit
-                      </motion.button>
-                    </div>
-                  </form>
-
-                  {/* Comments List */}
-                  <div className="space-y-4">
-                    {(blogs?.comments?.length ?? 0) + liveComments.length > 0 ? (
-                      [...(blogs?.comments ?? []), ...liveComments].map(
-                        (comment: any, idx) => (
-                          <Comments
-                            key={comment._id ?? comment.id ?? idx}
-                            comment={comment.comment}
-                            blogId={blog}
-                          />
-                        ),
-                      )
-                    ) : (
-                      <div className="text-center py-12">
-                        <div className="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <svg
-                            className="w-8 h-8 text-zinc-600"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                            />
-                          </svg>
-                        </div>
-                        <p className="text-zinc-500">
-                          No comments yet. Be the first to share your thoughts!
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
               </div>
             </motion.div>
           )}
+
+          {/* ─────────── BODY ─────────── */}
+          <section className="border-b border-rule">
+            <div className="max-w-3xl mx-auto px-6 lg:px-10 py-20">
+              <motion.div
+                variants={fadeUp}
+                className="font-display text-paper text-[1.2rem] md:text-[1.25rem] leading-[1.7] tracking-[-0.005em] whitespace-pre-wrap"
+              >
+                {blogs.content}
+              </motion.div>
+
+              <motion.div
+                variants={fadeUp}
+                className="mt-16 pt-8 border-t border-rule font-mono text-[0.7rem] tracking-label uppercase text-paper-3 flex items-center gap-3"
+              >
+                <span className="text-accent">●</span>
+                <span>end of piece</span>
+                <span className="flex-1 border-t border-rule" />
+                <span className="hidden md:inline">{dateStr}</span>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* ─────────── REACTIONS ─────────── */}
+          <section className="border-b border-rule">
+            <div className="max-w-3xl mx-auto px-6 lg:px-10 py-14">
+              <div className="flex items-baseline gap-4 mb-8">
+                <span className="font-mono text-paper-3 text-[0.7rem] tracking-label">
+                  §
+                </span>
+                <span className="label">React</span>
+                <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+                <span className="font-mono text-paper-3 text-[0.7rem] tracking-label hidden md:inline">
+                  {totalReactions} total
+                </span>
+              </div>
+
+              {counts && Object.keys(counts).length > 0 && (
+                <div className="mb-6 font-mono text-[0.75rem] text-paper-3 leading-relaxed">
+                  <pre className="whitespace-pre-wrap">
+                    {Object.entries(counts)
+                      .map(
+                        ([type, count]) =>
+                          `›  ${type.padEnd(10, " ")}  ${String(count).padStart(3, " ")}`,
+                      )
+                      .join("\n")}
+                  </pre>
+                </div>
+              )}
+
+              <div className="border border-rule bg-ink-2 p-6">
+                <Reactions onReactionSelected={handleReactionSelected} />
+              </div>
+            </div>
+          </section>
+
+          {/* ─────────── COMMENTS ─────────── */}
+          <section>
+            <div className="max-w-3xl mx-auto px-6 lg:px-10 py-14">
+              <div className="flex items-baseline gap-4 mb-8">
+                <span className="font-mono text-paper-3 text-[0.7rem] tracking-label">
+                  §
+                </span>
+                <span className="label">Thread</span>
+                <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+                <span className="font-mono text-paper-3 text-[0.7rem] tracking-label hidden md:inline-flex items-center gap-2">
+                  <span className="text-accent">●</span>
+                  <span>{totalComments} live</span>
+                </span>
+              </div>
+
+              {/* Add comment form — terminal input */}
+              <form onSubmit={handleComment} className="mb-12">
+                <label className="block">
+                  <span className="font-mono text-xs text-paper-3 block mb-2">
+                    &gt; write a reply
+                  </span>
+                  <div className="flex items-center gap-3 border-b border-rule focus-within:border-accent transition-colors">
+                    <span className="font-mono text-paper-3 text-sm select-none">
+                      ›
+                    </span>
+                    <input
+                      type="text"
+                      value={comments}
+                      onChange={handleInputChange}
+                      placeholder="type your comment"
+                      className="flex-1 bg-transparent border-0 text-paper py-2 px-0 font-mono text-sm placeholder:text-paper-3/60 outline-none"
+                    />
+                  </div>
+                </label>
+                <button
+                  type="submit"
+                  className="group mt-5 inline-flex items-center gap-2 border border-paper text-paper px-5 py-2.5 hover:bg-paper hover:text-ink transition-colors"
+                >
+                  <span className="font-mono text-[0.7rem] opacity-60 group-hover:opacity-100">
+                    [
+                  </span>
+                  <span className="text-sm">Post comment</span>
+                  <span className="font-mono text-[0.7rem] opacity-60 group-hover:opacity-100">
+                    ]
+                  </span>
+                </button>
+              </form>
+
+              {/* Thread */}
+              <div className="space-y-1">
+                {totalComments > 0 ? (
+                  [...(blogs?.comments ?? []), ...liveComments].map(
+                    (comment: any, idx) => (
+                      <Comments
+                        key={comment._id ?? comment.id ?? idx}
+                        comment={comment.comment}
+                        blogId={blog}
+                      />
+                    ),
+                  )
+                ) : (
+                  <div className="border border-rule p-10 text-center font-mono text-sm text-paper-3">
+                    <p>// no replies yet</p>
+                    <p className="mt-2 text-paper-3/70">
+                      ▸ be the first to weigh in
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+        </motion.article>
+      ) : (
+        <div className="max-w-3xl mx-auto px-6 lg:px-10 py-32">
+          <div className="font-mono text-sm text-paper-3 animate-pulse">
+            <p>› loading piece…</p>
+            <div className="mt-8 space-y-3">
+              <div className="h-10 bg-rule max-w-md" />
+              <div className="h-10 bg-rule max-w-sm" />
+              <div className="h-3 bg-rule max-w-xs mt-6" />
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
       <Footer />
-    </>
+    </main>
   );
 };
 

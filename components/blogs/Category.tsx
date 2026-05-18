@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Navigation from "../Navigation";
 import Footer from "../Footer";
 import useAuth from "@/hooks/useAuth";
@@ -10,12 +10,45 @@ interface FormData {
   category: string;
 }
 
+interface CategoryItem {
+  _id: string;
+  category: string;
+  createdAt?: string;
+}
+
 const Category = () => {
   const [formData, setFormData] = useState<FormData>({
     category: "",
   });
+  const [categories, setCategories] = useState<CategoryItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { isAuthenticated, token } = useAuth();
   const router = useRouter();
+
+  const fetchCategories = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(
+        `${process.env.DEPLOYMENTLINK}/blogscategories`,
+        { method: "GET" }
+      );
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Categories cannot be fetched", errorData);
+        return;
+      }
+      const data = await response.json();
+      setCategories(Array.isArray(data) ? data : []);
+    } catch (error: any) {
+      console.error("Categories not fetched:", error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -31,7 +64,7 @@ const Category = () => {
     e.preventDefault();
     if (isAuthenticated) {
       try {
-        // Keeping your existing FormData logic
+        // Keeping existing FormData logic
         const data = new FormData();
         data.append("category", formData.category);
 
@@ -64,112 +97,183 @@ const Category = () => {
     }
   };
 
+  const pad = (n: number, w = 3) => String(n).padStart(w, " ");
+
   return (
-    <div className="relative bg-black text-white min-h-screen overflow-hidden">
-      {/* --- Background Effects --- */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
-
-      {/* Floating Orbs */}
-      <motion.div
-        animate={{ y: [0, -30, 0], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-20 left-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"
-      />
-      <motion.div
-        animate={{ y: [0, 30, 0], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-20 right-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
-      />
-
+    <main className="bg-ink text-paper min-h-screen">
       <Navigation />
 
-      <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-100px)] px-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="w-full max-w-md"
-        >
-          {/* Card Container */}
-          <div className="bg-zinc-950 border border-zinc-900 rounded-3xl p-8 md:p-10 shadow-2xl relative overflow-hidden">
-            {/* Gradient Top Border */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-500"></div>
+      <section className="relative">
+        <div className="max-w-5xl mx-auto px-6 lg:px-10 pt-16 pb-24">
+          {/* Meta line */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="flex items-center gap-3 mb-10 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase"
+          >
+            <span className="text-accent">●</span>
+            <span>Admin / Taxonomy</span>
+            <span className="flex-1 border-t border-rule" />
+            <span className="hidden md:inline">categories</span>
+          </motion.div>
 
-            {/* Header */}
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 mb-4 border border-emerald-500/20">
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
-                  />
-                </svg>
-              </div>
-              <h2 className="text-2xl font-bold text-white">New Category</h2>
-              <p className="text-zinc-500 text-sm mt-2">
-                Organize your articles efficiently
+          {/* Title */}
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="mb-12"
+          >
+            <h1 className="font-display text-paper text-[clamp(2rem,5vw,3.25rem)] leading-[1.0] tracking-[-0.035em]">
+              Categories
+            </h1>
+            <p className="mt-3 text-paper-2 max-w-xl leading-relaxed">
+              Taxonomy for articles. Keep names short — one or two words is the
+              house style.
+            </p>
+          </motion.div>
+
+          {/* Section: list */}
+          <div className="flex items-baseline gap-4 mb-6">
+            <span className="font-mono text-paper-3 text-[0.7rem] tracking-label">
+              § 01
+            </span>
+            <span className="label">Existing</span>
+            <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+            <span className="font-mono text-paper-3 text-[0.7rem] tracking-label hidden md:inline">
+              {pad(categories.length)} total
+            </span>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.22, ease: "easeOut", delay: 0.04 }}
+            className="border border-rule bg-ink mb-20"
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse font-mono">
+                <thead>
+                  <tr>
+                    <th className="py-3 px-4 label text-left w-[60px]">#</th>
+                    <th className="py-3 px-4 label text-left">Name</th>
+                    <th className="py-3 px-4 label text-left hidden md:table-cell">
+                      Id
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {isLoading ? (
+                    [...Array(4)].map((_, i) => (
+                      <tr key={i} className="border-t border-rule">
+                        <td className="p-4">
+                          <div className="h-3 w-6 bg-rule animate-pulse" />
+                        </td>
+                        <td className="p-4">
+                          <div className="h-3 w-40 bg-rule animate-pulse" />
+                        </td>
+                        <td className="p-4 hidden md:table-cell">
+                          <div className="h-3 w-24 bg-rule animate-pulse" />
+                        </td>
+                      </tr>
+                    ))
+                  ) : categories.length > 0 ? (
+                    categories.map((c, i) => (
+                      <motion.tr
+                        key={c._id}
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.2,
+                          ease: "easeOut",
+                          delay: Math.min(i * 0.04, 0.4),
+                        }}
+                        className="group border-t border-rule hover:bg-ink-2 transition-colors duration-200"
+                      >
+                        <td className="py-3 px-4 text-[0.7rem] tracking-label text-paper-3 uppercase align-middle">
+                          {String(i + 1).padStart(2, "0")}
+                        </td>
+                        <td className="py-3 px-4 align-middle">
+                          <span className="font-sans text-paper text-sm group-hover:text-accent transition-colors">
+                            {c.category}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 align-middle hidden md:table-cell text-[0.7rem] tracking-label text-paper-3 uppercase">
+                          #{c._id.slice(-8)}
+                        </td>
+                      </motion.tr>
+                    ))
+                  ) : (
+                    <tr className="border-t border-rule">
+                      <td
+                        colSpan={3}
+                        className="py-16 px-6 text-center font-mono text-sm text-paper-3"
+                      >
+                        // no categories yet — create the first below
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+
+          {/* Section: create */}
+          <div className="flex items-baseline gap-4 mb-6">
+            <span className="font-mono text-paper-3 text-[0.7rem] tracking-label">
+              § 02
+            </span>
+            <span className="label">Create</span>
+            <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+            <span className="font-mono text-paper-3 text-[0.7rem] tracking-label hidden md:inline">
+              new entry
+            </span>
+          </div>
+
+          <motion.form
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.22, ease: "easeOut", delay: 0.08 }}
+            className="grid grid-cols-1 md:grid-cols-12 gap-8"
+          >
+            <div className="md:col-span-8">
+              <label htmlFor="category">
+                <span className="font-mono text-xs text-paper-3 block mb-2">
+                  &gt; name
+                </span>
+                <input
+                  id="category"
+                  name="category"
+                  type="text"
+                  placeholder="e.g. technology"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full bg-transparent border-0 border-b border-rule focus:border-accent text-paper font-mono text-base py-3 px-0 placeholder:text-paper-3/60 outline-none transition-colors"
+                />
+              </label>
+              <p className="mt-3 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase">
+                lowercase · no punctuation · &lt;= 24 chars
               </p>
             </div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label
-                  className="block text-sm font-medium text-zinc-300 mb-2"
-                  htmlFor="category"
-                >
-                  Category Name
-                </label>
-                <div className="relative group">
-                  <input
-                    className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all duration-300"
-                    id="category"
-                    name="category"
-                    type="text"
-                    placeholder="e.g., Technology, Lifestyle..."
-                    value={formData.category}
-                    onChange={handleInputChange}
-                    required
-                  />
-                  {/* Subtle glow effect on hover/focus */}
-                  <div className="absolute inset-0 rounded-xl bg-emerald-500/5 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300"></div>
-                </div>
-              </div>
-
-              <motion.button
+            <div className="md:col-span-4 flex md:items-end">
+              <button
                 type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full py-3.5 px-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-bold rounded-xl shadow-lg shadow-emerald-500/20 transition-all duration-300 flex items-center justify-center gap-2"
+                className="group inline-flex items-center justify-center gap-3 bg-accent text-ink px-6 py-3 w-full md:w-auto hover:bg-paper transition-colors duration-200 ease-out"
               >
-                <span>Add Category</span>
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  />
-                </svg>
-              </motion.button>
-            </form>
-          </div>
-        </motion.div>
-      </div>
+                <span className="font-mono text-xs opacity-70">▸</span>
+                <span className="font-medium text-sm">Add category</span>
+              </button>
+            </div>
+          </motion.form>
+        </div>
+      </section>
+
       <Footer />
-    </div>
+    </main>
   );
 };
 

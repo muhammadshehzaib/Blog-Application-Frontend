@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Admin from "./Admin";
 import Navigation from "../Navigation";
 import Footer from "../Footer";
-import Example from "../buttons/CreateCategory"; // Assuming this is your modal trigger
+import Example from "../buttons/CreateCategory";
 import { motion } from "framer-motion";
 
 interface Blog {
@@ -17,8 +17,10 @@ interface Blog {
 const AdminPanel = () => {
   const [blogData, setBlogData] = useState<Blog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [filter, setFilter] = useState<"all" | "pending" | "approved" | "rejected">(
+    "all"
+  );
 
-  // Added a refresh trigger mechanism so you can re-fetch after actions in the future
   const fetchBlogs = async () => {
     try {
       setIsLoading(true);
@@ -39,111 +41,224 @@ const AdminPanel = () => {
     fetchBlogs();
   }, []);
 
+  const counts = blogData.reduce(
+    (acc, b) => {
+      const s = (b.status || "").toLowerCase();
+      if (s === "approved" || s === "published") acc.approved += 1;
+      else if (s === "disapproved" || s === "rejected") acc.rejected += 1;
+      else acc.pending += 1;
+      return acc;
+    },
+    { approved: 0, rejected: 0, pending: 0 }
+  );
+  const total = blogData.length;
+
+  const filtered = blogData.filter((b) => {
+    if (filter === "all") return true;
+    const s = (b.status || "").toLowerCase();
+    if (filter === "approved") return s === "approved" || s === "published";
+    if (filter === "rejected") return s === "disapproved" || s === "rejected";
+    return !(
+      s === "approved" ||
+      s === "published" ||
+      s === "disapproved" ||
+      s === "rejected"
+    );
+  });
+
+  const pad = (n: number, w = 3) => String(n).padStart(w, " ");
+
   return (
-    <div className="relative bg-black text-white min-h-screen overflow-hidden">
-      {/* --- Background Effects (Consistent with other pages) --- */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
-
-      {/* Floating Orbs */}
-      <motion.div
-        animate={{ y: [0, -30, 0], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-20 left-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"
-      />
-      <motion.div
-        animate={{ y: [0, 30, 0], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-20 right-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
-      />
-
+    <main className="bg-ink text-paper min-h-screen">
       <Navigation />
 
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 min-h-[calc(100vh-200px)]">
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row justify-between items-end md:items-center mb-8 gap-4">
+      <section className="relative">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-24">
+          {/* Meta line */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="flex items-center gap-3 mb-10 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase"
           >
-            <h2 className="text-4xl font-bold">
-              Admin{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
-                Dashboard
-              </span>
-            </h2>
-            <p className="text-zinc-400 mt-2">Manage your blog posts and content</p>
+            <span className="text-accent">●</span>
+            <span>Admin / Console</span>
+            <span className="flex-1 border-t border-rule" />
+            <span className="hidden md:inline">
+              {new Date().toLocaleDateString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </span>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            {/* Wrapping your existing button component */}
-            <Example />
-          </motion.div>
-        </div>
+          {/* Title row */}
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+            >
+              <h1 className="font-display text-paper text-[clamp(2rem,5vw,3.25rem)] leading-[1.0] tracking-[-0.035em]">
+                Editorial review
+              </h1>
+              <p className="mt-3 text-paper-2 max-w-xl leading-relaxed">
+                Approve or reject submissions to the queue. Decisions are
+                visible at <span className="text-accent">/blogs</span> immediately.
+              </p>
+            </motion.div>
 
-        {/* Table Container */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-zinc-950 border border-zinc-900 rounded-3xl overflow-hidden shadow-2xl relative"
-        >
-          {/* Gradient Top Border */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-500 opacity-50"></div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-zinc-900/50 border-b border-zinc-800">
-                  <th className="py-5 px-6 text-xs font-bold text-zinc-400 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="py-5 px-6 text-xs font-bold text-zinc-400 uppercase tracking-wider">
-                    Date
-                  </th>
-                  <th className="py-5 px-6 text-xs font-bold text-zinc-400 uppercase tracking-wider">
-                    Title
-                  </th>
-                  <th className="py-5 px-6 text-xs font-bold text-zinc-400 uppercase tracking-wider text-right">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-zinc-900">
-                {isLoading ? (
-                  // Skeleton Loading State
-                  [...Array(5)].map((_, i) => (
-                    <tr key={i} className="animate-pulse">
-                      <td className="p-6"><div className="h-4 w-16 bg-zinc-900 rounded"></div></td>
-                      <td className="p-6"><div className="h-4 w-24 bg-zinc-900 rounded"></div></td>
-                      <td className="p-6"><div className="h-4 w-64 bg-zinc-900 rounded"></div></td>
-                      <td className="p-6"><div className="h-4 w-8 bg-zinc-900 rounded ml-auto"></div></td>
-                    </tr>
-                  ))
-                ) : (
-                  // Data Rows
-                  blogData.map((blog) => (
-                    <Admin key={blog.id || blog._id} blog={blog} />
-                  ))
-                )}
-              </tbody>
-            </table>
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.22, ease: "easeOut", delay: 0.04 }}
+              className="flex items-center gap-3"
+            >
+              <button
+                onClick={fetchBlogs}
+                className="group inline-flex items-center gap-2 border border-rule text-paper-2 px-4 py-2.5 hover:border-paper-3 hover:bg-ink-2 hover:text-paper transition-colors duration-200"
+              >
+                <span className="font-mono text-[0.7rem] text-paper-3 group-hover:text-accent">
+                  [
+                </span>
+                <span className="text-sm">Refresh</span>
+                <span className="font-mono text-[0.7rem] text-paper-3 group-hover:text-accent">
+                  ]
+                </span>
+              </button>
+              <Example />
+            </motion.div>
           </div>
-          
-          {!isLoading && blogData.length === 0 && (
-            <div className="text-center py-20 text-zinc-500">
-              No blogs found. Start by creating one!
+
+          {/* Spec block: stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.22, ease: "easeOut", delay: 0.08 }}
+            className="mb-12 overflow-x-auto"
+          >
+            <pre className="font-mono text-[0.75rem] text-paper-3 leading-relaxed select-none whitespace-pre min-w-fit">
+{`┌─ system ─────────────────────────────────────────────────────────────
+│  total      ${pad(total)}  │  pending   ${pad(counts.pending)}  │  approved  ${pad(counts.approved)}  │  rejected  ${pad(counts.rejected)}
+└──────────────────────────────────────────────────────────────────────`}
+            </pre>
+          </motion.div>
+
+          {/* Filter tabs */}
+          <div className="flex items-center gap-1 mb-6 flex-wrap">
+            {(["all", "pending", "approved", "rejected"] as const).map((f) => {
+              const active = filter === f;
+              return (
+                <button
+                  key={f}
+                  onClick={() => setFilter(f)}
+                  className={`group inline-flex items-baseline gap-2 px-3 py-2 transition-colors duration-200 ${
+                    active
+                      ? "text-paper border-b border-accent"
+                      : "text-paper-2 hover:text-paper border-b border-transparent"
+                  }`}
+                >
+                  <span
+                    className={`font-mono text-[0.65rem] ${
+                      active ? "text-accent" : "text-paper-3"
+                    }`}
+                  >
+                    {f === "all"
+                      ? "00"
+                      : f === "pending"
+                      ? "01"
+                      : f === "approved"
+                      ? "02"
+                      : "03"}
+                  </span>
+                  <span className="text-sm capitalize">{f}</span>
+                  <span className="font-mono text-[0.65rem] text-paper-3">
+                    (
+                    {f === "all"
+                      ? total
+                      : f === "pending"
+                      ? counts.pending
+                      : f === "approved"
+                      ? counts.approved
+                      : counts.rejected}
+                    )
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Table */}
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.22, ease: "easeOut", delay: 0.12 }}
+            className="border border-rule bg-ink"
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr>
+                    <th className="py-3 px-4 label text-left">Status</th>
+                    <th className="py-3 px-4 label text-left">Date</th>
+                    <th className="py-3 px-4 label text-left">Title</th>
+                    <th className="py-3 px-4 label text-left hidden md:table-cell">
+                      Id
+                    </th>
+                    <th className="py-3 px-4 label text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {isLoading ? (
+                    [...Array(5)].map((_, i) => (
+                      <tr key={i} className="border-t border-rule">
+                        <td className="p-4">
+                          <div className="h-3 w-16 bg-rule animate-pulse" />
+                        </td>
+                        <td className="p-4">
+                          <div className="h-3 w-24 bg-rule animate-pulse" />
+                        </td>
+                        <td className="p-4">
+                          <div className="h-3 w-64 bg-rule animate-pulse" />
+                        </td>
+                        <td className="p-4 hidden md:table-cell">
+                          <div className="h-3 w-12 bg-rule animate-pulse" />
+                        </td>
+                        <td className="p-4">
+                          <div className="h-3 w-24 bg-rule animate-pulse ml-auto" />
+                        </td>
+                      </tr>
+                    ))
+                  ) : filtered.length > 0 ? (
+                    filtered.map((blog) => (
+                      <Admin key={blog.id || blog._id} blog={blog} />
+                    ))
+                  ) : (
+                    <tr className="border-t border-rule">
+                      <td
+                        colSpan={5}
+                        className="py-16 px-6 text-center font-mono text-sm text-paper-3"
+                      >
+                        // queue is empty — no submissions to review
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
-          )}
-        </motion.div>
-      </div>
+          </motion.div>
+
+          {/* Footer note */}
+          <p className="mt-6 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase">
+            Actions are immediate · approved pieces are public
+          </p>
+        </div>
+      </section>
 
       <Footer />
-    </div>
+    </main>
   );
 };
 

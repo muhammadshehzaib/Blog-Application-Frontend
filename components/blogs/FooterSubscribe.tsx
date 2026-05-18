@@ -19,217 +19,162 @@ const FooterSubscribe = () => {
     "Professional writing tools",
   ];
 
-  const containerVariants = {
+  const stagger = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
   };
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+  const fadeUp = {
+    hidden: { opacity: 0, y: 8 },
     visible: {
-      y: 0,
       opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
+      y: 0,
+      transition: { duration: 0.22, ease: [0.2, 0.65, 0.2, 1] as const },
     },
   };
 
   return (
-    <section className="relative py-24 bg-black text-white overflow-hidden border-t border-zinc-900">
-      {/* Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
+    <section className="relative bg-ink text-paper border-t border-rule">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.22, ease: "easeOut" }}
+          className="flex items-baseline gap-4 mb-12"
+        >
+          <span className="text-accent font-mono text-[0.7rem]">●</span>
+          <span className="label">Subscribe</span>
+          <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+          <span className="font-mono text-paper-3 text-[0.7rem] tracking-label hidden md:inline">
+            newsletter
+          </span>
+        </motion.div>
 
-      {/* Floating Gradient Orbs */}
-      <motion.div
-        animate={{
-          y: [0, -30, 0],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-10 left-10 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
-      />
-      <motion.div
-        animate={{
-          y: [0, 30, 0],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute bottom-10 right-10 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
-      />
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+        {/* Headline + intro */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="lg:col-span-7 font-display text-paper text-[clamp(2rem,5vw,4rem)] leading-[1.0] tracking-[-0.035em] max-w-3xl text-balance"
           >
+            Join a quiet community of{" "}
+            <em className="font-display italic text-accent">writers</em>.
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.25, delay: 0.04, ease: "easeOut" }}
+            className="lg:col-span-5 lg:pl-8 lg:border-l lg:border-rule text-paper-2 leading-relaxed"
+          >
+            One dispatch a week. New essays, a short editor&apos;s note, and
+            the occasional reading list. No tracking pixels, no
+            referral asks. Unsubscribe in one click.
+          </motion.p>
+        </div>
+
+        {/* Stats — mono spec block */}
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid grid-cols-2 md:grid-cols-4 border-t border-b border-rule mb-16"
+        >
+          {stats.map((stat, index) => (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-              className="inline-block mb-6 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-sm font-medium"
+              key={stat.label}
+              variants={fadeUp}
+              className={`px-6 py-8 ${
+                index !== 0 ? "md:border-l border-rule" : ""
+              } ${index === 2 ? "border-t md:border-t-0 border-rule" : ""} ${
+                index === 3 ? "border-t md:border-t-0 border-l border-rule" : ""
+              }`}
             >
-              🚀 Join the Community
+              <div className="font-display text-paper text-[2rem] leading-none tracking-[-0.03em] mb-3">
+                {stat.value}
+              </div>
+              <div className="font-mono text-[0.7rem] tracking-label uppercase text-paper-3">
+                {stat.label}
+              </div>
             </motion.div>
+          ))}
+        </motion.div>
 
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-              Join Our Growing Community of{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400">
-                Writers
-              </span>
-            </h2>
-            <p className="text-xl text-zinc-400 leading-relaxed">
-              Be part of a thriving ecosystem of creative minds, storytellers,
-              and thought leaders
-            </p>
-          </motion.div>
-
-          {/* Stats Grid */}
+        {/* CTA panel */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
-          >
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                whileHover={{
-                  y: -5,
-                  transition: { duration: 0.3 },
-                }}
-                className="group relative bg-zinc-950 border border-zinc-900 rounded-2xl p-6 text-center hover:border-zinc-800 transition-all duration-300 overflow-hidden"
-              >
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                <div className="relative">
-                  <div className="text-4xl font-bold text-white mb-2">
-                    {stat.value}
-                  </div>
-                  <div className="text-zinc-400 text-sm">{stat.label}</div>
-                </div>
-
-                {/* Bottom Accent Line */}
-                <motion.div
-                  className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
-                ></motion.div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Main CTA Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative bg-zinc-950 border border-zinc-900 rounded-3xl p-8 md:p-12 overflow-hidden"
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="lg:col-span-7"
           >
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-blue-500/5 to-purple-500/5"></div>
-
-            <div className="grid md:grid-cols-2 gap-8 items-center relative z-10">
-              {/* Left Content */}
-              <div>
-                <h3 className="text-3xl font-bold text-white mb-4">
-                  Start Your Writing Journey Today
-                </h3>
-                <p className="text-zinc-400 mb-6 leading-relaxed">
-                  Join Writers&apos; Haven and turn your passion for writing into
-                  engaging content that reaches readers worldwide.
-                </p>
-
-                <ul className="space-y-3 mb-8">
-                  {features.map((feature, index) => (
-                    <motion.li
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.5 + index * 0.1 }}
-                      className="flex items-center text-zinc-300"
-                    >
-                      <div className="w-6 h-6 mr-3 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center flex-shrink-0">
-                        <svg
-                          className="w-4 h-4 text-black"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                      {feature}
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Right Form */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.6 }}
-                className="space-y-4"
-              >
-                <div className="relative">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="w-full px-6 py-4 rounded-xl bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300"
-                  />
-                </div>
-
-                <motion.button
-                  whileHover={{
-                    scale: 1.02,
-                    boxShadow: "0 0 30px rgba(16, 185, 129, 0.3)",
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black rounded-xl font-bold transition-all duration-300 shadow-lg shadow-emerald-500/20"
+            <h3 className="font-display text-paper text-[clamp(1.75rem,3.5vw,2.5rem)] leading-[1.05] tracking-[-0.03em] max-w-xl text-balance">
+              Start your writing journey today.
+            </h3>
+            <p className="mt-5 text-paper-2 leading-relaxed max-w-xl">
+              Join Writers&apos; Haven and turn your passion for writing into
+              engaging work that reaches readers worldwide.
+            </p>
+            <motion.ul
+              variants={stagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="mt-8 space-y-2.5 max-w-xl"
+            >
+              {features.map((feature) => (
+                <motion.li
+                  key={feature}
+                  variants={fadeUp}
+                  className="flex items-start gap-3 text-paper-2"
                 >
-                  Get Started for Free
-                </motion.button>
-
-                <p className="text-sm text-zinc-500 text-center">
-                  No credit card required • Free 14-day trial
-                </p>
-              </motion.div>
-            </div>
-
-            {/* Decorative Elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-full blur-3xl -z-10"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-blue-500/10 to-transparent rounded-full blur-3xl -z-10"></div>
+                  <span className="text-accent font-mono mt-1">▸</span>
+                  <span>{feature}</span>
+                </motion.li>
+              ))}
+            </motion.ul>
           </motion.div>
+
+          <motion.form
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.25, delay: 0.04, ease: "easeOut" }}
+            onSubmit={(e) => e.preventDefault()}
+            className="relative lg:col-span-5 ascii-frame border border-rule bg-ink-2 p-8"
+          >
+            <p className="label mb-6">// subscribe</p>
+            <label className="block">
+              <span className="font-mono text-xs text-paper-3 block mb-2">
+                &gt; your email
+              </span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="hello@yourname.com"
+                className="w-full bg-transparent border-0 border-b border-rule focus:border-accent text-paper py-2 px-0 font-mono text-sm placeholder:text-paper-3/60 outline-none transition-colors"
+              />
+            </label>
+            <button
+              type="submit"
+              className="mt-8 w-full bg-accent text-ink py-3 hover:bg-paper transition-colors flex items-center justify-center gap-3"
+            >
+              <span className="font-mono text-xs opacity-70">[</span>
+              <span className="font-mono text-xs opacity-70">▸</span>
+              <span className="font-medium">Subscribe</span>
+              <span className="font-mono text-xs opacity-70">]</span>
+            </button>
+            <p className="font-mono text-[0.7rem] tracking-label text-paper-3 mt-6 uppercase">
+              No credit card · unsubscribe anytime
+            </p>
+          </motion.form>
         </div>
       </div>
     </section>

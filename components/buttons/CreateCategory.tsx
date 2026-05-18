@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -7,12 +8,11 @@ const Example = () => {
   const handleButtonClick = () => {
     router.push("/category");
   };
+
   return (
-    <div className="bg-slate-900">
-      <DrawOutlineButton onClick={handleButtonClick}>
-        Create New Category
-      </DrawOutlineButton>
-    </div>
+    <DrawOutlineButton onClick={handleButtonClick}>
+      Create New Category
+    </DrawOutlineButton>
   );
 };
 
@@ -28,21 +28,15 @@ const DrawOutlineButton = ({
     <button
       {...rest}
       onClick={onClick}
-      className="group relative px-4 py-2 font-medium text-slate-100 transition-colors duration-[400ms] hover:text-indigo-300"
+      className="group inline-flex items-center gap-2 border border-rule text-paper px-4 py-2.5 hover:border-paper-3 hover:bg-ink-2 transition-colors duration-200 ease-out"
     >
-      <span>{children}</span>
-
-      {/* TOP */}
-      <span className="absolute left-0 top-0 h-[2px] w-0 bg-indigo-300 transition-all duration-100 group-hover:w-full" />
-
-      {/* RIGHT */}
-      <span className="absolute right-0 top-0 h-0 w-[2px] bg-indigo-300 transition-all delay-100 duration-100 group-hover:h-full" />
-
-      {/* BOTTOM */}
-      <span className="absolute bottom-0 right-0 h-[2px] w-0 bg-indigo-300 transition-all delay-200 duration-100 group-hover:w-full" />
-
-      {/* LEFT */}
-      <span className="absolute bottom-0 left-0 h-0 w-[2px] bg-indigo-300 transition-all delay-300 duration-100 group-hover:h-full" />
+      <span className="font-mono text-[0.7rem] text-paper-3 group-hover:text-accent transition-colors">
+        [
+      </span>
+      <span className="text-sm">{children}</span>
+      <span className="font-mono text-[0.7rem] text-paper-3 group-hover:text-accent transition-colors">
+        ]
+      </span>
     </button>
   );
 };

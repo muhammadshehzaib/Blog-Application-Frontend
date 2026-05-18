@@ -1,19 +1,17 @@
 import React from "react";
 import Navigation from "../../Navigation";
 import Footer from "../../Footer";
-import FooterSubscribe from "../../blogs/FooterSubscribe";
 import HeroSection from "./HeroSection";
 import Plans from "./Plans";
 
 const Pricing = () => {
   return (
-    <div>
+    <main className="bg-ink text-paper min-h-screen">
       <Navigation />
       <HeroSection />
       <Plans />
-      <FooterSubscribe />
       <Footer />
-    </div>
+    </main>
   );
 };
 

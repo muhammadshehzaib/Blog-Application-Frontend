@@ -10,132 +10,120 @@ const HeroSection = () => {
     "24/7 Support",
   ];
 
-  const containerVariants = {
+  const stagger = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
   };
 
-  const itemVariants = {
-    hidden: { y: 10, opacity: 0 },
+  const fadeUp = {
+    hidden: { opacity: 0, y: 8 },
     visible: {
-      y: 0,
       opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
+      y: 0,
+      transition: { duration: 0.22, ease: [0.2, 0.65, 0.2, 1] },
     },
   };
 
   return (
-    <div className="relative bg-black text-white overflow-hidden pt-32 pb-16">
-      {/* Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
+    <section className="relative bg-ink">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-20 pb-24">
+        {/* Meta line */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.22 }}
+          className="flex items-center gap-3 mb-12 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase"
+        >
+          <span className="text-accent">●</span>
+          <span>§ 03 / Pricing</span>
+          <span className="flex-1 border-t border-rule" />
+          <span className="hidden md:inline">three tiers · one promise</span>
+        </motion.div>
 
-      {/* Floating Gradient Orbs */}
-      <motion.div
-        animate={{
-          y: [0, -30, 0],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-20 left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
-      />
-      <motion.div
-        animate={{
-          y: [0, 30, 0],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
-      />
+        {/* Headline */}
+        <motion.h1
+          initial="hidden"
+          animate="visible"
+          variants={stagger}
+          className="font-display text-paper text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.95] tracking-[-0.04em] max-w-5xl text-balance"
+        >
+          <motion.span variants={fadeUp} className="block">
+            Pay what you can.
+          </motion.span>
+          <motion.span variants={fadeUp} className="block">
+            Or <em className="text-accent font-display italic">nothing</em> at
+            all.
+          </motion.span>
+        </motion.h1>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center py-8">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="inline-block mb-6 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-sm font-medium"
-          >
-            💎 Flexible Pricing Plans
-          </motion.div>
-
-          {/* Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight"
-          >
-            Simple Pricing for{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400">
-              Every Writer
-            </span>
-          </motion.h1>
-
-          {/* Description */}
+        {/* Subhead grid */}
+        <div className="mt-14 grid grid-cols-12 gap-6">
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-xl text-zinc-400 leading-relaxed mb-10 max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.18, duration: 0.22 }}
+            className="col-span-12 md:col-span-7 text-paper-2 text-lg leading-relaxed max-w-2xl"
           >
-            Whether you&apos;re just starting your writing journey or running a
-            professional publication, we have a plan that&apos;s perfect for you.
+            Whether you&apos;re drafting your first essay or running a
+            professional publication, there is a tier that fits. Move between
+            them as your work grows — no contracts, no clawbacks, no
+            paywalled support email.
           </motion.p>
 
-          {/* Features */}
           <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-wrap justify-center gap-4"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.22, duration: 0.22 }}
+            className="col-span-12 md:col-span-5 md:pl-6 md:border-l md:border-rule"
           >
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                whileHover={{
-                  scale: 1.05,
-                  y: -2,
-                }}
-                className="group flex items-center bg-zinc-950 border border-zinc-900 rounded-xl px-5 py-3 hover:border-zinc-800 transition-all duration-300"
-              >
-                <div className="w-6 h-6 mr-3 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center flex-shrink-0">
-                  <svg
-                    className="w-4 h-4 text-black"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <span className="text-zinc-300 font-medium">{feature}</span>
-              </motion.div>
-            ))}
+            <p className="label mb-2">The Promise</p>
+            <p className="font-display text-2xl leading-tight text-paper">
+              We never take a percentage of your earnings. The page is yours
+              from the first word.
+            </p>
+            <p className="font-mono text-[0.7rem] tracking-label text-paper-3 mt-3 uppercase">
+              policy · revised May 2026
+            </p>
           </motion.div>
         </div>
+
+        {/* Feature chips */}
+        <motion.ul
+          variants={stagger}
+          initial="hidden"
+          animate="visible"
+          className="mt-12 flex flex-wrap gap-x-8 gap-y-3"
+        >
+          {features.map((feature) => (
+            <motion.li
+              key={feature}
+              variants={fadeUp}
+              className="flex items-baseline gap-2 text-paper-2"
+            >
+              <span className="font-mono text-accent text-xs">▸</span>
+              <span className="text-sm">{feature}</span>
+            </motion.li>
+          ))}
+        </motion.ul>
+
+        {/* ASCII spec block */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.22 }}
+          className="mt-20 font-mono text-[0.75rem] text-paper-3 leading-relaxed select-none hidden md:block"
+        >
+          <pre className="whitespace-pre">
+{`┌─ pricing ————————————————————————————————————————————————
+│  model        pay-what-you-can ◦ no obligation
+│  cut          0% — we never touch your payout
+│  billing      monthly · cancel from the keyboard
+│  guarantee    14 days · full refund · no questions
+└────────────────────────────────────────────────────────────`}
+          </pre>
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 

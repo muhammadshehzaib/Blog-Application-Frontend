@@ -1,12 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import Footer from "./Footer";
-import Navigation from "./Navigation";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import { motion } from "framer-motion";
-import Link from "next/link";
 
 interface FormData {
   email: string;
@@ -71,169 +68,112 @@ const Otp = () => {
   };
 
   return (
-    <>
-      <Navigation />
-      <div className="relative min-h-screen bg-black text-white overflow-hidden pt-32 pb-16">
-        {/* Grid Background */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
-
-        {/* Floating Gradient Orbs */}
-        <motion.div
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-20 left-20 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            y: [0, 30, 0],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute bottom-20 right-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
-        />
-
-        <div className="container mx-auto px-4 py-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-md mx-auto"
-          >
-            {/* Card */}
-            <div className="relative bg-zinc-950 border border-zinc-900 rounded-3xl p-8 md:p-10 overflow-hidden">
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-blue-500/5 to-purple-500/5"></div>
-
-              <div className="relative">
-                {/* Header */}
-                <div className="text-center mb-8">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
-                    className="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-500"
-                  >
-                    <svg
-                      className="w-8 h-8 text-black"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                      />
-                    </svg>
-                  </motion.div>
-                  <h2 className="text-3xl font-bold text-white mb-2">
-                    Verify Your Email
-                  </h2>
-                  <p className="text-zinc-400">
-                    Enter the verification code sent to your email
-                  </p>
-                </div>
-
-                {/* Form */}
-                <form className="space-y-5" onSubmit={handleSubmit}>
-                  <div>
-                    <label
-                      className="block text-sm font-medium text-zinc-300 mb-2"
-                      htmlFor="email"
-                    >
-                      Email Address
-                    </label>
-                    <input
-                      className="w-full px-4 py-3 border border-zinc-800 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-zinc-900 text-white placeholder-zinc-500 transition-all duration-300"
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="Enter your email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      className="block text-sm font-medium text-zinc-300 mb-2"
-                      htmlFor="otp"
-                    >
-                      Verification Code
-                    </label>
-                    <input
-                      className="w-full px-4 py-3 border border-zinc-800 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-zinc-900 text-white placeholder-zinc-500 transition-all duration-300 text-center text-2xl tracking-widest font-mono"
-                      id="otp"
-                      name="otp"
-                      type="text"
-                      placeholder="000000"
-                      maxLength={6}
-                      value={formData.otp}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-
-                  <motion.button
-                    type="submit"
-                    whileHover={{
-                      scale: 1.02,
-                      boxShadow: "0 0 30px rgba(6, 182, 212, 0.3)",
-                    }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full py-3 px-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-cyan-500/20 mt-6"
-                  >
-                    Verify Code
-                  </motion.button>
-                </form>
-
-                {/* Footer */}
-                <div className="mt-8 text-center">
-                  <p className="text-sm text-zinc-400">
-                    Didn&apos;t receive a code?{" "}
-                    <button
-                      onClick={() => router.push("/forgetpassword")}
-                      className="font-semibold text-cyan-400 hover:text-cyan-300 transition-colors duration-300"
-                    >
-                      Resend
-                    </button>
-                  </p>
-                </div>
-
-                {/* Decorative Elements */}
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-tr from-blue-500/10 to-transparent rounded-full blur-3xl"></div>
-              </div>
-            </div>
-
-            {/* Additional Info */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="mt-6 text-center"
-            >
-              <p className="text-sm text-zinc-500">
-                Check your spam folder if you don&apos;t see the email
-              </p>
-            </motion.div>
-          </motion.div>
+    <main className="min-h-screen bg-ink text-paper flex items-center justify-center px-6 py-16">
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        className="w-full max-w-md"
+      >
+        {/* Meta line */}
+        <div className="flex items-center gap-3 mb-10 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase">
+          <span className="text-accent">●</span>
+          <span>step 02 / verify</span>
+          <span className="flex-1 border-t border-rule" />
+          <span className="hidden sm:inline">6-digit code</span>
         </div>
-      </div>
-      <Footer />
+
+        {/* Headline */}
+        <h1 className="font-display text-paper text-[clamp(2rem,5vw,2.75rem)] leading-[1.0] tracking-[-0.035em] text-balance">
+          Check your <em className="text-accent font-display italic">inbox</em>.
+        </h1>
+        <p className="mt-4 text-paper-2 text-base leading-relaxed">
+          We sent a one-time code. Enter it below with the email you used to
+          request it.
+        </p>
+
+        {/* Form card */}
+        <div className="relative ascii-frame border border-rule bg-ink-2 p-8 mt-10">
+          <p className="label mb-6">// otp-verify</p>
+
+          <form className="space-y-7" onSubmit={handleSubmit}>
+            <label className="block">
+              <span className="font-mono text-xs text-paper-3 block mb-2">
+                &gt; email
+              </span>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="hello@yourname.com"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                className="w-full bg-transparent border-0 border-b border-rule focus:border-accent text-paper py-2 px-0 font-mono text-sm placeholder:text-paper-3/60 outline-none transition-colors"
+              />
+            </label>
+
+            <label className="block">
+              <span className="font-mono text-xs text-paper-3 block mb-2">
+                &gt; verification-code
+              </span>
+              <input
+                id="otp"
+                name="otp"
+                type="text"
+                placeholder="000000"
+                maxLength={6}
+                value={formData.otp}
+                onChange={handleInputChange}
+                required
+                inputMode="numeric"
+                className="w-full bg-transparent border-0 border-b border-rule focus:border-accent text-paper py-2 px-0 font-mono text-2xl tracking-[0.5em] placeholder:text-paper-3/40 outline-none transition-colors text-center"
+              />
+            </label>
+
+            <button
+              type="submit"
+              className="group w-full inline-flex items-center justify-center gap-3 bg-accent text-ink px-6 py-3.5 hover:bg-paper transition-colors"
+            >
+              <span className="font-mono text-xs opacity-70">▸</span>
+              <span className="font-medium">Verify code</span>
+              <span className="font-mono text-xs opacity-70 transition-transform group-hover:translate-x-1">
+                →
+              </span>
+            </button>
+          </form>
+
+          <p className="font-mono text-[0.7rem] tracking-label text-paper-3 mt-6 uppercase">
+            code expires in 10 minutes
+          </p>
+        </div>
+
+        {/* Footer links */}
+        <div className="mt-8 flex items-baseline justify-between font-mono text-xs text-paper-3">
+          <span>
+            didn&apos;t arrive?{" "}
+            <button
+              type="button"
+              onClick={() => router.push("/forgetpassword")}
+              className="text-paper hover:text-accent underline underline-offset-4 decoration-1 transition-colors"
+            >
+              resend
+            </button>
+          </span>
+          <button
+            type="button"
+            onClick={() => router.push("/signin")}
+            className="hover:text-paper transition-colors"
+          >
+            [ back ]
+          </button>
+        </div>
+
+        <p className="mt-10 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase leading-relaxed">
+          check your spam folder if you don&apos;t see it
+        </p>
+      </motion.div>
+
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -246,8 +186,8 @@ const Otp = () => {
         pauseOnHover
         theme="dark"
       />
-    </>
+    </main>
   );
 };
 
-export default Otp; 
+export default Otp;

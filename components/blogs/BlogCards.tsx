@@ -25,65 +25,62 @@ interface BlogCardsProps {
 const BlogCards: React.FC<BlogCardsProps> = ({ blog }) => {
   const router = useRouter();
 
+  if (blog.status !== "Approved") {
+    return <div className="hidden" />;
+  }
+
+  const dateStr = new Date(blog.createdAt).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
   return (
-    <div className={blog.status === "Approved" ? "mt-10 ml-3 cursor-pointer" : "hidden"}>
-      <div>
-        <div
-          key={`blog-cards-Simple${blog._id}`}
-          className="card flex flex-col border rounded-md overflow-hidden shadow-md bg-white dark:bg-gray-800 xl:h-[450px] h-[500px]"
-        >
-          <div
-            className="image relative cursor-pointer"
-            onClick={() => router.push(`/blogs/${blog._id}`)}
-          >
-            <Image
-              src={blog.image}
-              alt="Blog Image"
-              className="object-cover w-full h-40 md:h-52"
-              width={300}
-              height={300}
-            />
-          </div>
-          <div className="card-body p-4 flex flex-col items-start w-full">
-            <div className="userDetail flex">
-              <p className="text-gray-500 dark:text-gray-400 font-medium text-xs">
-                {new Date(blog.createdAt).toLocaleDateString(undefined, {
-                  month: "long",
-                  day: "numeric",
-                })}
-              </p>
-            </div>
-            <div className="blogHeading pt-3">
-              <h2 className="text-xl md:text-2xl font-bold dark:text-gray-100">{blog.title}</h2>
-            </div>
-            <div className="blogParagraph mt-2">
-              <p className="text-gray-600 dark:text-gray-300 font-medium text-sm">
-                {blog.content}
-              </p>
-            </div>
-            <div className="w-full mt-3">
-              <hr className="border-t border-gray-300 dark:border-gray-700" />
-            </div>
-            <div className="mt-3 flex items-center justify-between">
-              <div>
-                <p className="text-gray-500 dark:text-gray-400 font-medium text-xs">
-                  Author: {blog.author}
-                </p>
-                <p className="text-gray-500 dark:text-gray-400 font-medium text-xs">
-                  Status: {blog.status}
-                </p>
-                <p className="text-gray-500 dark:text-gray-400 font-medium text-xs">
-                  Category: {blog.category && blog.category.category}
-                </p>
-                <p className="text-gray-500 dark:text-gray-400">
-                  {blog.reactions && blog.reactions.reaction}
-                </p>
-              </div>
-            </div>
-          </div>
+    <article
+      key={`blog-cards-Simple${blog._id}`}
+      onClick={() => router.push(`/blogs/${blog._id}`)}
+      className="group cursor-pointer border border-rule bg-ink hover:bg-ink-2 transition-colors flex flex-col h-full rounded-none"
+    >
+      <div className="relative overflow-hidden border-b border-rule bg-ink-2">
+        <Image
+          src={blog.image}
+          alt={blog.title}
+          className="object-cover w-full h-48 md:h-56"
+          width={600}
+          height={400}
+        />
+      </div>
+
+      <div className="p-6 flex flex-col flex-1">
+        <div className="flex items-center gap-2 mb-4 font-mono text-[0.7rem] tracking-label uppercase text-paper-3">
+          <span className="text-accent">●</span>
+          <span>{blog.category?.category || "General"}</span>
+          <span className="text-rule">·</span>
+          <span>{dateStr}</span>
+        </div>
+
+        <h2 className="font-display text-paper text-[1.4rem] leading-tight tracking-tight mb-3 group-hover:text-accent transition-colors">
+          {blog.title}
+        </h2>
+
+        <p className="text-paper-2 leading-relaxed text-sm line-clamp-3 mb-6">
+          {blog.content}
+        </p>
+
+        <div className="mt-auto pt-4 border-t border-rule font-mono text-[0.7rem] tracking-label uppercase text-paper-3 flex items-center justify-between gap-3">
+          <span>
+            <span className="text-paper-3">by</span>{" "}
+            <span className="text-paper-2">{blog.author}</span>
+          </span>
+          <span className="inline-flex items-center gap-1 text-paper-3 group-hover:text-accent transition-colors">
+            <span>read</span>
+            <span className="transition-transform group-hover:translate-x-1">
+              →
+            </span>
+          </span>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

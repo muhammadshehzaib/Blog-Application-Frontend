@@ -9,7 +9,7 @@ const Plans = () => {
     {
       name: "Free",
       price: "$0",
-      period: "/month",
+      period: "/mo",
       description: "Perfect for getting started",
       features: [
         "Up to 3 articles per month",
@@ -24,7 +24,7 @@ const Plans = () => {
     {
       name: "Pro",
       price: "$15",
-      period: "/month",
+      period: "/mo",
       description: "For serious writers",
       features: [
         "Unlimited articles",
@@ -40,7 +40,7 @@ const Plans = () => {
     {
       name: "Business",
       price: "$49",
-      period: "/month",
+      period: "/mo",
       description: "For professional publishers",
       features: [
         "Everything in Pro",
@@ -55,215 +55,175 @@ const Plans = () => {
     },
   ];
 
-  const containerVariants = {
+  const stagger = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
   };
 
-  const cardVariants = {
-    hidden: { y: 30, opacity: 0 },
+  const fadeUp = {
+    hidden: { opacity: 0, y: 8 },
     visible: {
-      y: 0,
       opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
+      y: 0,
+      transition: { duration: 0.22, ease: [0.2, 0.65, 0.2, 1] },
     },
   };
 
   return (
-    <div className="relative bg-black text-white overflow-hidden py-24 border-t border-zinc-900">
-      {/* Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
+    <section className="relative bg-ink border-t border-rule">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+        {/* Section header */}
+        <div className="flex items-baseline gap-4 mb-12">
+          <span className="font-mono text-paper-3 text-[0.7rem] tracking-label">
+            § 04
+          </span>
+          <span className="label">Choose a tier</span>
+          <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+          <span className="font-mono text-paper-3 text-[0.7rem] tracking-label hidden md:inline">
+            three options
+          </span>
+        </div>
 
-      {/* Floating Gradient Orbs */}
-      <motion.div
-        animate={{
-          y: [0, -30, 0],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
-      />
-      <motion.div
-        animate={{
-          y: [0, 30, 0],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute bottom-20 left-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
-      />
+        {/* Heading + lede */}
+        <div className="grid grid-cols-12 gap-6 mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.22 }}
+            className="col-span-12 md:col-span-7 font-display text-paper text-[clamp(2rem,5vw,3.5rem)] leading-[1.0] tracking-[-0.035em] max-w-3xl text-balance"
+          >
+            Choose your{" "}
+            <em className="text-accent font-display italic">writing</em>{" "}
+            journey.
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.04, duration: 0.22 }}
+            className="col-span-12 md:col-span-5 md:pl-6 md:border-l md:border-rule text-paper-2 leading-relaxed"
+          >
+            Select a plan that fits your goals today. Upgrade or downgrade
+            whenever — your archive, URL, and readers stay put.
+          </motion.p>
+        </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
+        {/* Plans grid — 3 columns separated by 1px dividers */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-3xl mx-auto mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-            Choose Your{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400">
-              Writing Journey
-            </span>
-          </h2>
-          <p className="text-xl text-zinc-400 leading-relaxed">
-            Select a plan that best fits your writing goals and aspirations.
-            Upgrade or downgrade anytime.
-          </p>
-        </motion.div>
-
-        {/* Pricing Cards */}
-        <motion.div
-          variants={containerVariants}
+          variants={stagger}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-px bg-rule border border-rule"
         >
-          {plans.map((plan, index) => (
-            <motion.div
-              key={index}
-              variants={cardVariants}
-              whileHover={{
-                y: plan.featured ? 0 : -8,
-                transition: { duration: 0.3 },
-              }}
-              className={`group relative bg-zinc-950 border rounded-3xl p-8 transition-all duration-300 overflow-hidden ${
-                plan.featured
-                  ? "border-emerald-500/50 scale-105 md:scale-110 shadow-2xl shadow-emerald-500/20"
-                  : "border-zinc-900 hover:border-zinc-800"
-              }`}
-            >
-              {/* Featured Badge */}
-              {plan.featured && (
-                <div className="absolute top-0 right-0 bg-gradient-to-r from-emerald-500 to-teal-500 text-black text-xs font-bold px-4 py-1 rounded-bl-xl rounded-tr-3xl">
-                  MOST POPULAR
-                </div>
-              )}
-
-              {/* Gradient Overlay */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${plan.gradient} opacity-0 ${
-                  plan.featured ? "opacity-5" : "group-hover:opacity-5"
-                } transition-opacity duration-500`}
-              ></div>
-
-              {/* Content */}
-              <div className="relative">
-                {/* Plan Header */}
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-white mb-4">
-                    {plan.name}
-                  </h3>
-                  <div className="flex justify-center items-baseline mb-2">
-                    <span className="text-5xl font-extrabold text-white">
-                      {plan.price}
-                    </span>
-                    <span className="text-zinc-400 ml-1">{plan.period}</span>
+          {plans.map((plan, index) => {
+            const tierCode = String(index + 1).padStart(2, "0");
+            const borderClass = plan.featured
+              ? "border-accent"
+              : "border-transparent";
+            return (
+              <motion.div
+                key={plan.name}
+                variants={fadeUp}
+                className={`relative bg-ink p-8 flex flex-col border ${borderClass}`}
+              >
+                {/* Recommended ribbon */}
+                {plan.featured && (
+                  <div className="font-mono text-[0.7rem] tracking-label text-accent uppercase mb-3">
+                    ┌ recommended ┐
                   </div>
-                  <p className="text-zinc-400">{plan.description}</p>
+                )}
+
+                {/* Tier label */}
+                <div className="font-mono text-[0.7rem] tracking-label text-paper-3 uppercase mb-6 flex items-baseline gap-2">
+                  <span className={plan.featured ? "text-accent" : "text-paper-3"}>
+                    ●
+                  </span>
+                  <span>TIER · {tierCode}</span>
                 </div>
 
-                {/* Features List */}
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, featureIndex) => (
-                    <motion.li
-                      key={featureIndex}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.1 * featureIndex }}
-                      className="flex items-center"
+                {/* Plan name */}
+                <h3 className="font-display text-2xl text-paper tracking-tight mb-6">
+                  {plan.name}
+                </h3>
+
+                {/* Price */}
+                <div className="flex items-baseline gap-1.5 mb-3">
+                  <span className="font-display text-paper text-[3.5rem] leading-none tracking-[-0.04em]">
+                    {plan.price}
+                  </span>
+                  <span className="font-mono text-paper-3 text-xs">
+                    {plan.period}
+                  </span>
+                </div>
+
+                {/* Description */}
+                <p className="text-paper-2 text-sm leading-relaxed mb-8">
+                  {plan.description}
+                </p>
+
+                {/* Divider */}
+                <div className="border-t border-rule mb-6" />
+
+                {/* Features */}
+                <ul className="space-y-3 mb-10 flex-1">
+                  {plan.features.map((feature) => (
+                    <li
+                      key={feature}
+                      className="flex items-start gap-3 text-paper-2 text-sm leading-relaxed"
                     >
-                      <div
-                        className={`w-6 h-6 mr-3 rounded-full bg-gradient-to-br ${plan.gradient} flex items-center justify-center flex-shrink-0`}
-                      >
-                        <svg
-                          className="w-4 h-4 text-black"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                      <span className="text-zinc-300">{feature}</span>
-                    </motion.li>
+                      <span className="font-mono text-accent mt-0.5">▸</span>
+                      <span>{feature}</span>
+                    </li>
                   ))}
                 </ul>
 
-                {/* CTA Button */}
-                {plan.featured ? (
-                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                    <Link
-                      href={plan.buttonLink}
-                      className={`block w-full text-center bg-gradient-to-r ${plan.gradient} text-black font-bold py-4 rounded-xl transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40`}
-                    >
-                      {plan.buttonText}
-                    </Link>
-                  </motion.div>
-                ) : (
-                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                    <Link
-                      href={plan.buttonLink}
-                      className="block w-full text-center bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700 text-white font-semibold py-4 rounded-xl transition-all duration-300"
-                    >
-                      {plan.buttonText}
-                    </Link>
-                  </motion.div>
-                )}
-              </div>
-
-              {/* Bottom Accent Line */}
-              {!plan.featured && (
-                <motion.div
-                  className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${plan.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left`}
-                ></motion.div>
-              )}
-            </motion.div>
-          ))}
+                {/* CTA bracket button */}
+                <Link
+                  href={plan.buttonLink}
+                  className={`group inline-flex items-center justify-center gap-2 px-4 py-3 border transition-colors ${
+                    plan.featured
+                      ? "bg-accent text-ink border-accent hover:bg-paper hover:border-paper"
+                      : "bg-transparent text-paper border-rule hover:border-paper-3 hover:bg-ink-2"
+                  }`}
+                >
+                  <span className="font-mono text-[0.7rem] opacity-70">[</span>
+                  <span className="text-sm font-medium">
+                    {plan.buttonText}
+                  </span>
+                  <span className="font-mono text-[0.7rem] opacity-70">]</span>
+                </Link>
+              </motion.div>
+            );
+          })}
         </motion.div>
 
-        {/* Additional Info */}
+        {/* Additional info */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="text-center mt-16"
+          transition={{ delay: 0.18, duration: 0.22 }}
+          className="mt-16 flex flex-col md:flex-row items-start md:items-baseline gap-4 md:gap-6 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase"
         >
-          <p className="text-zinc-500">
-            All plans include a 14-day free trial. Need a custom plan?{" "}
+          <span className="flex items-center gap-2">
+            <span className="text-accent">●</span>
+            <span>14-day free trial on every plan</span>
+          </span>
+          <span className="hidden md:inline text-rule">·</span>
+          <span>
+            Need something custom?{" "}
             <Link
               href="/contact"
-              className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors duration-300"
+              className="text-accent underline underline-offset-4 decoration-1 hover:text-paper transition-colors"
             >
-              Contact us
+              talk to us
             </Link>
-          </p>
+          </span>
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 

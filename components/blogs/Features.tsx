@@ -1,72 +1,81 @@
-'use client';
+"use client";
 
 import React from "react";
 import { motion } from "framer-motion";
 import Cards from "./Cards";
 
 const Features = () => {
-  // Variants for section heading animations
-  const headingVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+  const stagger = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
   };
 
-  // Stagger container variant for smooth sequential animations
-  const containerVariants = {
-    hidden: { opacity: 0 },
+  const fadeUp = {
+    hidden: { opacity: 0, y: 8 },
     visible: {
       opacity: 1,
-      transition: {
-        delayChildren: 0.2,
-        staggerChildren: 0.1
-      }
-    }
+      y: 0,
+      transition: { duration: 0.22, ease: [0.2, 0.65, 0.2, 1] as const },
+    },
   };
 
   return (
-    <motion.div 
-      initial="hidden"
-      animate="visible"
-      className="mb-4"
-    >
-      <motion.div 
-        variants={containerVariants}
-        className="mb-6 mx-auto md:mb-12 text-center"
-      >
-        <motion.p 
-          variants={headingVariants}
-          className="text-base font-semibold uppercase tracking-wide text-primary-600 dark:text-primary-200"
+    <section className="bg-ink text-paper border-t border-rule">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.22, ease: "easeOut" }}
+          className="flex items-baseline gap-4 mb-12"
         >
-          Features
-        </motion.p>
-        
-        <motion.h2 
-          variants={headingVariants}
-          className="font-heading mb-4 font-bold tracking-tight text-4xl md:text-5xl text-gray-900 dark:text-white"
+          <span className="font-mono text-paper-3 text-[0.7rem] tracking-label">
+            § 04
+          </span>
+          <span className="label">Features</span>
+          <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+          <span className="font-mono text-paper-3 text-[0.7rem] tracking-label hidden md:inline">
+            six principles
+          </span>
+        </motion.div>
+
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-16"
         >
-          What you get with{" "}
-          <span className="whitespace-nowrap">Writers&apos; Haven</span>
-        </motion.h2>
-        
-        <motion.p 
-          variants={headingVariants}
-          className="mx-auto mt-4 max-w-3xl text-xl text-gray-600 dark:text-slate-400 text-center"
-        >
-          Boosting Your Online Impact: Unveiling the Harmonies Unleashed in Our
-          Platform&apos;s Fundamental Capabilities, from Effortless Integration
-          to Collaborative Creativity.
-        </motion.p>
-      </motion.div>
-      
-      <Cards />
-    </motion.div>
+          <motion.h2
+            variants={fadeUp}
+            className="lg:col-span-7 font-display text-paper text-[clamp(2rem,5vw,3.75rem)] leading-[1.0] tracking-[-0.035em] max-w-3xl text-balance"
+          >
+            What you get with{" "}
+            <em className="font-display italic text-accent">
+              Writers&apos; Haven
+            </em>
+            .
+          </motion.h2>
+          <motion.div
+            variants={fadeUp}
+            className="lg:col-span-5 lg:pl-8 lg:border-l lg:border-rule"
+          >
+            <p className="label mb-3">Summary</p>
+            <p className="text-paper-2 leading-relaxed text-base">
+              Six small commitments that add up to a calmer publishing
+              surface — composer, archive, distribution, and the page itself,
+              tuned for reading first.
+            </p>
+            <p className="font-mono text-[0.7rem] tracking-label text-paper-3 mt-4 uppercase">
+              ▸ scroll for full list
+            </p>
+          </motion.div>
+        </motion.div>
+
+        <Cards />
+      </div>
+    </section>
   );
 };
 

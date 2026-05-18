@@ -14,7 +14,7 @@ interface BlogProps {
 const Admin: React.FC<BlogProps> = ({ blog }) => {
   const { token } = useAuth();
   const [isStatusUpdated, setStatusUpdated] = useState(false);
-  // Optional: Local state to show immediate UI feedback before fetch completes
+  // Local state to show immediate UI feedback before fetch completes
   const [currentStatus, setCurrentStatus] = useState(blog.status);
 
   const handleApprove = async (_id: string) => {
@@ -29,7 +29,7 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
 
       console.log(`Blog approved`);
       setStatusUpdated(true);
-      setCurrentStatus("approved"); // Immediate visual feedback
+      setCurrentStatus("approved");
     } catch (error) {
       console.error("Error approving blog:", error);
     }
@@ -47,7 +47,7 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
 
       console.log(`Blog disapproved`);
       setStatusUpdated(true);
-      setCurrentStatus("disapproved"); // Immediate visual feedback
+      setCurrentStatus("disapproved");
     } catch (error) {
       console.error("Error disapproving blog:", error);
     }
@@ -79,35 +79,41 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
     }
   }, [isStatusUpdated, blog._id, token]);
 
-  // Helper to determine badge color based on status
-  const getStatusColor = (status: string) => {
+  const statusGlyph = (status: string) => {
     const s = status.toLowerCase();
-    if (s === "approved" || s === "published")
-      return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.2)]";
-    if (s === "disapproved" || s === "rejected")
-      return "bg-red-500/10 text-red-400 border-red-500/20";
-    return "bg-amber-500/10 text-amber-400 border-amber-500/20";
+    if (s === "approved" || s === "published") return "●";
+    if (s === "disapproved" || s === "rejected") return "×";
+    return "◦";
+  };
+
+  const statusColor = (status: string) => {
+    const s = status.toLowerCase();
+    if (s === "approved" || s === "published") return "text-accent";
+    if (s === "disapproved" || s === "rejected") return "text-paper-3";
+    return "text-paper-2";
   };
 
   return (
     <motion.tr
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      className="group border-b border-zinc-900 hover:bg-zinc-900/50 transition-colors duration-300"
+      transition={{ duration: 0.22, ease: "easeOut" }}
+      className="group border-t border-rule hover:bg-ink-2 transition-colors duration-200"
     >
-      {/* Status Column */}
-      <td className="py-6 px-6 text-center align-middle">
+      {/* Status */}
+      <td className="py-4 px-4 align-middle">
         <span
-          className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border ${getStatusColor(
+          className={`font-mono text-[0.7rem] tracking-label uppercase inline-flex items-center gap-2 ${statusColor(
             currentStatus
           )}`}
         >
-          {currentStatus}
+          <span aria-hidden>{statusGlyph(currentStatus)}</span>
+          <span>{currentStatus || "pending"}</span>
         </span>
       </td>
 
-      {/* Date Column */}
-      <td className="py-6 px-6 text-center text-sm text-zinc-500 align-middle">
+      {/* Date */}
+      <td className="py-4 px-4 align-middle font-mono text-xs text-paper-3 whitespace-nowrap">
         {new Date(blog.createdAt).toLocaleDateString(undefined, {
           month: "short",
           day: "numeric",
@@ -115,61 +121,48 @@ const Admin: React.FC<BlogProps> = ({ blog }) => {
         })}
       </td>
 
-      {/* Title Column */}
-      <td className="py-6 px-6 text-center align-middle">
-        <p className="text-white font-medium text-sm line-clamp-1 max-w-[250px] mx-auto group-hover:text-emerald-400 transition-colors">
+      {/* Title */}
+      <td className="py-4 px-4 align-middle">
+        <p className="font-display text-paper text-base leading-snug line-clamp-1 max-w-[420px] group-hover:text-accent transition-colors">
           {blog.title}
         </p>
       </td>
 
-      {/* Actions Column */}
-      <td className="py-6 px-6 text-center align-middle">
-        <div className="flex items-center justify-center gap-2">
-          {/* Approve Button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+      {/* Id (mono, tertiary) */}
+      <td className="py-4 px-4 align-middle hidden md:table-cell font-mono text-[0.7rem] tracking-label text-paper-3 uppercase">
+        #{blog._id.slice(-6)}
+      </td>
+
+      {/* Actions */}
+      <td className="py-4 px-4 align-middle text-right">
+        <div className="inline-flex items-center gap-1">
+          <button
             onClick={() => handleApprove(blog._id)}
-            className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-500 border border-emerald-500/50 hover:bg-emerald-500 hover:text-black transition-all duration-300"
+            className="group/btn inline-flex items-center gap-1.5 px-3 py-1.5 text-paper-2 hover:text-accent transition-colors duration-200"
             title="Approve"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-          </motion.button>
-
-          {/* Disapprove Button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            <span className="font-mono text-[0.7rem] text-paper-3 group-hover/btn:text-accent">
+              [
+            </span>
+            <span className="font-mono text-xs">approve</span>
+            <span className="font-mono text-[0.7rem] text-paper-3 group-hover/btn:text-accent">
+              ]
+            </span>
+          </button>
+          <span className="text-rule font-mono text-xs">·</span>
+          <button
             onClick={() => handleDisapprove(blog._id)}
-            className="flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-800 text-zinc-400 border border-zinc-700 hover:border-red-500/50 hover:text-red-400 hover:bg-red-500/10 transition-all duration-300"
-            title="Disapprove"
+            className="group/btn inline-flex items-center gap-1.5 px-3 py-1.5 text-paper-2 hover:text-paper transition-colors duration-200"
+            title="Reject"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </motion.button>
+            <span className="font-mono text-[0.7rem] text-paper-3 group-hover/btn:text-paper">
+              [
+            </span>
+            <span className="font-mono text-xs">reject</span>
+            <span className="font-mono text-[0.7rem] text-paper-3 group-hover/btn:text-paper">
+              ]
+            </span>
+          </button>
         </div>
       </td>
     </motion.tr>

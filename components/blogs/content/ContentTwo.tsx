@@ -4,139 +4,117 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image1 from "../../../images/camera-back.webp";
 import Image from "next/image";
-import Tick from "../../../images/svg/Tick";
+
+const listItems = [
+  "Per ei quaeque sensibus",
+  "Cu imperdiet posidonium sed",
+  "Nulla omittam sadipscing mel ne",
+  "Per ei quaeque sensibus",
+  "Cu imperdiet posidonium sed",
+  "Nulla omittam sadipscing mel ne",
+];
 
 const ContentTwo = () => {
-  // Variants for section text
-  const textVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  // Variants for list items
-  const listItemVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { 
-      opacity: 1, 
-      x: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  // Variants for image
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: { 
-      opacity: 1, 
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeInOut"
-      }
-    }
-  };
-
-  // Stagger container variant
-  const containerVariants = {
+  const stagger = {
     hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+  };
+  const fadeUp = {
+    hidden: { opacity: 0, y: 8 },
     visible: {
       opacity: 1,
-      transition: {
-        delayChildren: 0.2,
-        staggerChildren: 0.1
-      }
-    }
+      y: 0,
+      transition: { duration: 0.22, ease: [0.2, 0.65, 0.2, 1] as const },
+    },
   };
 
-  const listItems = [
-    "Per ei quaeque sensibus",
-    "Cu imperdiet posidonium sed",
-    "Nulla omittam sadipscing mel ne",
-    "Per ei quaeque sensibus",
-    "Cu imperdiet posidonium sed",
-    "Nulla omittam sadipscing mel ne"
-  ];
-
   return (
-    <div>
-      <motion.section 
-        initial="hidden"
-        animate="visible"
-        className="relative not-prose scroll-mt-[72px]"
-      >
-        <div className="absolute inset-0 bg-blue-50 dark:bg-slate-800"></div>
-        <div className="relative mx-auto max-w-7xl px-4 md:px-6 text-default py-0 md:py-0 lg:py-0 pb-12 md:pb-16 lg:pb-20">
-          <div className="mx-auto max-w-7xl">
-            <div className="md:flex md:flex-row-reverse md:gap-16">
-              <motion.div 
-                variants={containerVariants}
-                className="self-center md:basis-1/2"
-              >
-                <motion.div 
-                  variants={textVariants}
-                  className="mb-8 lg:mb-12 text-lg text-gray-600 dark:text-slate-400"
+    <section className="bg-ink text-paper border-t border-rule scroll-mt-[72px]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.22, ease: "easeOut" }}
+          className="flex items-baseline gap-4 mb-12"
+        >
+          <span className="font-mono text-paper-3 text-[0.7rem] tracking-label">
+            § 02
+          </span>
+          <span className="label">Detail</span>
+          <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+          <span className="font-mono text-paper-3 text-[0.7rem] tracking-label hidden md:inline">
+            six entries
+          </span>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
+          {/* Image — placed first on md per row reverse */}
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            aria-hidden="true"
+            className="md:col-span-5 md:order-2"
+          >
+            <figure className="border border-rule bg-ink-2 p-3">
+              <Image
+                src={Image1.src}
+                alt="Editorial figure"
+                loading="lazy"
+                width={828}
+                height={828}
+                decoding="async"
+                className="w-full h-auto"
+                sizes="(max-width: 768px) 100vw, 432px"
+              />
+              <figcaption className="font-mono text-[0.7rem] tracking-label text-paper-3 uppercase mt-3 px-1">
+                Fig. 02 — apparatus, rear
+              </figcaption>
+            </figure>
+          </motion.div>
+
+          {/* Text + list */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            className="md:col-span-7 md:order-1 max-w-3xl"
+          >
+            <motion.p
+              variants={fadeUp}
+              className="text-paper-2 leading-relaxed text-lg mb-10 max-w-2xl"
+            >
+              Per odio fabellas consulatu cu. Utroque detracto mel ea, quo te
+              latine theophrastus. Ea his tale nib dissentias, mei exerci
+              tamquam euripidis cu.
+            </motion.p>
+
+            <ul>
+              {listItems.map((item, idx) => (
+                <motion.li
+                  key={`${item}-${idx}`}
+                  variants={fadeUp}
+                  className={`grid grid-cols-[3rem_1fr] gap-6 py-4 ${
+                    idx !== 0 ? "border-t border-rule" : ""
+                  }`}
                 >
-                  Per odio fabellas consulatu cu. Utroque detracto mel ea, quo
-                  te latine theophrastus. Ea his tale nib dissentias, mei exerci
-                  tamquam euripidis cu.
-                </motion.div>
-                <motion.div 
-                  variants={containerVariants}
-                  className="grid mx-auto max-w-4xl gap-4 md:gap-y-6"
-                >
-                  {listItems.map((item, index) => (
-                    <motion.div 
-                      key={index}
-                      variants={listItemVariants}
-                    >
-                      <div className="flex max-w-full">
-                        <div className="flex justify-center">
-                          <Tick/>
-                        </div>
-                        <div className="mt-0.5">
-                          <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white mt-1 mb-2">
-                            {item}
-                          </h3>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </motion.div>
-              <motion.div 
-                variants={imageVariants}
-                aria-hidden="true" 
-                className="mt-10 md:mt-0 md:basis-1/2"
-              >
-                <div className="relative m-auto max-w-4xl">
-                  <Image
-                    src={Image1.src}
-                    alt="Colorful Image"
-                    loading="lazy"
-                    width="828"
-                    height="828"
-                    decoding="async"
-                    data-nimg="1"
-                    className="mx-auto w-full rounded-lg shadow-lg bg-gray-400 dark:bg-slate-700"
-                    sizes="(max-width: 768px) 100vw, 432px"
-                  />
-                </div>
-              </motion.div>
-            </div>
-          </div>
+                  <span className="font-mono text-accent text-sm pt-1">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="font-display text-paper text-[1.25rem] leading-snug tracking-tight">
+                    {item}
+                  </h3>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
         </div>
-      </motion.section>
-    </div>
+      </div>
+    </section>
   );
 };
 

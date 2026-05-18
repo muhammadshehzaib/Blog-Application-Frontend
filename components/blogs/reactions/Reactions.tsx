@@ -4,6 +4,18 @@ interface ReactionsProps {
   onReactionSelected: (reaction: string) => void;
 }
 
+const reactionItems: { key: string; glyph: string; label: string }[] = [
+  { key: "happy", glyph: "◠", label: "happy" },
+  { key: "sad", glyph: "◡", label: "sad" },
+  { key: "angry", glyph: "▲", label: "angry" },
+  { key: "love", glyph: "♥", label: "love" },
+  { key: "surprised", glyph: "◎", label: "surprised" },
+  { key: "boring", glyph: "─", label: "boring" },
+  { key: "excited", glyph: "★", label: "excited" },
+  { key: "laugh", glyph: "✦", label: "laugh" },
+  { key: "shocked", glyph: "◐", label: "shocked" },
+];
+
 const Reactions: FC<ReactionsProps> = ({ onReactionSelected }) => {
   const [selectedReaction, setSelectedReaction] = useState<string | null>(null);
 
@@ -16,79 +28,44 @@ const Reactions: FC<ReactionsProps> = ({ onReactionSelected }) => {
 
   return (
     <div>
-      <div className="flex justify-around text-3xl cursor-pointer">
-        <span
-          role="img"
-          aria-label="Happy"
-          onClick={() => handleReactionClick("happy")}
-          style={{ opacity: selectedReaction === "happy" ? 1 : 0.6 }}
-        >
-          😄
-        </span>
-        <span
-          role="img"
-          aria-label="Sad"
-          onClick={() => handleReactionClick("sad")}
-          style={{ opacity: selectedReaction === "sad" ? 1 : 0.6 }}
-        >
-          😢
-        </span>
-        <span
-          role="img"
-          aria-label="angry"
-          onClick={() => handleReactionClick("angry")}
-          style={{ opacity: selectedReaction === "angry" ? 1 : 0.6 }}
-        >
-          😡
-        </span>
-        <span
-          role="img"
-          aria-label="love"
-          onClick={() => handleReactionClick("love")}
-          style={{ opacity: selectedReaction === "love" ? 1 : 0.6 }}
-        >
-          ❤️
-        </span>
-        <span
-          role="img"
-          aria-label="surprised"
-          onClick={() => handleReactionClick("surprised")}
-          style={{ opacity: selectedReaction === "surprised" ? 1 : 0.6 }}
-        >
-          😮
-        </span>
-        <span
-          role="img"
-          aria-label="boring"
-          onClick={() => handleReactionClick("boring")}
-          style={{ opacity: selectedReaction === "boring" ? 1 : 0.6 }}
-        >
-          😑
-        </span>
-        <span
-          role="img"
-          aria-label="excited"
-          onClick={() => handleReactionClick("excited")}
-          style={{ opacity: selectedReaction === "excited" ? 1 : 0.6 }}
-        >
-          🤩
-        </span>
-        <span
-          role="img"
-          aria-label="laugh"
-          onClick={() => handleReactionClick("laugh")}
-          style={{ opacity: selectedReaction === "laugh" ? 1 : 0.6 }}
-        >
-          😆
-        </span>
-        <span
-          role="img"
-          aria-label="shocked"
-          onClick={() => handleReactionClick("shocked")}
-          style={{ opacity: selectedReaction === "shocked" ? 1 : 0.6 }}
-        >
-          😱
-        </span>
+      <p className="font-mono text-[0.7rem] tracking-label uppercase text-paper-3 mb-4">
+        &gt; react
+      </p>
+      <div className="flex flex-wrap gap-x-3 gap-y-2 font-mono text-sm">
+        {reactionItems.map((r) => {
+          const active = selectedReaction === r.key;
+          return (
+            <button
+              key={r.key}
+              type="button"
+              aria-label={r.label}
+              aria-pressed={active}
+              onClick={() => handleReactionClick(r.key)}
+              className={`group inline-flex items-center gap-2 px-3 py-1.5 border transition-colors ${
+                active
+                  ? "border-accent text-accent bg-accent-soft"
+                  : "border-rule text-paper-2 hover:border-paper-3 hover:text-paper"
+              }`}
+            >
+              <span
+                className={`text-xs ${
+                  active ? "text-accent" : "text-paper-3 group-hover:text-paper-2"
+                }`}
+              >
+                [
+              </span>
+              <span aria-hidden="true">{r.glyph}</span>
+              <span className="text-xs uppercase tracking-label">{r.label}</span>
+              <span
+                className={`text-xs ${
+                  active ? "text-accent" : "text-paper-3 group-hover:text-paper-2"
+                }`}
+              >
+                ]
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

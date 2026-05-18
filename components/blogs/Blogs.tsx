@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+"use client";
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "../Navigation";
+import Footer from "../Footer";
 
 interface Blog {
   _id: string;
@@ -15,90 +18,91 @@ interface Blog {
   };
 }
 
-// BlogCard Component
-const BlogCard = ({ blog, index }: { blog: Blog; index: number }) => {
-  const [isHovered, setIsHovered] = useState(false);
+const SectionHeader = ({
+  index,
+  label,
+  caption,
+}: {
+  index: string;
+  label: string;
+  caption?: string;
+}) => (
+  <div className="flex items-baseline gap-4 mb-10">
+    <span className="font-mono text-paper-3 text-[0.7rem] tracking-label">
+      § {index}
+    </span>
+    <span className="label">{label}</span>
+    <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+    {caption && (
+      <span className="font-mono text-paper-3 text-[0.7rem] tracking-label hidden md:inline">
+        {caption}
+      </span>
+    )}
+  </div>
+);
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.22, ease: [0.2, 0.65, 0.2, 1] as const },
+  },
+};
+
+const stagger = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
+
+const BlogRow = ({ blog, index }: { blog: Blog; index: number }) => {
+  const dateStr = new Date(blog.createdAt).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      className="group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-zinc-800 transition-all duration-300"
+    <motion.article
+      variants={fadeUp}
+      className="group border border-rule bg-ink hover:bg-ink-2 transition-colors rounded-none"
     >
-      {/* Image */}
-      <div className="relative h-56 overflow-hidden bg-zinc-900">
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"
-          initial={{ opacity: 0.6 }}
-          animate={{ opacity: isHovered ? 0.8 : 0.6 }}
-          transition={{ duration: 0.3 }}
-        />
-        <motion.img
-          src={blog.image}
-          alt={blog.title}
-          className="w-full h-full object-cover"
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.6 }}
-        />
-        {/* Category Badge */}
-        <div className="absolute top-4 left-4 z-20">
-          <span className="px-3 py-1.5 bg-emerald-500/90 backdrop-blur-sm text-black rounded-lg text-xs font-bold uppercase tracking-wider">
-            {blog.category?.category || "General"}
-          </span>
-        </div>
-      </div>
+      <Link href={`/blogs/${blog._id}`} className="block p-6 md:p-8">
+        <div className="grid grid-cols-12 gap-6 items-baseline">
+          <div className="hidden md:block col-span-1 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase pt-1">
+            {String(index + 1).padStart(2, "0")}
+          </div>
 
-      {/* Content */}
-      <div className="p-6">
-        <motion.h3
-          className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-emerald-400 transition-colors duration-300"
-          whileHover={{ x: 5 }}
-          transition={{ duration: 0.2 }}
-        >
-          {blog.title}
-        </motion.h3>
-        <p className="text-zinc-400 text-sm mb-6 line-clamp-3 leading-relaxed">
-          {blog.content.length > 120
-            ? `${blog.content.substring(0, 120)}...`
-            : blog.content}
-        </p>
+          <div className="col-span-12 md:col-span-8">
+            <div className="flex items-center gap-2 mb-3 font-mono text-[0.7rem] tracking-label uppercase text-paper-3">
+              <span className="text-accent">●</span>
+              <span>{blog.category?.category || "General"}</span>
+              <span className="text-rule">·</span>
+              <span>{dateStr}</span>
+            </div>
 
-        {/* Footer */}
-        <div className="flex justify-between items-center pt-4 border-t border-zinc-900">
-          <motion.a
-            href={`/blogs/${blog._id}`}
-            className="inline-flex items-center text-emerald-400 hover:text-emerald-300 font-semibold text-sm group"
-            whileHover={{ x: 5 }}
-            transition={{ duration: 0.2 }}
-          >
-            Read Article
-            <motion.svg
-              className="w-4 h-4 ml-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              animate={{ x: isHovered ? 5 : 0 }}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </motion.svg>
-          </motion.a>
-          <span className="text-xs text-zinc-500 uppercase tracking-wider">
-            {new Date(blog.createdAt).toLocaleDateString(undefined, {
-              month: "short",
-              day: "numeric",
-            })}
-          </span>
+            <h3 className="font-display text-paper text-[1.6rem] md:text-[1.85rem] leading-tight tracking-tight mb-3 group-hover:text-accent transition-colors text-balance">
+              {blog.title}
+            </h3>
+
+            <p className="text-paper-2 leading-relaxed line-clamp-2 max-w-2xl">
+              {blog.content}
+            </p>
+          </div>
+
+          <div className="col-span-12 md:col-span-3 md:text-right">
+            <div className="font-mono text-[0.7rem] tracking-label uppercase text-paper-3">
+              <span>by </span>
+              <span className="text-paper-2">{blog.author || "anon"}</span>
+            </div>
+            <div className="mt-3 font-mono text-[0.7rem] tracking-label uppercase text-paper-3 group-hover:text-accent transition-colors inline-flex items-center gap-1.5">
+              <span>read</span>
+              <span className="transition-transform group-hover:translate-x-1">→</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </Link>
+    </motion.article>
   );
 };
 
@@ -106,6 +110,7 @@ const Blogs: React.FC = () => {
   const [blogData, setBlogData] = useState<Blog[]>([]);
   const [categorySelected, setCategorySelected] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -131,247 +136,244 @@ const Blogs: React.FC = () => {
     setCategorySelected(value);
   };
 
-  const filteredBlogs = categorySelected
-    ? blogData.filter(
-        (blog) => blog.category && blog.category.category === categorySelected
-      )
-    : blogData;
+  const filteredBlogs = useMemo(() => {
+    let list = categorySelected
+      ? blogData.filter(
+          (blog) =>
+            blog.category && blog.category.category === categorySelected,
+        )
+      : blogData;
+
+    const q = query.trim().toLowerCase();
+    if (q) {
+      list = list.filter(
+        (blog) =>
+          blog.title?.toLowerCase().includes(q) ||
+          blog.content?.toLowerCase().includes(q) ||
+          blog.author?.toLowerCase().includes(q),
+      );
+    }
+    return list;
+  }, [blogData, categorySelected, query]);
 
   const uniqueCategories = Array.from(
-    new Set(blogData.map((blog) => blog.category && blog.category.category))
-  );
+    new Set(blogData.map((blog) => blog.category && blog.category.category)),
+  ).filter(Boolean) as string[];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
+  const issueDate = new Date().toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
 
   return (
-    <div className="bg-black text-white min-h-screen">
-      <Navigation/>
-      {/* Navigation would go here */}
-      <div className="h-20"></div>
+    <main className="bg-ink text-paper min-h-screen">
+      <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative py-24 overflow-hidden border-b border-zinc-900">
-        {/* Grid Background */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
-
-        {/* Floating Gradient Orbs */}
-        <motion.div
-          animate={{
-            y: [0, -20, 0],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-10 left-20 w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            y: [0, 20, 0],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute bottom-10 right-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl"
-        />
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* ────────────── HERO ────────────── */}
+      <section className="relative">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-20">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.25 }}
+            className="flex items-center gap-3 mb-12 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase"
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-              className="inline-block mb-6 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-sm font-medium"
-            >
-              📚 Explore Our Collection
-            </motion.div>
+            <span className="text-accent">●</span>
+            <span>Archive / {issueDate}</span>
+            <span className="flex-1 border-t border-rule" />
+            <span className="hidden md:inline">
+              {blogData.length} pieces · {uniqueCategories.length} categories
+            </span>
+          </motion.div>
 
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-              Discover{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400">
-                Amazing
-              </span>{" "}
-              Stories
-            </h1>
-            <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-              Dive into a world of knowledge, creativity, and inspiration from
-              our community of writers
-            </p>
+          <motion.h1
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="font-display text-paper text-[clamp(2.25rem,6vw,4.5rem)] leading-[0.98] tracking-[-0.04em] max-w-4xl text-balance"
+          >
+            Every piece <em className="text-accent font-display italic">we&apos;ve</em>{" "}
+            published, in one place.
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08, duration: 0.24 }}
+            className="mt-8 max-w-2xl text-paper-2 text-lg leading-relaxed"
+          >
+            Essays, reporting, and short fiction from the Writers&apos; Haven
+            contributors. Filter by section or search the archive.
+          </motion.p>
+
+          {/* ASCII spec block */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.18, duration: 0.24 }}
+            className="mt-14 font-mono text-[0.75rem] text-paper-3 leading-relaxed select-none hidden md:block"
+          >
+            <pre className="whitespace-pre">
+{`┌─ archive ——————————————————————————————————————————————————
+│  total       ${String(blogData.length).padStart(4, " ")} pieces
+│  sections    ${String(uniqueCategories.length).padStart(4, " ")} categories
+│  filter      ${categorySelected ?? "—"}
+│  query       ${query || "—"}
+└────────────────────────────────────────────────────────────`}
+            </pre>
           </motion.div>
         </div>
       </section>
 
-      {/* Category Filter Section */}
-      <section className="py-12 border-b border-zinc-900">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-8"
-          >
-            <h2 className="text-2xl font-bold mb-3">Filter by Category</h2>
-            <p className="text-zinc-500 text-sm">
-              Find exactly what you&apos;re looking for
-            </p>
-          </motion.div>
+      {/* ────────────── FILTER + SEARCH ────────────── */}
+      <section className="relative border-t border-rule">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+            <div className="lg:col-span-7">
+              <p className="label mb-4">// filter by section</p>
+              <div className="flex flex-wrap gap-x-5 gap-y-2 items-baseline">
+                <button
+                  onClick={() => handleClick(null)}
+                  className={`group inline-flex items-baseline gap-2 font-mono text-xs uppercase tracking-label transition-colors ${
+                    categorySelected === null
+                      ? "text-accent"
+                      : "text-paper-3 hover:text-paper"
+                  }`}
+                >
+                  <span className="font-mono text-[0.65rem] opacity-80">
+                    {categorySelected === null ? "▸" : "·"}
+                  </span>
+                  <span>all</span>
+                </button>
 
-          <div className="flex flex-wrap gap-3 justify-center">
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleClick(null)}
-              className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
-                categorySelected === null
-                  ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-black shadow-lg shadow-emerald-500/20"
-                  : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-white"
-              }`}
-            >
-              All Articles
-            </motion.button>
+                {uniqueCategories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => handleClick(category)}
+                    className={`group inline-flex items-baseline gap-2 font-mono text-xs uppercase tracking-label transition-colors ${
+                      categorySelected === category
+                        ? "text-accent"
+                        : "text-paper-3 hover:text-paper"
+                    }`}
+                  >
+                    <span className="font-mono text-[0.65rem] opacity-80">
+                      {categorySelected === category ? "▸" : "·"}
+                    </span>
+                    <span>{category}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
 
-            {uniqueCategories.map((category, index) => (
-              <motion.button
-                key={category}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.05 }}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => handleClick(category)}
-                className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
-                  categorySelected === category
-                    ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-black shadow-lg shadow-emerald-500/20"
-                    : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-white"
-                }`}
-              >
-                {category}
-              </motion.button>
-            ))}
+            <div className="lg:col-span-5">
+              <label className="block">
+                <span className="label block mb-2">// search archive</span>
+                <div className="flex items-center gap-3 border-b border-rule focus-within:border-accent transition-colors">
+                  <span className="font-mono text-paper-3 text-sm select-none">
+                    &gt;
+                  </span>
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="search query"
+                    className="w-full bg-transparent border-0 text-paper py-2 px-0 font-mono text-sm placeholder:text-paper-3/60 outline-none"
+                  />
+                  {query && (
+                    <button
+                      onClick={() => setQuery("")}
+                      className="font-mono text-xs text-paper-3 hover:text-accent transition-colors"
+                      aria-label="Clear search"
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
+              </label>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Blog Grid Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ────────────── LIST ────────────── */}
+      <section className="relative border-t border-rule">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+          <SectionHeader
+            index="02"
+            label="All Articles"
+            caption={
+              isLoading
+                ? "loading…"
+                : `${filteredBlogs.length} of ${blogData.length}`
+            }
+          />
+
           {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <motion.div
+            <div className="space-y-4">
+              {[0, 1, 2, 3].map((i) => (
+                <div
                   key={i}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="bg-zinc-950 rounded-2xl overflow-hidden shadow-lg border border-zinc-900"
+                  className="border border-rule p-8 animate-pulse"
                 >
-                  <div className="h-56 bg-gradient-to-r from-zinc-800 via-zinc-700 to-zinc-800 animate-pulse"></div>
-                  <div className="p-6 space-y-4">
-                    <div className="h-4 w-24 bg-zinc-800 rounded-full animate-pulse"></div>
-                    <div className="h-6 bg-zinc-800 rounded-lg animate-pulse"></div>
-                    <div className="space-y-2">
-                      <div className="h-4 bg-zinc-800 rounded animate-pulse"></div>
-                      <div className="h-4 bg-zinc-800 rounded animate-pulse w-2/3"></div>
-                    </div>
-                  </div>
-                </motion.div>
+                  <div className="h-3 w-32 bg-rule mb-5" />
+                  <div className="h-7 bg-rule mb-3 max-w-xl" />
+                  <div className="h-3 bg-rule max-w-md" />
+                </div>
               ))}
             </div>
           ) : filteredBlogs.length > 0 ? (
             <motion.div
-              variants={containerVariants}
+              variants={stagger}
               initial="hidden"
               animate="visible"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="space-y-4"
             >
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout">
                 {filteredBlogs.map((blog, index) => (
-                  <BlogCard key={blog._id} blog={blog} index={index} />
+                  <BlogRow key={blog._id} blog={blog} index={index} />
                 ))}
               </AnimatePresence>
             </motion.div>
           ) : (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-20"
-            >
-              <div className="w-24 h-24 bg-zinc-900 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg
-                  className="w-12 h-12 text-zinc-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+            <div className="border border-rule p-16 text-center font-mono text-sm text-paper-3">
+              <p>// no articles match this filter</p>
+              <p className="mt-3">
+                <button
+                  onClick={() => {
+                    handleClick(null);
+                    setQuery("");
+                  }}
+                  className="text-accent hover:underline underline-offset-4 decoration-1"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-2">No Articles Found</h3>
-              <p className="text-zinc-500 mb-6">
-                Try selecting a different category or check back later
+                  ▸ reset filters
+                </button>
               </p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => handleClick(null)}
-                className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-black rounded-xl font-semibold"
-              >
-                View All Articles
-              </motion.button>
-            </motion.div>
+            </div>
+          )}
+
+          {!isLoading && filteredBlogs.length > 0 && (
+            <div className="mt-10 pt-6 border-t border-rule font-mono text-[0.7rem] tracking-label uppercase text-paper-3 flex flex-wrap items-center justify-between gap-3">
+              <span>
+                showing{" "}
+                <span className="text-paper">{filteredBlogs.length}</span>{" "}
+                {filteredBlogs.length === 1 ? "piece" : "pieces"}
+                {categorySelected && (
+                  <>
+                    {" "}in <span className="text-paper">{categorySelected}</span>
+                  </>
+                )}
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-accent">●</span>
+                <span>end of archive</span>
+              </span>
+            </div>
           )}
         </div>
       </section>
 
-      {/* Results Counter */}
-      {!isLoading && filteredBlogs.length > 0 && (
-        <section className="py-8 border-t border-zinc-900">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <p className="text-zinc-500">
-                Showing{" "}
-                <span className="text-emerald-400 font-semibold">
-                  {filteredBlogs.length}
-                </span>{" "}
-                {categorySelected ? (
-                  <>
-                    article{filteredBlogs.length !== 1 ? "s" : ""} in{" "}
-                    <span className="text-white font-semibold">
-                      {categorySelected}
-                    </span>
-                  </>
-                ) : (
-                  <>article{filteredBlogs.length !== 1 ? "s" : ""}</>
-                )}
-              </p>
-            </div>
-          </div>
-        </section>
-      )}
-
-    </div>
+      <Footer />
+    </main>
   );
 };
 

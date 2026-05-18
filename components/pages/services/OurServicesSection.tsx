@@ -4,274 +4,191 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const OurServicesSection = () => {
-  const services = [
-    {
-      icon: (
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-        />
-      ),
-      title: "Content Creation Tools",
-      description:
-        "Advanced editor with markdown support, image optimization, and formatting tools to help you create beautiful content.",
-      link: "/create-blogs",
-      linkText: "Start Writing →",
-      gradient: "from-emerald-500 to-teal-500",
-    },
-    {
-      icon: (
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-        />
-      ),
-      title: "Analytics & Insights",
-      description:
-        "Detailed analytics on your content performance, reader engagement, and audience demographics.",
-      link: "/analytics",
-      linkText: "View Analytics →",
-      gradient: "from-blue-500 to-cyan-500",
-    },
-    {
-      icon: (
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-        />
-      ),
-      title: "SEO Optimization",
-      description:
-        "Built-in SEO tools to help your content rank better and reach a wider audience.",
-      link: "/seo-tools",
-      linkText: "Optimize Content →",
-      gradient: "from-purple-500 to-pink-500",
-    },
-    {
-      icon: (
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-        />
-      ),
-      title: "Community Features",
-      description:
-        "Connect with other writers, join writing challenges, and participate in community events.",
-      link: "/community",
-      linkText: "Join Community →",
-      gradient: "from-emerald-500 to-teal-500",
-    },
-    {
-      icon: (
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      ),
-      title: "Monetization",
-      description:
-        "Multiple ways to monetize your content through subscriptions, tips, and sponsored opportunities.",
-      link: "/monetization",
-      linkText: "Start Earning →",
-      gradient: "from-blue-500 to-cyan-500",
-    },
-    {
-      icon: (
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"
-        />
-      ),
-      title: "Support & Resources",
-      description:
-        "24/7 support, writing guides, and resources to help you grow as a writer.",
-      link: "/resources",
-      linkText: "Access Resources →",
-      gradient: "from-purple-500 to-pink-500",
-    },
-  ];
+interface Service {
+  title: string;
+  description: string;
+  link: string;
+  linkText: string;
+}
 
-  const containerVariants = {
+const services: Service[] = [
+  {
+    title: "Content Creation Tools",
+    description:
+      "Advanced editor with markdown support, image optimization, and formatting tools to help you create beautiful content.",
+    link: "/create-blogs",
+    linkText: "Start writing",
+  },
+  {
+    title: "Analytics & Insights",
+    description:
+      "Detailed analytics on your content performance, reader engagement, and audience demographics.",
+    link: "/analytics",
+    linkText: "View analytics",
+  },
+  {
+    title: "SEO Optimization",
+    description:
+      "Built-in SEO tools to help your content rank better and reach a wider audience.",
+    link: "/seo-tools",
+    linkText: "Optimize content",
+  },
+  {
+    title: "Community Features",
+    description:
+      "Connect with other writers, join writing challenges, and participate in community events.",
+    link: "/community",
+    linkText: "Join community",
+  },
+  {
+    title: "Monetization",
+    description:
+      "Multiple ways to monetize your content through subscriptions, tips, and sponsored opportunities.",
+    link: "/monetization",
+    linkText: "Start earning",
+  },
+  {
+    title: "Support & Resources",
+    description:
+      "24/7 support, writing guides, and resources to help you grow as a writer.",
+    link: "/resources",
+    linkText: "Access resources",
+  },
+];
+
+const SectionHeader = ({
+  index,
+  label,
+  caption,
+}: {
+  index: string;
+  label: string;
+  caption?: string;
+}) => (
+  <div className="flex items-baseline gap-4 mb-12">
+    <span className="font-mono text-paper-3 text-[0.7rem] tracking-label">
+      § {index}
+    </span>
+    <span className="label">{label}</span>
+    <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+    {caption && (
+      <span className="font-mono text-paper-3 text-[0.7rem] tracking-label hidden md:inline">
+        {caption}
+      </span>
+    )}
+  </div>
+);
+
+const OurServicesSection = () => {
+  const stagger = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
   };
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+  const fadeUp = {
+    hidden: { opacity: 0, y: 8 },
     visible: {
-      y: 0,
       opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
+      y: 0,
+      transition: { duration: 0.24, ease: [0.2, 0.65, 0.2, 1] },
     },
   };
 
   return (
-    <div className="relative bg-black text-white overflow-hidden py-24 border-t border-zinc-900">
-      {/* Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]"></div>
+    <section
+      id="services"
+      className="relative border-t border-rule"
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+        <SectionHeader
+          index="02"
+          label="What We Offer"
+          caption={`${services.length.toString().padStart(2, "0")} modules`}
+        />
 
-      {/* Floating Gradient Orbs */}
-      <motion.div
-        animate={{
-          y: [0, -30, 0],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
-      />
-      <motion.div
-        animate={{
-          y: [0, 30, 0],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute bottom-20 left-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
-      />
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-3xl mx-auto mb-16"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="inline-block mb-6 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-sm font-medium"
+        {/* Lead paragraph in asymmetric grid */}
+        <div className="grid grid-cols-12 gap-6 mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.24 }}
+            className="col-span-12 md:col-span-7 font-display text-paper text-[clamp(2rem,5vw,3.5rem)] leading-[1.0] tracking-[-0.035em] text-balance"
           >
-            ✨ Powerful Features
-          </motion.div>
+            A complete kit for{" "}
+            <em className="text-accent font-display italic">modern</em> writers.
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.24, delay: 0.06 }}
+            className="col-span-12 md:col-span-5 md:pl-6 md:border-l md:border-rule text-paper-2 leading-relaxed"
+          >
+            Each module below is part of the standard offering. Nothing is
+            locked behind a tier. Read what you need, then start writing.
+          </motion.p>
+        </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-            What We Offer to{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400">
-              Writers
-            </span>
-          </h2>
-          <p className="text-xl text-zinc-400 leading-relaxed">
-            Empower your writing journey with our comprehensive suite of tools
-            and services designed for modern content creators.
-          </p>
-        </motion.div>
-
-        {/* Services Grid */}
-        <motion.div
-          variants={containerVariants}
+        {/* Numbered editorial list */}
+        <motion.ol
+          variants={stagger}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto"
+          viewport={{ once: true, margin: "-60px" }}
+          className="border-t border-rule"
         >
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              whileHover={{
-                y: -8,
-                transition: { duration: 0.3 },
-              }}
-              className="group relative bg-zinc-950 border border-zinc-900 rounded-2xl p-8 hover:border-zinc-800 transition-all duration-300 overflow-hidden"
-            >
-              {/* Gradient Overlay on Hover */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-              ></div>
+          {services.map((service, index) => {
+            const num = (index + 1).toString().padStart(2, "0");
+            return (
+              <motion.li
+                key={service.title}
+                variants={fadeUp}
+                className="group border-b border-rule hover:bg-ink-2 transition-colors"
+              >
+                <div className="grid grid-cols-12 gap-6 py-10 px-2 md:px-4">
+                  {/* Mono number */}
+                  <div className="col-span-2 md:col-span-1">
+                    <span className="font-mono text-paper-3 text-[0.7rem] tracking-label">
+                      {num}
+                    </span>
+                  </div>
 
-              {/* Icon */}
-              <div className="relative mb-6">
-                <motion.div
-                  className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center`}
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <svg
-                    className="w-8 h-8 text-black"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    {service.icon}
-                  </svg>
-                </motion.div>
-              </div>
+                  {/* Title */}
+                  <div className="col-span-10 md:col-span-4">
+                    <h3 className="font-display text-paper text-2xl md:text-3xl leading-tight tracking-tight">
+                      {service.title}
+                    </h3>
+                  </div>
 
-              {/* Content */}
-              <div className="relative">
-                <h3 className="text-2xl font-bold mb-3 text-white">
-                  {service.title}
-                </h3>
-                <p className="text-zinc-400 leading-relaxed mb-6">
-                  {service.description}
-                </p>
+                  {/* Body + link */}
+                  <div className="col-span-12 md:col-span-7 flex flex-col gap-5">
+                    <p className="text-paper-2 leading-relaxed max-w-2xl">
+                      {service.description}
+                    </p>
+                    <Link
+                      href={service.link}
+                      className="inline-flex items-baseline gap-2 self-start text-accent underline underline-offset-4 decoration-1 hover:text-paper transition-colors"
+                    >
+                      <span className="font-mono text-xs">▸</span>
+                      <span>{service.linkText}</span>
+                    </Link>
+                  </div>
+                </div>
+              </motion.li>
+            );
+          })}
+        </motion.ol>
 
-                {/* Link */}
-                <Link
-                  href={service.link}
-                  className="inline-flex items-center text-emerald-400 hover:text-emerald-300 font-semibold group/link"
-                >
-                  <span>{service.linkText}</span>
-                  <motion.svg
-                    className="w-4 h-4 ml-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    initial={{ x: 0 }}
-                    whileHover={{ x: 5 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </motion.svg>
-                </Link>
-              </div>
-
-              {/* Bottom Accent Line */}
-              <motion.div
-                className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${service.gradient} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left`}
-              ></motion.div>
-            </motion.div>
-          ))}
-        </motion.div>
+        {/* Footer dotted rule */}
+        <div className="mt-16 flex items-center gap-4 font-mono text-[0.7rem] tracking-label text-paper-3 uppercase">
+          <span>· · ·</span>
+          <span>End of catalog</span>
+          <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+          <span className="hidden md:inline">{services.length} of {services.length}</span>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
