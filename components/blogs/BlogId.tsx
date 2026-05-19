@@ -47,7 +47,10 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
   const [comments, setComments] = useState<string>("");
   const [reactions, setReactions] = useState<string | null>(null);
   const [blogs, setBlogs] = useState<Blog | null>(null);
-  const { liveComments, counts } = useBlogSocket(blog);
+  const { liveComments, counts, typingNames, notifyTyping } = useBlogSocket(
+    blog,
+    token,
+  );
 
   const fetchData = async () => {
     try {
@@ -96,6 +99,7 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setComments(value);
+    notifyTyping();
   };
 
   const handleReactionSelected = async (reaction: string) => {
@@ -311,6 +315,15 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
                       placeholder="type your comment"
                       className="flex-1 bg-transparent border-0 text-paper py-2 px-0 font-mono text-sm placeholder:text-paper-3/60 outline-none"
                     />
+                  </div>
+                  <div className="font-mono text-[0.7rem] text-paper-3 mt-2 h-4">
+                    {typingNames.length > 0 && (
+                      <span>
+                        ▸ {typingNames.join(", ")}{" "}
+                        {typingNames.length === 1 ? "is" : "are"} typing
+                        <span className="animate-pulse">…</span>
+                      </span>
+                    )}
                   </div>
                 </label>
                 <button
