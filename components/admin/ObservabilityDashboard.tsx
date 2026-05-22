@@ -80,7 +80,10 @@ export default function ObservabilityDashboard() {
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
-      setReindexResult(`✓ indexed ${json.indexed} blogs`);
+      const failedNote = json.failed ? `, ${json.failed} failed` : "";
+      setReindexResult(
+        `✓ indexed ${json.indexed}/${json.total} blogs${failedNote}`,
+      );
     } catch (e: any) {
       setReindexResult(`✗ ${e.message}`);
     } finally {
