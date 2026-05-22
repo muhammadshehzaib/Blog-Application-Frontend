@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import useAuth from "@/hooks/useAuth";
 
 const navLinks = [
   { name: "Articles", href: "/blogs", code: "01" },
@@ -11,9 +12,9 @@ const navLinks = [
 ];
 
 const Navigation = () => {
+  const { isAuthenticated, isAdmin, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 12);
@@ -21,7 +22,7 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleLogout = () => setIsAuthenticated(false);
+  const handleLogout = () => logout();
 
   return (
     <>
@@ -74,18 +75,30 @@ const Navigation = () => {
 
             {/* Right actions */}
             <div className="hidden lg:flex items-center gap-2">
-              <Link
-                href="/my-posts"
-                className="px-3 py-2 text-sm text-paper-2 hover:text-paper transition-colors"
-              >
-                My posts
-              </Link>
-              <Link
-                href="/profile"
-                className="px-3 py-2 text-sm text-paper-2 hover:text-paper transition-colors"
-              >
-                Profile
-              </Link>
+              {isAdmin && (
+                <Link
+                  href="/admin/dashboard"
+                  className="px-3 py-2 text-sm text-accent hover:text-paper transition-colors"
+                >
+                  Admin
+                </Link>
+              )}
+              {isAuthenticated && (
+                <>
+                  <Link
+                    href="/my-posts"
+                    className="px-3 py-2 text-sm text-paper-2 hover:text-paper transition-colors"
+                  >
+                    My posts
+                  </Link>
+                  <Link
+                    href="/profile"
+                    className="px-3 py-2 text-sm text-paper-2 hover:text-paper transition-colors"
+                  >
+                    Profile
+                  </Link>
+                </>
+              )}
               {!isAuthenticated ? (
                 <Link
                   href="/signin"
@@ -159,20 +172,33 @@ const Navigation = () => {
                   </motion.div>
                 ))}
                 <div className="pt-4 mt-3 border-t border-rule flex flex-col gap-2">
-                  <Link
-                    href="/my-posts"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="py-2 text-paper-2 hover:text-paper transition-colors"
-                  >
-                    My posts
-                  </Link>
-                  <Link
-                    href="/profile"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="py-2 text-paper-2 hover:text-paper transition-colors"
-                  >
-                    Profile
-                  </Link>
+                  {isAdmin && (
+                    <Link
+                      href="/admin/dashboard"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="py-2 text-accent hover:text-paper transition-colors"
+                    >
+                      Admin
+                    </Link>
+                  )}
+                  {isAuthenticated && (
+                    <>
+                      <Link
+                        href="/my-posts"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="py-2 text-paper-2 hover:text-paper transition-colors"
+                      >
+                        My posts
+                      </Link>
+                      <Link
+                        href="/profile"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="py-2 text-paper-2 hover:text-paper transition-colors"
+                      >
+                        Profile
+                      </Link>
+                    </>
+                  )}
                   {!isAuthenticated ? (
                     <Link
                       href="/signin"

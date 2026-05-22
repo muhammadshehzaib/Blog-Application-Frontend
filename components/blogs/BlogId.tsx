@@ -44,7 +44,7 @@ const stagger = {
 
 const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
   const router = useRouter();
-  const { token } = useAuth();
+  const { token, userId } = useAuth();
   const [comments, setComments] = useState<string>("");
   const [reactions, setReactions] = useState<string | null>(null);
   const [blogs, setBlogs] = useState<Blog | null>(null);
@@ -431,15 +431,23 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
               <div className="space-y-1">
                 {totalComments > 0 ? (
                   [...(blogs?.comments ?? []), ...liveComments].map(
-                    (comment: any, idx) => (
-                      <Comments
-                        key={comment._id ?? comment.id ?? idx}
-                        comment={comment.comment}
-                        commentId={comment._id ?? comment.id}
-                        token={token}
-                        blogId={blog}
-                      />
-                    ),
+                    (comment: any, idx) => {
+                      const ownerId =
+                        typeof comment.userId === "object"
+                          ? comment.userId?._id
+                          : comment.userId;
+                      return (
+                        <Comments
+                          key={comment._id ?? comment.id ?? idx}
+                          comment={comment.comment}
+                          commentId={comment._id ?? comment.id}
+                          commentUserId={ownerId}
+                          currentUserId={userId}
+                          token={token}
+                          blogId={blog}
+                        />
+                      );
+                    },
                   )
                 ) : (
                   <div className="border border-rule p-10 text-center font-mono text-sm text-paper-3">

@@ -7,12 +7,16 @@ interface CommentsProps {
   blogId: string;
   commentId?: string;
   token?: string | null;
+  commentUserId?: string;
+  currentUserId?: string | null;
 }
 
 const Comments: React.FC<CommentsProps> = ({
   comment,
   commentId,
   token,
+  commentUserId,
+  currentUserId,
 }) => {
   const stamp = new Date().toLocaleTimeString("en-US", {
     hour: "2-digit",
@@ -26,7 +30,13 @@ const Comments: React.FC<CommentsProps> = ({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const canEdit = Boolean(commentId && token);
+  const canEdit = Boolean(
+    commentId &&
+      token &&
+      commentUserId &&
+      currentUserId &&
+      String(commentUserId) === String(currentUserId),
+  );
 
   const save = async () => {
     if (!commentId || !token) return;
