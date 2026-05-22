@@ -69,24 +69,49 @@ export default function ObservabilityDashboard() {
   const [reindexing, setReindexing] = useState(false);
   const [reindexResult, setReindexResult] = useState<string | null>(null);
 
+  const pollReindex = async (jobId: string) => {
+    try {
+      const res = await fetch(
+        `${process.env.DEPLOYMENTLINK}/blogs/reindex/${jobId}`,
+        { headers: { authorization: `bearer ${token}` } },
+      );
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const job = await res.json();
+
+      if (job.state === "completed") {
+        const r = job.result ?? {};
+        const failedNote = r.failed ? `, ${r.failed} failed` : "";
+        setReindexResult(
+          `✓ indexed ${r.indexed}/${r.total} blogs${failedNote}`,
+        );
+        setReindexing(false);
+      } else if (job.state === "failed") {
+        setReindexResult("✗ reindex job failed — check server logs");
+        setReindexing(false);
+      } else {
+        setReindexResult(`reindexing… ${job.progress || 0}% (${job.state})`);
+        setTimeout(() => pollReindex(jobId), 2000);
+      }
+    } catch (e: any) {
+      setReindexResult(`✗ ${e.message}`);
+      setReindexing(false);
+    }
+  };
+
   const handleReindex = async () => {
     if (!token) return;
     setReindexing(true);
-    setReindexResult(null);
+    setReindexResult("queued…");
     try {
       const res = await fetch(`${process.env.DEPLOYMENTLINK}/blogs/reindex`, {
         method: "POST",
         headers: { authorization: `bearer ${token}` },
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = await res.json();
-      const failedNote = json.failed ? `, ${json.failed} failed` : "";
-      setReindexResult(
-        `✓ indexed ${json.indexed}/${json.total} blogs${failedNote}`,
-      );
+      const { jobId } = await res.json();
+      pollReindex(jobId);
     } catch (e: any) {
       setReindexResult(`✗ ${e.message}`);
-    } finally {
       setReindexing(false);
     }
   };
