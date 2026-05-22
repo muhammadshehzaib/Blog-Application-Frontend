@@ -435,6 +435,8 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
                       <Comments
                         key={comment._id ?? comment.id ?? idx}
                         comment={comment.comment}
+                        commentId={comment._id ?? comment.id}
+                        token={token}
                         blogId={blog}
                       />
                     ),

@@ -165,6 +165,27 @@ export default function ObservabilityDashboard() {
         </span>
       </header>
 
+      <div className="flex flex-wrap gap-3 font-mono text-xs">
+        <a
+          href="/admin"
+          className="border border-rule px-4 py-2 text-paper-2 hover:text-paper hover:border-accent transition-colors"
+        >
+          ▸ blog moderation
+        </a>
+        <a
+          href="/admin/users"
+          className="border border-rule px-4 py-2 text-paper-2 hover:text-paper hover:border-accent transition-colors"
+        >
+          ▸ user roles
+        </a>
+        <a
+          href="/admin/comments"
+          className="border border-rule px-4 py-2 text-paper-2 hover:text-paper hover:border-accent transition-colors"
+        >
+          ▸ comments moderation
+        </a>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card title="System health">
           <div className="space-y-3">

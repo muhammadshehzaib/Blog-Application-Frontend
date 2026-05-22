@@ -4,6 +4,7 @@ import Admin from "./Admin";
 import Navigation from "../Navigation";
 import Footer from "../Footer";
 import Example from "../buttons/CreateCategory";
+import useAuth from "@/hooks/useAuth";
 import { motion } from "framer-motion";
 
 interface Blog {
@@ -15,6 +16,7 @@ interface Blog {
 }
 
 const AdminPanel = () => {
+  const { token } = useAuth();
   const [blogData, setBlogData] = useState<Blog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState<"all" | "pending" | "approved" | "rejected">(
@@ -24,7 +26,12 @@ const AdminPanel = () => {
   const fetchBlogs = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${process.env.DEPLOYMENTLINK}/blogs`);
+      const response = await fetch(
+        `${process.env.DEPLOYMENTLINK}/blogs/admin`,
+        token
+          ? { headers: { authorization: `bearer ${token}` } }
+          : undefined,
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch blog data");
       }
@@ -38,8 +45,8 @@ const AdminPanel = () => {
   };
 
   useEffect(() => {
-    fetchBlogs();
-  }, []);
+    if (token) fetchBlogs();
+  }, [token]);
 
   const counts = blogData.reduce(
     (acc, b) => {

@@ -22,8 +22,67 @@ const Category = () => {
   });
   const [categories, setCategories] = useState<CategoryItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editValue, setEditValue] = useState("");
+  const [actionError, setActionError] = useState<string | null>(null);
   const { isAuthenticated, token } = useAuth();
   const router = useRouter();
+
+  const startEdit = async (id: string) => {
+    setActionError(null);
+    try {
+      const res = await fetch(
+        `${process.env.DEPLOYMENTLINK}/blogscategories/${id}`,
+      );
+      const data = await res.json();
+      setEditingId(id);
+      setEditValue(data.category ?? "");
+    } catch {
+      setActionError("Could not load category.");
+    }
+  };
+
+  const saveEdit = async (id: string) => {
+    try {
+      const res = await fetch(
+        `${process.env.DEPLOYMENTLINK}/blogscategories/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `bearer ${token}`,
+          },
+          body: JSON.stringify({ category: editValue }),
+        },
+      );
+      if (!res.ok) throw new Error(`Update failed (${res.status})`);
+      setCategories((prev) =>
+        prev.map((c) =>
+          c._id === id ? { ...c, category: editValue } : c,
+        ),
+      );
+      setEditingId(null);
+    } catch (e: any) {
+      setActionError(e.message);
+    }
+  };
+
+  const deleteCategory = async (id: string) => {
+    if (!confirm("Delete this category?")) return;
+    try {
+      const res = await fetch(
+        `${process.env.DEPLOYMENTLINK}/blogscategories/${id}`,
+        {
+          method: "DELETE",
+          headers: { authorization: `bearer ${token}` },
+        },
+      );
+      if (!res.ok) throw new Error(`Delete failed (${res.status})`);
+      setCategories((prev) => prev.filter((c) => c._id !== id));
+    } catch (e: any) {
+      setActionError(e.message);
+    }
+  };
 
   const fetchCategories = async () => {
     try {
@@ -146,6 +205,12 @@ const Category = () => {
             </span>
           </div>
 
+          {actionError && (
+            <p className="font-mono text-xs text-red-400 mb-3">
+              ✗ {actionError}
+            </p>
+          )}
+
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -161,6 +226,7 @@ const Category = () => {
                     <th className="py-3 px-4 label text-left hidden md:table-cell">
                       Id
                     </th>
+                    <th className="py-3 px-4 label text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -195,19 +261,60 @@ const Category = () => {
                           {String(i + 1).padStart(2, "0")}
                         </td>
                         <td className="py-3 px-4 align-middle">
-                          <span className="font-sans text-paper text-sm group-hover:text-accent transition-colors">
-                            {c.category}
-                          </span>
+                          {editingId === c._id ? (
+                            <input
+                              value={editValue}
+                              onChange={(e) => setEditValue(e.target.value)}
+                              className="bg-transparent border-b border-accent text-paper font-mono text-sm py-1 outline-none"
+                            />
+                          ) : (
+                            <span className="font-sans text-paper text-sm group-hover:text-accent transition-colors">
+                              {c.category}
+                            </span>
+                          )}
                         </td>
                         <td className="py-3 px-4 align-middle hidden md:table-cell text-[0.7rem] tracking-label text-paper-3 uppercase">
                           #{c._id.slice(-8)}
+                        </td>
+                        <td className="py-3 px-4 align-middle text-right whitespace-nowrap">
+                          {editingId === c._id ? (
+                            <>
+                              <button
+                                onClick={() => saveEdit(c._id)}
+                                className="font-mono text-xs text-accent hover:underline mr-3"
+                              >
+                                save
+                              </button>
+                              <button
+                                onClick={() => setEditingId(null)}
+                                className="font-mono text-xs text-paper-3 hover:text-paper"
+                              >
+                                cancel
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button
+                                onClick={() => startEdit(c._id)}
+                                className="font-mono text-xs text-paper-2 hover:text-accent mr-3"
+                              >
+                                edit
+                              </button>
+                              <button
+                                onClick={() => deleteCategory(c._id)}
+                                className="font-mono text-xs text-paper-2 hover:text-red-400"
+                              >
+                                delete
+                              </button>
+                            </>
+                          )}
                         </td>
                       </motion.tr>
                     ))
                   ) : (
                     <tr className="border-t border-rule">
                       <td
-                        colSpan={3}
+                        colSpan={4}
                         className="py-16 px-6 text-center font-mono text-sm text-paper-3"
                       >
                         // no categories yet — create the first below
