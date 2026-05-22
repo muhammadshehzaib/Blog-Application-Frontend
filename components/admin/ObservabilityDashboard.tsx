@@ -66,6 +66,27 @@ export default function ObservabilityDashboard() {
   const [data, setData] = useState<Snapshot | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [reindexing, setReindexing] = useState(false);
+  const [reindexResult, setReindexResult] = useState<string | null>(null);
+
+  const handleReindex = async () => {
+    if (!token) return;
+    setReindexing(true);
+    setReindexResult(null);
+    try {
+      const res = await fetch(`${process.env.DEPLOYMENTLINK}/blogs/reindex`, {
+        method: "POST",
+        headers: { authorization: `bearer ${token}` },
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      setReindexResult(`✓ indexed ${json.indexed} blogs`);
+    } catch (e: any) {
+      setReindexResult(`✗ ${e.message}`);
+    } finally {
+      setReindexing(false);
+    }
+  };
 
   useEffect(() => {
     if (!token) return;
@@ -224,6 +245,35 @@ export default function ObservabilityDashboard() {
           </div>
         </Card>
       </div>
+
+      <Card title="Vector search index">
+        <div className="font-mono text-xs text-paper-3 space-y-3 leading-relaxed">
+          <p>
+            Re-embed every blog into Qdrant. Run this once after adding the
+            feature, or to backfill posts created while the indexer was down.
+          </p>
+          <button
+            type="button"
+            onClick={handleReindex}
+            disabled={reindexing}
+            className="inline-flex items-center gap-2 border border-rule text-paper-2 px-4 py-2 hover:border-accent hover:text-paper transition-colors disabled:opacity-50"
+          >
+            <span className="text-accent">▸</span>
+            {reindexing ? "reindexing…" : "Reindex all blogs"}
+          </button>
+          {reindexResult && (
+            <p
+              className={
+                reindexResult.startsWith("✓")
+                  ? "text-emerald-400"
+                  : "text-red-400"
+              }
+            >
+              {reindexResult}
+            </p>
+          )}
+        </div>
+      </Card>
 
       <Card title="External tooling">
         <div className="font-mono text-xs text-paper-3 space-y-2 leading-relaxed">

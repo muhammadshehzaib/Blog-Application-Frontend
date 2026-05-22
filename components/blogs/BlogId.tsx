@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import useAuth from "@/hooks/useAuth";
 import useBlogSocket from "@/hooks/useBlogSocket";
+import useBlogAi from "@/hooks/useBlogAi";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Comments from "./Comments";
@@ -51,6 +52,16 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
     blog,
     token,
   );
+  const {
+    related,
+    summary,
+    suggestions,
+    loadingSummary,
+    loadingTags,
+    error: aiError,
+    fetchSummary,
+    fetchTags,
+  } = useBlogAi(blog, token);
 
   const fetchData = async () => {
     try {
@@ -250,6 +261,82 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
             </div>
           </section>
 
+          {/* ─────────── AI TOOLS ─────────── */}
+          <section className="border-b border-rule">
+            <div className="max-w-3xl mx-auto px-6 lg:px-10 py-14">
+              <div className="flex items-baseline gap-4 mb-8">
+                <span className="font-mono text-paper-3 text-[0.7rem] tracking-label">
+                  §
+                </span>
+                <span className="label">AI assistant</span>
+                <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+                <span className="font-mono text-paper-3 text-[0.7rem] tracking-label hidden md:inline">
+                  powered by AI
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-3 mb-6">
+                <button
+                  type="button"
+                  onClick={fetchSummary}
+                  disabled={loadingSummary}
+                  className="inline-flex items-center gap-2 border border-rule text-paper-2 px-5 py-2.5 hover:border-accent hover:text-paper transition-colors disabled:opacity-50 font-mono text-sm"
+                >
+                  <span className="text-accent">▸</span>
+                  {loadingSummary ? "summarizing…" : "Summarize this post"}
+                </button>
+                <button
+                  type="button"
+                  onClick={fetchTags}
+                  disabled={loadingTags}
+                  className="inline-flex items-center gap-2 border border-rule text-paper-2 px-5 py-2.5 hover:border-accent hover:text-paper transition-colors disabled:opacity-50 font-mono text-sm"
+                >
+                  <span className="text-accent">▸</span>
+                  {loadingTags ? "thinking…" : "Suggest categories"}
+                </button>
+              </div>
+
+              {aiError && (
+                <p className="font-mono text-xs text-red-400 mb-4">
+                  ✗ {aiError}
+                </p>
+              )}
+
+              {summary && (
+                <div className="border border-rule bg-ink-2 p-6 mb-4">
+                  <p className="font-mono text-[0.7rem] tracking-label uppercase text-paper-3 mb-3">
+                    ▸ TL;DR
+                  </p>
+                  <p className="text-paper-2 leading-relaxed">{summary}</p>
+                </div>
+              )}
+
+              {suggestions && (
+                <div className="border border-rule bg-ink-2 p-6">
+                  <p className="font-mono text-[0.7rem] tracking-label uppercase text-paper-3 mb-3">
+                    ▸ suggested categories
+                  </p>
+                  {suggestions.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                      {suggestions.map((s) => (
+                        <span
+                          key={s}
+                          className="font-mono text-sm px-3 py-1 border border-rule rounded-full text-paper"
+                        >
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="font-mono text-sm text-paper-3">
+                      // no confident matches
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          </section>
+
           {/* ─────────── REACTIONS ─────────── */}
           <section className="border-b border-rule">
             <div className="max-w-3xl mx-auto px-6 lg:px-10 py-14">
@@ -363,6 +450,54 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
               </div>
             </div>
           </section>
+
+          {/* ─────────── RELATED POSTS ─────────── */}
+          {related.length > 0 && (
+            <section className="border-t border-rule">
+              <div className="max-w-3xl mx-auto px-6 lg:px-10 py-14">
+                <div className="flex items-baseline gap-4 mb-8">
+                  <span className="font-mono text-paper-3 text-[0.7rem] tracking-label">
+                    §
+                  </span>
+                  <span className="label">Related</span>
+                  <span className="flex-1 border-t border-rule translate-y-[-2px]" />
+                  <span className="font-mono text-paper-3 text-[0.7rem] tracking-label hidden md:inline">
+                    by meaning
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {related.map((r) => (
+                    <Link
+                      key={r._id}
+                      href={`/blogs/${r._id}`}
+                      className="group border border-rule bg-ink-2 hover:border-accent transition-colors overflow-hidden"
+                    >
+                      {r.image && (
+                        <div className="relative h-32 overflow-hidden">
+                          <Image
+                            src={r.image}
+                            alt={r.title}
+                            width={600}
+                            height={300}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                      <div className="p-4">
+                        <p className="font-mono text-[0.65rem] tracking-label uppercase text-paper-3 mb-2">
+                          {r.category?.category || "essay"}
+                        </p>
+                        <p className="font-display text-paper text-lg leading-snug group-hover:text-accent transition-colors">
+                          {r.title}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
         </motion.article>
       ) : (
         <div className="max-w-3xl mx-auto px-6 lg:px-10 py-32">
