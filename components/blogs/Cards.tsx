@@ -53,7 +53,7 @@ const Cards = () => {
           throw new Error("Failed to fetch blog data");
         }
         const data = await response.json();
-        setBlogData(data);
+        setBlogData(Array.isArray(data) ? data : data?.items ?? []);
       } catch (error: any) {
         console.error(error.message);
       }

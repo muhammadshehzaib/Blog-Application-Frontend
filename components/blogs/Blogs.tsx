@@ -18,6 +18,28 @@ interface Blog {
   };
 }
 
+interface PaginatedBlogs {
+  items: Blog[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+const PAGE_SIZE = 12;
+
+function pageWindow(current: number, total: number): (number | "…")[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const out: (number | "…")[] = [1];
+  const left = Math.max(2, current - 1);
+  const right = Math.min(total - 1, current + 1);
+  if (left > 2) out.push("…");
+  for (let i = left; i <= right; i++) out.push(i);
+  if (right < total - 1) out.push("…");
+  out.push(total);
+  return out;
+}
+
 const SectionHeader = ({
   index,
   label,
@@ -107,58 +129,97 @@ const BlogRow = ({ blog, index }: { blog: Blog; index: number }) => {
 };
 
 const Blogs: React.FC = () => {
-  const [blogData, setBlogData] = useState<Blog[]>([]);
+  const [items, setItems] = useState<Blog[]>([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [categorySelected, setCategorySelected] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [allCategories, setAllCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    const id = setTimeout(() => setDebouncedQuery(query.trim()), 300);
+    return () => clearTimeout(id);
+  }, [query]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [categorySelected, debouncedQuery]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.DEPLOYMENTLINK}/blogscategories`,
+        );
+        if (!res.ok) return;
+        const data = await res.json();
+        const names = (Array.isArray(data) ? data : [])
+          .map((c: { category?: string }) => c?.category)
+          .filter(Boolean) as string[];
+        setAllCategories(names);
+      } catch {
+        /* non-fatal */
+      }
+    };
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`${process.env.DEPLOYMENTLINK}/blogs`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch blog data");
-        }
-        const data: Blog[] = await response.json();
-        setBlogData(data);
+        const params = new URLSearchParams({
+          page: String(page),
+          limit: String(PAGE_SIZE),
+        });
+        if (categorySelected) params.set("category", categorySelected);
+        if (debouncedQuery) params.set("q", debouncedQuery);
+
+        const response = await fetch(
+          `${process.env.DEPLOYMENTLINK}/blogs?${params.toString()}`,
+        );
+        if (!response.ok) throw new Error("Failed to fetch blog data");
+        const data: PaginatedBlogs = await response.json();
+        setItems(data.items ?? []);
+        setTotal(data.total ?? 0);
+        setTotalPages(Math.max(1, data.totalPages ?? 1));
       } catch (error: any) {
         console.error(error.message);
+        setItems([]);
+        setTotal(0);
+        setTotalPages(1);
       } finally {
         setIsLoading(false);
       }
     };
-
     fetchData();
-  }, []);
+  }, [page, categorySelected, debouncedQuery]);
 
   const handleClick = (value: string | null) => {
     setCategorySelected(value);
   };
 
-  const filteredBlogs = useMemo(() => {
-    let list = categorySelected
-      ? blogData.filter(
-          (blog) =>
-            blog.category && blog.category.category === categorySelected,
-        )
-      : blogData;
-
-    const q = query.trim().toLowerCase();
-    if (q) {
-      list = list.filter(
-        (blog) =>
-          blog.title?.toLowerCase().includes(q) ||
-          blog.content?.toLowerCase().includes(q) ||
-          blog.author?.toLowerCase().includes(q),
-      );
+  const goToPage = (p: number) => {
+    const next = Math.min(Math.max(1, p), totalPages);
+    if (next === page) return;
+    setPage(next);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-    return list;
-  }, [blogData, categorySelected, query]);
+  };
 
-  const uniqueCategories = Array.from(
-    new Set(blogData.map((blog) => blog.category && blog.category.category)),
-  ).filter(Boolean) as string[];
+  const uniqueCategories = useMemo(() => {
+    if (allCategories.length > 0) return allCategories;
+    return Array.from(
+      new Set(items.map((b) => b.category?.category).filter(Boolean) as string[]),
+    );
+  }, [allCategories, items]);
+
+  const rangeStart = total === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
+  const rangeEnd = Math.min(total, page * PAGE_SIZE);
 
   const issueDate = new Date().toLocaleDateString("en-US", {
     month: "long",
@@ -182,7 +243,7 @@ const Blogs: React.FC = () => {
             <span>Archive / {issueDate}</span>
             <span className="flex-1 border-t border-rule" />
             <span className="hidden md:inline">
-              {blogData.length} pieces · {uniqueCategories.length} categories
+              {total} pieces · {uniqueCategories.length} categories
             </span>
           </motion.div>
 
@@ -214,10 +275,11 @@ const Blogs: React.FC = () => {
             className="mt-14 font-mono text-[0.75rem] text-paper-3 leading-relaxed select-none hidden md:block"
           >
             <pre className="whitespace-pre">
-{`┌─ archive ——————————————————————————————————————————————————
-│  total       ${String(blogData.length).padStart(4, " ")} pieces
+{`┌─ archive ──────────────────────────────────────────────────
+│  total       ${String(total).padStart(4, " ")} pieces
 │  sections    ${String(uniqueCategories.length).padStart(4, " ")} categories
-│  filter      ${categorySelected ?? "—"}
+│  page        ${String(page).padStart(4, " ")} of ${String(totalPages).padStart(4, " ")}
+│  filter      ${categorySelected ?? "all"}
 │  query       ${query || "—"}
 └────────────────────────────────────────────────────────────`}
             </pre>
@@ -304,7 +366,9 @@ const Blogs: React.FC = () => {
             caption={
               isLoading
                 ? "loading…"
-                : `${filteredBlogs.length} of ${blogData.length}`
+                : total === 0
+                  ? "0 results"
+                  : `${rangeStart}–${rangeEnd} of ${total}`
             }
           />
 
@@ -321,16 +385,21 @@ const Blogs: React.FC = () => {
                 </div>
               ))}
             </div>
-          ) : filteredBlogs.length > 0 ? (
+          ) : items.length > 0 ? (
             <motion.div
+              key={`page-${page}-${categorySelected ?? "all"}-${debouncedQuery}`}
               variants={stagger}
               initial="hidden"
               animate="visible"
               className="space-y-4"
             >
               <AnimatePresence mode="popLayout">
-                {filteredBlogs.map((blog, index) => (
-                  <BlogRow key={blog._id} blog={blog} index={index} />
+                {items.map((blog, index) => (
+                  <BlogRow
+                    key={blog._id}
+                    blog={blog}
+                    index={(page - 1) * PAGE_SIZE + index}
+                  />
                 ))}
               </AnimatePresence>
             </motion.div>
@@ -351,12 +420,14 @@ const Blogs: React.FC = () => {
             </div>
           )}
 
-          {!isLoading && filteredBlogs.length > 0 && (
+          {!isLoading && total > 0 && (
             <div className="mt-10 pt-6 border-t border-rule font-mono text-[0.7rem] tracking-label uppercase text-paper-3 flex flex-wrap items-center justify-between gap-3">
               <span>
                 showing{" "}
-                <span className="text-paper">{filteredBlogs.length}</span>{" "}
-                {filteredBlogs.length === 1 ? "piece" : "pieces"}
+                <span className="text-paper">
+                  {rangeStart}–{rangeEnd}
+                </span>{" "}
+                of <span className="text-paper">{total}</span>
                 {categorySelected && (
                   <>
                     {" "}in <span className="text-paper">{categorySelected}</span>
@@ -365,9 +436,57 @@ const Blogs: React.FC = () => {
               </span>
               <span className="flex items-center gap-2">
                 <span className="text-accent">●</span>
-                <span>end of archive</span>
+                <span>
+                  page {page} / {totalPages}
+                </span>
               </span>
             </div>
+          )}
+
+          {!isLoading && totalPages > 1 && (
+            <nav
+              aria-label="Pagination"
+              className="mt-8 flex flex-wrap items-center justify-center gap-1 font-mono text-xs tracking-label uppercase"
+            >
+              <button
+                onClick={() => goToPage(page - 1)}
+                disabled={page === 1}
+                className="px-3 py-2 border border-rule text-paper-3 hover:text-accent hover:border-accent transition-colors disabled:opacity-30 disabled:hover:text-paper-3 disabled:hover:border-rule disabled:cursor-not-allowed"
+              >
+                ← prev
+              </button>
+
+              {pageWindow(page, totalPages).map((p, i) =>
+                p === "…" ? (
+                  <span
+                    key={`gap-${i}`}
+                    className="px-2 py-2 text-paper-3 select-none"
+                  >
+                    …
+                  </span>
+                ) : (
+                  <button
+                    key={p}
+                    onClick={() => goToPage(p)}
+                    className={`min-w-[2.5rem] px-3 py-2 border transition-colors ${
+                      p === page
+                        ? "border-accent text-accent"
+                        : "border-rule text-paper-3 hover:text-paper hover:border-paper-3"
+                    }`}
+                  >
+                    {String(p).padStart(2, "0")}
+                  </button>
+                ),
+              )}
+
+              <button
+                onClick={() => goToPage(page + 1)}
+                disabled={page === totalPages}
+                className="px-3 py-2 border border-rule text-paper-3 hover:text-accent hover:border-accent transition-colors disabled:opacity-30 disabled:hover:text-paper-3 disabled:hover:border-rule disabled:cursor-not-allowed"
+              >
+                next →
+              </button>
+            </nav>
           )}
         </div>
       </section>
