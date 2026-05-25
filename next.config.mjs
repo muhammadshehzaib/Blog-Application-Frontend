@@ -5,7 +5,7 @@ const nextConfig = {
   },
   env: {
     LOCALHOST: "http://localhost:3002",
-    DEPLOYMENTLINK: "https://blog-application-v3ed.onrender.com",
+    DEPLOYMENTLINK: "http://localhost:3002",
   },
 };
 
