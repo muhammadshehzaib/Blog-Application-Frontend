@@ -123,18 +123,15 @@ const Category = () => {
     e.preventDefault();
     if (isAuthenticated) {
       try {
-        // Keeping existing FormData logic
-        const data = new FormData();
-        data.append("category", formData.category);
-
         const response = await fetch(
           `${process.env.DEPLOYMENTLINK}/blogscategories`,
           {
             method: "POST",
             headers: {
+              "Content-Type": "application/json",
               authorization: `bearer ${token}`,
             },
-            body: data,
+            body: JSON.stringify({ category: formData.category }),
           }
         );
 

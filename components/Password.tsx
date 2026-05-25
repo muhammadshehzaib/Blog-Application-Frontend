@@ -12,8 +12,7 @@ const Password = () => {
   const router = useRouter();
 
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+    newPassword: "",
   });
 
   const handleInputChange = (e: any) => {
@@ -24,39 +23,46 @@ const Password = () => {
   const handlePasswordChange = async (e: any) => {
     e.preventDefault();
 
-    try {
-      const forms = {
-        username: formData.username,
-        password: formData.password,
-      };
+    const resetToken =
+      typeof window !== "undefined"
+        ? sessionStorage.getItem("resetToken")
+        : null;
 
+    if (!resetToken) {
+      toast.error("Reset token missing. Verify OTP again.");
+      router.push("/forgetpassword");
+      return;
+    }
+
+    if (!formData.newPassword || formData.newPassword.length < 8) {
+      toast.error("Password must be at least 8 characters.");
+      return;
+    }
+
+    try {
       const response = await fetch(
         `${process.env.DEPLOYMENTLINK}/auth/changePassword`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(forms),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            resetToken,
+            newPassword: formData.newPassword,
+          }),
         }
       );
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Password Change Failed", errorData);
-        toast.error("Password Change Failed");
+        const errorData = await response.json().catch(() => ({}));
+        toast.error(errorData?.message || "Password change failed.");
         return;
       }
 
-      const responseData = await response.json();
-      setTimeout(() => {
-        toast.success("Password Changed Successfully");
-        router.push("/signin");
-      }, 1000);
-
-      console.log("Password Change Successful:", responseData);
-    } catch (error: any) {
-      console.error("Password Change Fail", error.message);
+      sessionStorage.removeItem("resetToken");
+      toast.success("Password changed successfully.");
+      setTimeout(() => router.push("/signin"), 800);
+    } catch {
+      toast.error("Network error, please try again.");
     }
   };
 
@@ -92,30 +98,15 @@ const Password = () => {
           <form className="space-y-7" onSubmit={handlePasswordChange}>
             <label className="block">
               <span className="font-mono text-xs text-paper-3 block mb-2">
-                &gt; username
-              </span>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                autoComplete="username"
-                required
-                onChange={handleInputChange}
-                className="w-full bg-transparent border-0 border-b border-rule focus:border-accent text-paper py-2 px-0 font-mono text-sm placeholder:text-paper-3/60 outline-none transition-colors"
-                placeholder="your-handle"
-              />
-            </label>
-
-            <label className="block">
-              <span className="font-mono text-xs text-paper-3 block mb-2">
                 &gt; new-password
               </span>
               <input
-                id="password"
-                name="password"
+                id="newPassword"
+                name="newPassword"
                 type="password"
                 autoComplete="new-password"
                 required
+                minLength={8}
                 onChange={handleInputChange}
                 className="w-full bg-transparent border-0 border-b border-rule focus:border-accent text-paper py-2 px-0 font-mono text-sm placeholder:text-paper-3/60 outline-none transition-colors"
                 placeholder="at least 8 characters"

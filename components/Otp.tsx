@@ -53,11 +53,13 @@ const Otp = () => {
       }
 
       const responseData = await response.json();
+      if (responseData?.resetToken && typeof window !== "undefined") {
+        sessionStorage.setItem("resetToken", responseData.resetToken);
+      }
       setTimeout(() => {
         toast.success("Verification Successful");
         router.push("/forgetpassword/changepassword");
       }, 1000);
-      console.log("Email Accepted", responseData);
       setFormData({
         otp: "",
         email: "",
