@@ -11,6 +11,7 @@ import Navigation from "../Navigation";
 import Footer from "../Footer";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 interface Blog {
   _id: string;
@@ -82,6 +83,17 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
   const handleComment = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!token) {
+      toast.warn("Please sign in to leave a comment.");
+      router.push("/signin");
+      return;
+    }
+
+    if (!comments.trim()) {
+      toast.warn("Write something before posting.");
+      return;
+    }
+
     try {
       const response = await fetch(`${process.env.DEPLOYMENTLINK}/comments`, {
         method: "POST",
@@ -93,17 +105,15 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Comment Failed:", errorData);
+        const errorData = await response.json().catch(() => ({}));
+        toast.error(errorData?.message || "Could not post your comment.");
         return;
       }
 
-      const responseData = await response.json();
       setComments("");
-
-      console.log("Comment Successful:", responseData);
+      toast.success("Comment posted.");
     } catch (error: any) {
-      console.error("Comment Failed:", error.message);
+      toast.error("Network error, please try again.");
     }
   };
 
@@ -114,6 +124,12 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
   };
 
   const handleReactionSelected = async (reaction: string) => {
+    if (!token) {
+      toast.warn("Please sign in to react to this post.");
+      router.push("/signin");
+      return;
+    }
+
     try {
       const response = await fetch(`${process.env.DEPLOYMENTLINK}/reactions`, {
         method: "POST",
@@ -125,17 +141,15 @@ const BlogId: React.FC<BlogIdProps> = ({ blog }) => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Reaction Failed:", errorData);
+        const errorData = await response.json().catch(() => ({}));
+        toast.error(errorData?.message || "Could not save your reaction.");
         return;
       }
 
       const responseData = await response.json();
       setReactions(responseData);
-
-      console.log("Reaction Successful ", responseData);
     } catch (error: any) {
-      console.error("Reaction Unsuccessful:", error.message);
+      toast.error("Network error, please try again.");
     }
   };
 

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
 const inter = Inter({
@@ -100,6 +102,21 @@ export default function RootLayout({
     >
       <body className="font-sans bg-ink text-paper antialiased selection:bg-accent selection:text-ink">
         {children}
+        <ToastContainer
+          position="top-right"
+          autoClose={3500}
+          newestOnTop
+          closeOnClick
+          pauseOnHover
+          theme="dark"
+          toastStyle={{
+            background: "var(--ink)",
+            color: "var(--paper)",
+            border: "1px solid var(--rule)",
+            fontFamily: "var(--font-mono)",
+            fontSize: "0.875rem",
+          }}
+        />
       </body>
     </html>
   );
