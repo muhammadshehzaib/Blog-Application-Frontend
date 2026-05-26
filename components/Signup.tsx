@@ -47,11 +47,8 @@ function SignUp() {
         return;
       }
 
-      const responseData = await response.json();
       toast.success("Account created successfully");
-      setTimeout(() => {
-        router.push("/signin");
-      }, 1000);
+      router.push("/signin");
     } catch (error: any) {
       console.error("Signup Failed:", error.message);
     }

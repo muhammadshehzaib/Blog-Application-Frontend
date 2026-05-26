@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 
 function SignIn() {
   const router = useRouter();
-  const { isAuthenticated, token, login, logout } = useAuth();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -55,17 +55,22 @@ function SignIn() {
       }
 
       const responseData = await response.json();
+      login(responseData.accessToken);
       toast.success("Signed in successfully");
 
-      setTimeout(() => {
-        login(responseData.accessToken);
-        if (isAuthenticated) {
-          router.push("/");
-        }
-        if (forms.username === "admin") {
-          router.push("admin");
-        }
-      }, 1000);
+      let role = "";
+      try {
+        let b64 = responseData.accessToken
+          .split(".")[1]
+          .replace(/-/g, "+")
+          .replace(/_/g, "/");
+        while (b64.length % 4) b64 += "=";
+        role = JSON.parse(atob(b64))?.role ?? "";
+      } catch {
+        /* fall through to default redirect */
+      }
+
+      router.push(role === "Admin" ? "/admin" : "/");
     } catch (error: any) {
       console.error("Signin Failed:", error.message);
     }
