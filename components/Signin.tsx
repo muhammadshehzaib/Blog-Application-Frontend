@@ -20,6 +20,16 @@ function SignIn() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const fillCredentials = (username: string, password: string) => {
+    setFormData({ username, password });
+  };
+
+  const testAccounts: { role: string; username: string; password: string }[] = [
+    { role: "Admin", username: "admin", password: "admin123" },
+    { role: "Writer", username: "writer", password: "writer123" },
+    { role: "Reader", username: "reader", password: "reader123" },
+  ];
+
   const handleSignin = async (e: any) => {
     e.preventDefault();
 
@@ -101,6 +111,7 @@ function SignIn() {
                 type="text"
                 autoComplete="username"
                 required
+                value={formData.username}
                 onChange={handleInputChange}
                 className="w-full bg-transparent border-0 border-b border-rule focus:border-accent text-paper py-2 px-0 font-mono text-sm placeholder:text-paper-3/60 outline-none transition-colors"
                 placeholder="your-handle"
@@ -125,6 +136,7 @@ function SignIn() {
                 type="password"
                 autoComplete="current-password"
                 required
+                value={formData.password}
                 onChange={handleInputChange}
                 className="w-full bg-transparent border-0 border-b border-rule focus:border-accent text-paper py-2 px-0 font-mono text-sm placeholder:text-paper-3/60 outline-none transition-colors"
                 placeholder="••••••••"
@@ -146,6 +158,40 @@ function SignIn() {
           <p className="font-mono text-[0.7rem] tracking-label text-paper-3 mt-6 uppercase">
             session expires in 30 days &middot; encrypted at rest
           </p>
+        </div>
+
+        {/* Test accounts panel */}
+        <div className="mt-6 border border-rule bg-ink-2 p-5">
+          <div className="flex items-center justify-between mb-3">
+            <p className="label">// demo accounts</p>
+            <span className="font-mono text-[0.65rem] tracking-label text-paper-3 uppercase">
+              click to fill
+            </span>
+          </div>
+          <ul className="font-mono text-xs space-y-2">
+            {testAccounts.map((acc) => (
+              <li key={acc.username}>
+                <button
+                  type="button"
+                  onClick={() => fillCredentials(acc.username, acc.password)}
+                  className="group w-full grid grid-cols-12 gap-3 items-baseline text-left py-1.5 hover:bg-ink transition-colors px-2 -mx-2"
+                >
+                  <span className="col-span-3 text-accent uppercase tracking-label text-[0.65rem]">
+                    {acc.role}
+                  </span>
+                  <span className="col-span-4 text-paper">
+                    {acc.username}
+                  </span>
+                  <span className="col-span-4 text-paper-3 group-hover:text-paper transition-colors">
+                    {acc.password}
+                  </span>
+                  <span className="col-span-1 text-paper-3 group-hover:text-accent transition-colors text-right">
+                    ▸
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Footer links */}
