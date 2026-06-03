@@ -1,8 +1,30 @@
-# Blogs App — Frontend
+# Writer's Heaven — Frontend (Blogs App Web Client)
 
-The web client for the Blogs App, built with **Next.js 14** (App Router). It
+The web client for Writer's Heaven, built with **Next.js 14** (App Router). It
 talks to the NestJS backend over HTTP for data and over **WebSockets** for
 real-time updates.
+
+<p align="center">
+  <a href="https://REPLACE-WITH-YOUR-VPS-URL"><img src="https://img.shields.io/badge/Live%20Demo-Visit-2ea44f?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo"></a>
+  <a href="https://github.com/muhammadshehzaib/Blog-Application-Frontend"><img src="https://img.shields.io/badge/Frontend-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Frontend repo"></a>
+  <a href="https://github.com/muhammadshehzaib/Blog-Application"><img src="https://img.shields.io/badge/Backend-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Backend repo"></a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js%2014-000000?logo=nextdotjs&logoColor=white" alt="Next.js 14">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
+  <img src="https://img.shields.io/badge/Socket.IO-010101?logo=socketdotio&logoColor=white" alt="Socket.IO">
+</p>
+
+> 📸 **Add a screenshot / demo GIF here.** Drop an image at `docs/screenshot.png` and uncomment the block below.
+<!--
+<p align="center">
+  <img src="docs/screenshot.png" alt="Writer's Heaven frontend" width="850">
+</p>
+-->
+
+**Companion backend:** [Writer's Heaven — Backend](https://github.com/muhammadshehzaib/Blog-Application) (NestJS API)
 
 ---
 
